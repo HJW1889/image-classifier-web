@@ -7,12 +7,28 @@
 </head>
 <body>
   <h1>이미지 분류기</h1>
-  <div class="card">
-    <input type="file" id="file" accept="image/*" />
-    <button id="btn">예측하기</button>
+  
+  <!-- 박스 UI -->
+  <div class="container">
+    <!-- 업로드 영역 -->
+    <div class="header">
+      <p>이미지를 업로드하세요</p>
+      <input type="file" id="file" accept="image/*" />
+    </div>
+
+    <!-- 미리보기 -->
     <img id="preview" />
+
+    <!-- 결과 -->
     <pre id="result"></pre>
+
+    <!-- 버튼 -->
+    <div class="footer">
+      <p>예측하기</p>
+      <button id="btn">▶</button>
+    </div>
   </div>
+
   <script src="app.js"></script>
 </body>
 </html>
