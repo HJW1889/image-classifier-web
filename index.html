@@ -14,53 +14,59 @@
       <span class="brand">SMART TEXTURE</span>
     </div>
     <nav>
-      <a href="#">Home</a>
-      <a href="#">프로젝트 소개</a>
-      <a href="#">접근성 설명</a>
-      <a href="#">문의하기</a>
+      <a href="#home">Home</a>
+      <a href="#project">프로젝트 소개</a>
+      <a href="#accessibility">접근성 설명</a>
+      <a href="#contact">문의하기</a>
     </nav>
   </header>
 
   <!-- 메인 콘텐츠 -->
   <main>
-    <h1>스마트 원단 분석</h1>
-    <!--<p>여기에 이미지를 드래그하거나 버튼을 클릭하세요</p>-->
-
-    <!-- 메인 박스 -->
-    <div class="container">
-      <!-- 업로드 영역 -->
-      <div class="header" id="drop-area">
-        <input type="file" id="file" accept="image/*" />
-        <label for="file" class="upload-btn">이미지 업로드</label>
-        <button id="camera-btn" class="camera-btn">📷 카메라로 촬영</button>
-        <p>이미지를 업로드하거나 카메라로 촬영해 원단 종류를 분석해보세요.</p>
+    <section id="home"> 
+      <h1>스마트 원단 분석</h1>
+      <!--<p>여기에 이미지를 드래그하거나 버튼을 클릭하세요</p>-->
+  
+      <!-- 메인 박스 -->
+      <div class="container">
+        <!-- 업로드 영역 -->
+        <div class="header" id="drop-area">
+          <input type="file" id="file" accept="image/*" />
+          <label for="file" class="upload-btn">이미지 업로드</label>
+          <button id="camera-btn" class="camera-btn">📷 카메라로 촬영</button>
+          <p>이미지를 업로드하거나 카메라로 촬영해 원단 종류를 분석해보세요.</p>
+        </div>
+  
+        <!-- 미리보기 -->
+        <div class="preview-wrapper">
+          <img id="preview" />
+          <div class="scan-line" id="scan-line"></div>
+        </div>
+  
+        <!-- 결과 -->
+        <div id="resultContainer" style="display: flex; gap: 20px; align-items: flex-start;">
+          <pre id="result"></pre>         <!-- 기존 텍스트 출력 -->
+          <div id="progressBars" style="flex: 1;"></div>  <!-- 막대바 영역 -->
+        </div>
+  
+        <!-- 쇼핑몰 연동 -->
+        <h3 id="shopTitle" style="display:none; text-align:left; margin-bottom:10px;">🛍 AI 추천</h3>
+        <div id="shopLinks" class="shop-links" style="display:none;"></div>
+  
+        <!-- 로딩 및 버튼 -->
+        <div class="footer">
+          <button id="btn" class="predict-btn">▶ 예측하기</button>
+          <span id="loading">
+            예측 중
+            <span class="loader"></span>
+          </span>
+        </div>
       </div>
-
-      <!-- 미리보기 -->
-      <div class="preview-wrapper">
-        <img id="preview" />
-        <div class="scan-line" id="scan-line"></div>
-      </div>
-
-      <!-- 결과 -->
-      <div id="resultContainer" style="display: flex; gap: 20px; align-items: flex-start;">
-        <pre id="result"></pre>         <!-- 기존 텍스트 출력 -->
-        <div id="progressBars" style="flex: 1;"></div>  <!-- 막대바 영역 -->
-      </div>
-
-      <!-- 쇼핑몰 연동 -->
-      <h3 id="shopTitle" style="display:none; text-align:left; margin-bottom:10px;">🛍 AI 추천</h3>
-      <div id="shopLinks" class="shop-links" style="display:none;"></div>
-
-      <!-- 로딩 및 버튼 -->
-      <div class="footer">
-        <button id="btn" class="predict-btn">▶ 예측하기</button>
-        <span id="loading">
-          예측 중
-          <span class="loader"></span>
-        </span>
-      </div>
-    </div>
+    </section>
+    <section id="project">
+       <h1>프로젝트 소개</h1>
+    </section>
+  <!-- 추가 컨텐츠도 같은 방식으로 계속 추가 -->
   </main>
 
   <!-- 스크립트 -->
