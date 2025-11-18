@@ -64,6 +64,14 @@ function showPreview(fileOrBlob) {
   reader.readAsDataURL(fileOrBlob);
 }
 
+function showOverlay() {
+  document.getElementById('accessibilityOverlay').style.display = 'flex';
+}
+function closeOverlay() {
+  document.getElementById('accessibilityOverlay').style.display = 'none';
+}
+
+
 // 서버 업로드 및 예측
 $btn.addEventListener("click", async () => {
   let uploadFile = $file.files[0] || $file._cameraBlob;
