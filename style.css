@@ -443,3 +443,22 @@ h1 {
   transform: translateY(30px);
   transition: opacity 0.8s, transform 0.8s;
 }
+
+.overlay {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.4); /* 살짝 어두운 투명 */
+  z-index: 9999; /* 최상단 */
+}
+
+.overlay-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  text-align: center;
+}
