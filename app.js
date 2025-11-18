@@ -263,3 +263,39 @@ setInterval(async () => {
     console.warn("서버 ping 실패:", err);
   }
 }, 5 * 60 * 1000); // 5분 = 300,000 ms
+
+
+// 문의 폼 제출 기능만 별도
+document.addEventListener('DOMContentLoaded', function () {
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if (!email || !message) {
+        alert("필수 항목을 작성하세요.");
+        return;
+      }
+
+      // 실제 배포 환경이라면 여기에 서버로 POST 등 구현!
+      // 데모는 Console에 출력만
+      console.log({
+        firstName,
+        lastName,
+        email,
+        phone,
+        message
+      });
+
+      alert("문의가 성공적으로 제출되었습니다!");
+
+      e.target.reset();
+    });
+  }
+});
