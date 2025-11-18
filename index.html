@@ -44,8 +44,10 @@
         </div>
   
         <!-- 결과 -->
-        <div id="result"></div>
-        <div id="progressBars"></div>
+        <div id="resultContainer" style="display: flex; gap: 20px; align-items: flex-start; margin-top: 20px;">
+          <div id="progressBars" style="flex: 1;"></div>
+          <pre id="result" style="flex: 1; white-space: pre-wrap; overflow-x: auto;"></pre>          
+        </div>
         <div id="resultText"></div>
 
         <!-- 쇼핑몰 연동 -->
