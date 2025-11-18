@@ -133,7 +133,7 @@ $btn.addEventListener("click", async () => {
           bar.style.width = percent + "%";
         });
       }, 100);
-    }
+  
 
     } else if (data.error) {
       $result.textContent = "백엔드 에러: " + data.error;
