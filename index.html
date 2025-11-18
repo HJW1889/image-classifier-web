@@ -45,9 +45,10 @@
       </div>
 
       <!-- 결과 -->
-      <pre id="result"></pre>
-      <div id="resultText"></div>
-      <div id="progressBars"></div>
+      <div id="resultContainer" style="display: flex; gap: 20px; align-items: flex-start;">
+        <pre id="result"></pre>         <!-- 기존 텍스트 출력 -->
+        <div id="progressBars" style="flex: 1;"></div>  <!-- 막대바 영역 -->
+      </div>
 
       <!-- 쇼핑몰 연동 -->
       <h3 id="shopTitle" style="display:none; text-align:left; margin-bottom:10px;">🛍 AI 추천</h3>
