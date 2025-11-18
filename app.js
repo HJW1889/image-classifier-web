@@ -263,4 +263,3 @@ setInterval(async () => {
     console.warn("서버 ping 실패:", err);
   }
 }, 5 * 60 * 1000); // 5분 = 300,000 ms
-
