@@ -107,7 +107,7 @@ $btn.addEventListener("click", async () => {
             <span class="progress-label">${p.label}</span>
             
             <div class="progress-wrapper">
-              <div class="progressBars" data-percent="${percent}" style="width:0"></div>
+              <div class="progress-bar" data-percent="${percent}" style="width:0"></div>
             </div>
     
             <span class="progress-percent">${percent}%</span>
@@ -128,7 +128,7 @@ $btn.addEventListener("click", async () => {
         container.style.opacity = 1;
         container.style.transform = "translateY(0)";
     
-        document.querySelectorAll(".progressBars").forEach((bar) => {
+        document.querySelectorAll(".progress-bar").forEach((bar) => {
           const percent = bar.dataset.percent;
           bar.style.transition = "width 1.2s cubic-bezier(.42,0,.58,1)";
           bar.style.width = percent + "%";
