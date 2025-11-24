@@ -116,10 +116,10 @@ $btn.addEventListener("click", async () => {
       });
     
       // 막대바 영역에 출력
-      document.getElementById("progressBars").innerHTML = progressBarsHtml;
+      document.getElementById("progressBarsContainer").innerHTML = progressBarsHtml;
     
       // fade-in + 애니메이션
-      const container = document.getElementById("progressBars");
+      const container = document.getElementById("progressBarsContainer");
       container.style.opacity = 0;
       container.style.transform = "translateY(20px)";
       container.style.transition = "opacity 0.5s, transform 0.5s";
