@@ -227,12 +227,10 @@ h1 {
 /* 막대바 틀 */
 .progress-wrapper {
   flex: 1;
-  width: 120px;
   height: 10px;
   background: #ddd;
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
-  margin: 0 8px;
 }
 
 /* 라벨 정렬 */
@@ -240,7 +238,6 @@ h1 {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 5px 0;
 }
 
 .progress {
