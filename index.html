@@ -45,9 +45,12 @@
         </div>
   
         <!-- 결과 -->
-        <div class="result-row">
-           <div id="result"></div>
-          <div id="progressBars"></div>
+        <div class="progress-row">
+          <span class="progress-label">${p.label}</span>
+          <div class="progress-wrapper">
+            <div class="progress-bar" data-percent="${percent}" style="width:0"></div>
+          </div>
+          <span class="progress-percent">${percent}%</span>
         </div>
         <div id="resultText"></div>
 
