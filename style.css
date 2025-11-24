@@ -481,12 +481,11 @@ h1 {
 /* progressBars를 처음에 숨기는 기본 세팅 */
 #progressBars {
   opacity: 0;
-  transform: translateY(30px);
-  height: 100%;
-  background: linear-gradient(90deg, #00d4ff, #0096ff);
-  border-radius: 10px;
-  transition: opacity 0.8s, transform 0.8s, width 1.2s cubic-bezier(.42,0,.58,1);
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  margin-top: 10px;
 }
+
 
 .overlay {
   position: fixed;
