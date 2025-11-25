@@ -64,9 +64,69 @@
         </div>
       </div>
     </section>
-    <section id="project">
-       <h1>프로젝트 소개</h1>
+    <section id="project" class="project-section">
+      <div class="intro-header">
+        <div class="intro-logo">AI</div>
+        <div>
+          <h1>AI 기반 의류 소재 인식 시스템</h1>
+          <p class="lead">
+            실환경 원단 이미지를 분석하여 섬유 재질을 자동으로 식별하는 AI 기반 의류 관리 기술입니다.
+          </p>
+        </div>
+      </div>
+    
+      <div class="intro-grid">
+        <div class="intro-main">
+          <section>
+            <h2>문제 배경</h2>
+            <p>
+              사용자는 의류 소재 정보를 정확히 파악하기 어렵고, 섬유 산업에서는 자동화된 원단 분류·검사가 요구되고 있습니다.
+            </p>
+          </section>
+    
+          <section>
+            <h2>우리의 솔루션</h2>
+            <p>
+              DenseNet121 기반 모델을 활용해 실환경 원단 이미지를 분석·분류하여 다양한 서비스에 쉽게 적용할 수 있습니다.
+            </p>
+          </section>
+    
+          <section>
+            <h2>주요 기능</h2>
+            <ul class="feature-list">
+              <li>이미지 업로드 후 즉시 원단 분석</li>
+              <li>세탁 및 관리 가이드 자동 제공</li>
+              <li>쇼핑몰 연동 기반 추천 필터</li>
+              <li>실시간 처리 가능(경량화 모델 적용 시)</li>
+            </ul>
+          </section>
+    
+          <section>
+            <h2>기대 효과</h2>
+            <p>
+              사용자는 편리한 의류 관리를 경험하고, 기업은 자동화된 검사 및 추천 시스템으로 효율을 개선할 수 있습니다.
+            </p>
+          </section>
+        </div>
+    
+        <aside class="demo-box">
+          <strong>데모: 이미지 분석</strong>
+          <label class="upload-btn" for="file-input">이미지 업로드</label>
+          <input id="file-input" type="file" accept="image/*" />
+    
+          <div id="preview" class="preview" style="display:none;">
+            <img id="preview-img" src="" alt="preview" />
+          </div>
+    
+          <div id="result" class="result" style="display:none;">
+            <h3 id="mat-title"></h3>
+            <div id="mat-tags"></div>
+            <p id="mat-desc"></p>
+          </div>
+        </aside>
+      </div>
     </section>
+
     <section id="accessibility">
       <!-- 접근성 설명 이미지/컨텐츠를 위한 overlay -->
       <div id="accessibilityOverlay" class="overlay" style="display: none;">
