@@ -237,7 +237,7 @@ h1 {
 .progress-row {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 25px;
 }
 
 .progress {
