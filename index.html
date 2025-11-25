@@ -68,7 +68,7 @@
     <!-- Font Awesome 아이콘 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
-    <section id="project">
+    <section id="project" class="project">
       <div class="intro-container">
     
         <h2 class="intro-title">AI 기반 의류 소재 인식 시스템</h2>
@@ -119,25 +119,21 @@
           </p>
         </div>
     
-        <!-- 팀 소개 -->
-        <div class="team-section">
-          <div class="section-header">
-            <i class="fa-users"></i>
-            <h4>프로젝트 팀</h4>
-          </div>
-          <ul>
+        <!-- 팀 소개 → intro-card 디자인으로 통일 -->
+        <div class="intro-card">
+          <div class="icon-box"><i class="fa-solid fa-users"></i></div>
+          <h3>프로젝트 팀</h3>
+          <ul class="team-list">
             <li><strong>황정원</strong> – 데이터 구축 & UI/UX 디자인</li>
             <li><strong>김은채</strong> – 웹/백엔드 개발</li>
             <li><strong>윤혜주</strong> – 기획 & 시연 시스템 구현</li>
           </ul>
         </div>
- 
+     
         <!-- 기술스택 -->
-        <div class="tech-section">
-          <div class="section-header">
-            <<i class="fa-code"></i>
-              <h3>기술 스택</h3>
-          </div>
+        <div class="intro-card">
+          <div class="icon-box"><i class="fa-solid fa-code"></i></div>
+          <h3>기술 스택</h3>
     
           <div class="tech-grid">
             <span><i class="fa-brands fa-python"></i> Python</span>
