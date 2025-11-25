@@ -632,6 +632,7 @@ h1 {
 .intro-card h3 {
   font-size: 22px;
   margin-bottom: 12px;
+  margin-top: 10px;
 }
 
 .intro-card p {
@@ -648,9 +649,13 @@ h1 {
   margin-bottom: 50px;
 }
 
-.feature-item i {
-  font-size: 32px;
-  color: #5C7CFA;
+.feature-item {
+  background: #fff;
+  padding: 25px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  transition: 0.2s ease;
 }
 
 /* 팀 */
