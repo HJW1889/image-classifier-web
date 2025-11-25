@@ -242,7 +242,7 @@ h1 {
 
 .progress {
   height: 100%;
-  width: 40%;              /* JS로 변경 가능 */
+  width: 85%;              /* JS로 변경 가능 */
   background: linear-gradient(to right, #3498db, #2ecc71);
 }
 
