@@ -212,8 +212,9 @@ h1 {
 }
 
 /* 전체 막대바 묶음 */ 
-#progressBarsContainer 
-  { margin-top: 10px; }
+#progressBarsContainer {
+  margin-top: 10px;
+}
 
 /* 막대바 하나(진짜 바) */
 .progressBars {
@@ -223,6 +224,7 @@ h1 {
   transition: width 1.2s cubic-bezier(.42,0,.58,1); }
 }
 
+/* 막대바 틀 */
 .progress-wrapper {
   width: 100%;
   height: 14px;
