@@ -603,7 +603,7 @@ h1 {
   margin-bottom: 50px;
 }
 
-/* 카드 디자인 */
+/* 카드 */
 .intro-card {
   background: #fff;
   padding: 30px;
@@ -631,13 +631,12 @@ h1 {
 
 .intro-card h3 {
   font-size: 22px;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin-bottom: 12px;
 }
 
 .intro-card p {
   font-size: 16px;
-  color: #444;
+  color: #4a4f6d; /* 요청한 은은한 푸른-보라 톤 */
   line-height: 1.6;
 }
 
@@ -649,75 +648,38 @@ h1 {
   margin-bottom: 50px;
 }
 
-.feature-item {
-  background: #fff;
-  padding: 25px;
-  border-radius: 14px;
-  text-align: center;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-  transition: 0.2s ease;
-}
-
-.feature-item:hover {
-  transform: translateY(-4px);
-}
-
 .feature-item i {
   font-size: 32px;
   color: #5C7CFA;
-  margin-bottom: 12px;
 }
 
-.feature-item h4 {
-  font-size: 18px;
-  margin-bottom: 8px;
-}
-
-/* 팀 섹션 아이콘/스타일 맞추기 */
-.team-section {
-  margin-top: 40px;
-  background: #fff;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-}
-
-.team-section ul li {
-  margin-bottom: 8px;
+/* 팀 */
+.team-list li {
   font-size: 16px;
-  color: #444;
+  margin-bottom: 6px;
+  color: #4a4f6d;
 }
 
-/* 공통 섹션 헤더: 아이콘 + 제목 */
-.section-header {
+/* 기술 스택 */
+.tech-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.tech-grid span {
+  background: #eef0ff;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 15px;
+  color: #37406b;
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 18px;
+  gap: 8px;
 }
 
-.section-header i {
-  font-size: 22px;
+.tech-grid i {
   color: #5C7CFA;
 }
 
-/* 기술 스택 — 가로 카드 스타일 */
-.tech-horizontal {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-
-.tech-card {
-  background: #eef0ff;
-  padding: 12px 20px;
-  border-radius: 12px;
-  font-size: 15px;
-  color: #333;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-  transition: 0.2s;
-}
-
-.tech-card:hover {
-  transform: translateY(-3px);
-}
