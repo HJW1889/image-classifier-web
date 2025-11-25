@@ -673,7 +673,7 @@ h1 {
   margin-bottom: 8px;
 }
 
-/* 팀 */
+/* 팀 섹션 아이콘/스타일 맞추기 */
 .team-section {
   margin-top: 40px;
   background: #fff;
@@ -682,39 +682,42 @@ h1 {
   box-shadow: 0 6px 20px rgba(0,0,0,0.06);
 }
 
-.team-section h3 {
-  font-size: 22px;
-  margin-bottom: 15px;
-}
-
 .team-section ul li {
   margin-bottom: 8px;
   font-size: 16px;
+  color: #444;
 }
 
-/* 기술 스택 */
-.tech-section {
-  margin-top: 40px;
-  background: #fff;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+/* 공통 섹션 헤더: 아이콘 + 제목 */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
 }
 
-.tech-grid {
+.section-header i {
+  font-size: 22px;
+  color: #5C7CFA;
+}
+
+/* 기술 스택 — 가로 카드 스타일 */
+.tech-horizontal {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
-  margin-top: 15px;
+  gap: 14px;
 }
 
-.tech-grid span {
+.tech-card {
   background: #eef0ff;
-  padding: 10px 18px;
+  padding: 12px 20px;
   border-radius: 12px;
   font-size: 15px;
   color: #333;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+  transition: 0.2s;
+}
+
+.tech-card:hover {
+  transform: translateY(-3px);
 }
