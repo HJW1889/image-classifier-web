@@ -221,7 +221,7 @@ h1 {
   height: 10px;
   background: linear-gradient(90deg, #00d4ff, #0096ff);
   border-radius: 6px;
-  transition: width 1.2s cubic-bezier(.42,0,.58,1); }
+  transition: width 1.2s cubic-bezier(.42,0,.58,1);
 }
 
 /* 막대바 틀 */
