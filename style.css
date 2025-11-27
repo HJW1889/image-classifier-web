@@ -651,151 +651,155 @@ h1 {
   font-size: 18px;
 }
 
-/* 전체 섹션 */
-#contact {
-  padding: 60px 0;
-  background: #f6f7fb;
+/* ================================
+   🔥 방명록 UI 최종 통합 CSS 
+   ================================ */
+
+#contact.contact-section {
+  padding: 70px 0;
+  background: #f6f7fb !important;
   font-family: "Pretendard", sans-serif;
 }
 
-/* 좌우 배치 레이아웃 */
-.contact-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 32px;
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 20px;
+/* 레이아웃 — 기존보다 우선순위 높게 */
+#contact.contact-section .contact-container {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: stretch;
+  gap: 32px !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 28px !important;
 }
 
-/* 좌/우 카드 공통 스타일 */
-.contact-left,
-.contact-right {
-  flex: 1;
-  background: #ffffff;
-  padding: 32px;
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
-  display: flex;
-  flex-direction: column;
+/* 카드 공통 */
+#contact.contact-section .contact-left,
+#contact.contact-section .contact-right {
+  background: #ffffff !important;
+  padding: 32px !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.07) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border: 1px solid rgba(130,140,255,0.15) !important;
 }
 
-/* 왼쪽(입력칸)은 조금 좁게, 오른쪽(피드)은 넓게 */
-.contact-left {
-  flex: 0.9;
-}
-.contact-right {
-  flex: 1.1;
+/* 좌측(입력칸) */
+#contact.contact-section .contact-left {
+  flex: 0.9 !important;
 }
 
-/* 타이틀 */
-.contact-left h1,
-.contact-right h2 {
-  margin-bottom: 25px;
-  font-size: 26px;
-  font-weight: 700;
-  color: #222;
+/* 우측(피드) */
+#contact.contact-section .contact-right {
+  flex: 1.1 !important;
 }
 
-/* 입력 필드 그룹 */
-.field {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 18px;
+/* 제목 */
+#contact.contact-section h1,
+#contact.contact-section h2 {
+  font-size: 26px !important;
+  font-weight: 700 !important;
+  color: #2e2e4a !important;
+  margin-bottom: 25px !important;
 }
 
-.field label {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: #555;
+/* 입력 필드 */
+#contact.contact-section .field {
+  margin-bottom: 18px !important;
 }
 
-/* input / textarea */
-.field input,
-.field textarea {
-  padding: 14px 15px;
-  border: 1px solid #dcdcdc;
-  border-radius: 10px;
-  background: #fafafa;
-  font-size: 15px;
-  transition: 0.2s;
-  resize: none;
+#contact.contact-section .field label {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #555 !important;
+  margin-bottom: 6px !important;
 }
 
-.field textarea {
-  height: 130px;
+#contact.contact-section input,
+#contact.contact-section textarea {
+  padding: 14px 15px !important;
+  font-size: 15px !important;
+  border: 1px solid #dcdcdc !important;
+  background: #fafafa !important;
+  border-radius: 10px !important;
+  transition: all 0.25s ease !important;
+  resize: none !important;
 }
 
-.field input:focus,
-.field textarea:focus {
-  border-color: #7d8cff;
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(125, 140, 255, 0.18);
+#contact.contact-section textarea {
+  height: 130px !important;
+}
+
+#contact.contact-section input:focus,
+#contact.contact-section textarea:focus {
+  border-color: #7d8cff !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(125,140,255,0.18) !important;
 }
 
 /* 버튼 */
-button[type="submit"] {
-  width: 100%;
-  padding: 14px;
-  background: #7d8cff;
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s;
-  margin-top: 12px;
+#contact.contact-section button[type="submit"] {
+  width: 100% !important;
+  padding: 14px !important;
+  font-size: 16px !important;
+  background: #7d8cff !important;
+  color: #fff !important;
+  border: none !important;
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+  cursor: pointer !important;
+  margin-top: 12px !important;
+  transition: all 0.25s ease !important;
 }
 
-button[type="submit"]:hover {
-  background: #5f6dff;
-  transform: translateY(-2px);
+#contact.contact-section button[type="submit"]:hover {
+  background: #5f6dff !important;
+  transform: translateY(-2px) !important;
 }
 
 /* 피드 리스트 */
-.contact-right ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  overflow-y: auto;
-  flex: 1;
+#contact.contact-section #guestbookFeed {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow-y: auto !important;
+  flex: 1 !important;
 }
 
 /* 피드 항목 */
-.contact-right ul li {
-  background: #fafbff;
-  padding: 18px;
-  border-radius: 14px;
-  margin-bottom: 14px;
-  border: 1px solid #eceeff;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  transition: 0.2s;
+#contact.contact-section #guestbookFeed li {
+  background: #fafbff !important;
+  padding: 18px !important;
+  border-radius: 14px !important;
+  border: 1px solid #eceeff !important;
+  margin-bottom: 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  transition: all 0.25s ease !important;
 }
 
-.contact-right ul li:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 14px rgba(125, 140, 255, 0.15);
+#contact.contact-section #guestbookFeed li:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 6px 16px rgba(125,140,255,0.16) !important;
 }
 
-.contact-right ul li strong {
-  font-size: 16px;
-  color: #333;
+#contact.contact-section #guestbookFeed li strong {
+  font-size: 16px !important;
+  color: #333 !important;
 }
 
-.contact-right ul li .date {
-  font-size: 11px;
-  color: #888;
-  margin-bottom: 3px;
+#contact.contact-section #guestbookFeed li .date {
+  font-size: 11px !important;
+  color: #888 !important;
+  margin-bottom: 2px !important;
 }
 
 /* 반응형 */
 @media (max-width: 850px) {
-  .contact-container {
-    flex-direction: column;
-    gap: 20px;
+  #contact.contact-section .contact-container {
+    flex-direction: column !important;
+    gap: 20px !important;
+    padding: 0 16px !important;
   }
 }
