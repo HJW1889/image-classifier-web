@@ -803,3 +803,23 @@ h1 {
     padding: 0 16px !important;
   }
 }
+
+/* 방명록 컨테이너의 부모 .container 영향 완전 무시 */
+#contact .contact-container {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: stretch !important;
+
+  /* container가 가진 max-width 800px 무시 */
+  max-width: 1200px !important;
+  width: 100% !important;
+
+  /* 부모의 flex settings 무력화 */
+  flex: none !important;
+  align-self: stretch !important;
+}
+
+#contact {
+  width: 100% !important;
+}
