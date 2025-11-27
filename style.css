@@ -852,3 +852,149 @@ h1 {
 #contact {
   width: 100% !important;
 }
+
+/****************************************************
+    #home 섹션 리디자인 (기존 코드 보존 + 개선 버전)
+****************************************************/
+
+/* 섹션 전체 */
+#home {
+  padding: 60px 20px;
+  background: linear-gradient(180deg, #f4f7ff 0%, #eef3ff 100%);
+  box-sizing: border-box;
+}
+
+#home h1 {
+  font-size: 28px;
+  font-weight: 800;
+  text-align: center;
+  color: #1f2b46;
+  margin-bottom: 35px;
+}
+
+/* 메인 컨테이너 */
+#home .container {
+  max-width: 900px;      /* 더 넓고 안정감 있게 */
+  width: 95%;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 30px 25px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  gap: 25px;
+}
+
+/* 업로드 영역 */
+#home .header {
+  background: #f8faff;
+  border: 2px dashed #6e8bff;
+  border-radius: 14px;
+  padding: 30px 15px;
+  transition: 0.25s ease;
+}
+
+#home .header:hover {
+  border-color: #4a6dff;
+  background: #f1f4ff;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+}
+
+#home .header p {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* 업로드 / 카메라 버튼 */
+.upload-btn,
+.camera-btn {
+  background: #5a7dff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  margin: 6px;
+}
+
+.upload-btn:hover,
+.camera-btn:hover {
+  background: #425fe6;
+}
+
+/* 미리보기 영역 개선 */
+.preview-wrapper {
+  width: 100%;
+  max-width: 420px;
+  height: 420px;
+  margin: 0 auto;
+  background: #f2f5ff;
+  border: 1px solid #dde3ff;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#preview {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+}
+
+/* 스캔 라인 */
+.scan-line {
+  background: rgba(91, 123, 255, 0.7);
+  box-shadow: 0 0 15px rgba(91, 123, 255, 0.6);
+}
+
+/* 결과 텍스트 */
+#resultText {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #253045;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* 쇼핑몰 추천 제목 */
+#shopTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #22345a;
+}
+
+/* 쇼핑몰 추천 링크들 */
+.shop-links a {
+  border-radius: 10px;
+  background: #f7f9ff;
+  border: 1px solid #e1e6ff;
+  padding: 12px 15px;
+  transition: 0.2s ease;
+}
+
+.shop-links a:hover {
+  background: #eef2ff;
+  border-color: #a7b6ff;
+}
+
+/* 예측 버튼 */
+.predict-btn {
+  font-size: 1rem;
+  padding: 14px 28px;
+  border-radius: 14px;
+  background: #5b7bff;
+}
+
+.predict-btn:hover {
+  background: #3e55e6;
+}
+
+/* 로딩 */
+#loading {
+  color: #4a6dff;
+  font-size: 1rem;
+}
+
+/****************************************************
+    (여기까지가 #home UI 개선)
+****************************************************/
