@@ -999,27 +999,31 @@ h1 {
     (여기까지가 #home UI 개선)
 ****************************************************/
 /* 막대바 전체 폭 확장 */
+/* 막대바 전체 묶음만 container 제한을 벗어나게 */
 #progressBarsContainer {
-  width: 100%;
-  max-width: 100%;   /* 부모 제한 제거 */
+  width: 100vw; /* 화면 가로 전체 */
+  margin-left: calc(-50vw + 50%); /* 가운데 정렬 유지 */
+  padding: 0 20px; /* 좌우 여백 */
+  box-sizing: border-box;
 }
 
-/* progress-row 자체도 넓게 펼쳐지게 */
-.progress-row {
+/* 내부 막대는 전체 폭 사용 */
+.progress-row,
+.progress-wrapper {
   width: 100%;
-  justify-content: space-between;
+  max-width: 100%;
+}
+
+.progressBars,
+.progress-bar {
+  min-width: 70%;    /* 필요하면 조절: 70~100% */
+  width: 100% !important;
 }
 
 /* 틀(wrapper)을 넓게 */
 .progress-wrapper {
   width: 100% !important;
   max-width: 100% !important;
-}
-
-/* 실제 막대 */
-.progressBars {
-  width: auto;
-  min-width: 70%;    /* 필요하면 조절: 70~100% */
 }
 
 /* 텍스트가 폭을 가로막지 않게 줄 정렬 */
