@@ -793,208 +793,175 @@ h1 {
   width: 100% !important;
 }
 
+
 /****************************************************
-    #home 섹션 리디자인 (기존 코드 보존 + 개선 버전)
+   #home 전체 UI 대대적 개편
 ****************************************************/
 
 /* 섹션 전체 */
 #home {
-  padding: 60px 20px;
-  background: linear-gradient(180deg, #f4f7ff 0%, #eef3ff 100%);
+  padding: 70px 20px;
+  background: linear-gradient(180deg, #eef3ff 0%, #f7faff 100%);
   box-sizing: border-box;
 }
 
 #home h1 {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 800;
   text-align: center;
   color: #1f2b46;
-  margin-bottom: 35px;
+  margin-bottom: 40px;
 }
 
 /* 메인 컨테이너 */
 #home .container {
-  max-width: 900px;      /* 더 넓고 안정감 있게 */
+  max-width: 900px;
   width: 95%;
   margin: 0 auto;
   background: #ffffff;
-  border-radius: 18px;
-  padding: 30px 25px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  gap: 25px;
+  border-radius: 22px;
+  padding: 40px 32px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  border: 1px solid rgba(150,160,255,0.18);
 }
 
 /* 업로드 영역 */
 #home .header {
   background: #f8faff;
   border: 2px dashed #6e8bff;
-  border-radius: 14px;
-  padding: 30px 15px;
-  transition: 0.25s ease;
+  border-radius: 16px;
+  padding: 30px 20px;
+  transition: 0.25s;
 }
 
 #home .header:hover {
-  border-color: #4a6dff;
+  border-color: #4d66ff;
   background: #f1f4ff;
   box-shadow: 0 4px 18px rgba(0,0,0,0.05);
 }
 
-#home .header p {
-  margin-top: 12px;
-  font-size: 0.95rem;
-  color: #444;
-}
-
-/* 업로드 / 카메라 버튼 */
-.upload-btn,
-.camera-btn {
-  background: #5a7dff;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-size: 0.95rem;
-  margin: 6px;
-}
-
-.upload-btn:hover,
-.camera-btn:hover {
-  background: #425fe6;
-}
-
-/* 미리보기 영역 개선 */
+/* 미리보기 */
 .preview-wrapper {
   width: 100%;
-  max-width: 420px;
-  height: 420px;
+  max-width: 430px;
+  height: 430px;
   margin: 0 auto;
-  background: #f2f5ff;
-  border: 1px solid #dde3ff;
-  border-radius: 14px;
+  background: #f3f5ff;
+  border: 1px solid #dbe2ff;
+  border-radius: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#preview {
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+/****************************************************
+   🚀 결과 박스(result + resultText) 새 디자인
+****************************************************/
+
+.result-box {
+  background: #f9faff;
+  padding: 25px 28px;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  border: 1px solid rgba(150,160,255,0.20);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-/* 스캔 라인 */
-.scan-line {
-  background: rgba(91, 123, 255, 0.7);
-  box-shadow: 0 0 15px rgba(91, 123, 255, 0.6);
+/* 기존 result, resultText를 박스 내부에 자연스럽게 */
+#result, #resultText {
+  background: none !important;
+  padding: 0 !important;
+  margin: 0;
+  font-size: 15px;
+  color: #2b2b3d;
 }
 
-/* 결과 텍스트 */
-#resultText {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: #253045;
+#resultText h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #2a3470;
+}
+
+/****************************************************
+   📊 ProgressBar 통합 디자인 (Result Box 내부)
+****************************************************/
+
+#progressBarsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   margin-top: 10px;
-  text-align: center;
 }
 
-/* 쇼핑몰 추천 제목 */
-#shopTitle {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #22345a;
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-/* 쇼핑몰 추천 링크들 */
-.shop-links a {
+.progress-label {
+  width: 100px;
+  flex-shrink: 0;
+  font-weight: 600;
+  color: #333;
+}
+
+.progress-wrapper {
+  flex: 1;
+  height: 14px;
+  background: #e6e9f3;
   border-radius: 10px;
-  background: #f7f9ff;
-  border: 1px solid #e1e6ff;
-  padding: 12px 15px;
-  transition: 0.2s ease;
+  overflow: hidden;
 }
 
-.shop-links a:hover {
-  background: #eef2ff;
-  border-color: #a7b6ff;
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #7aa3ff, #4f6dff);
+  border-radius: 10px;
+  transition: width 1.2s cubic-bezier(.42,0,.58,1);
 }
 
-/* 예측 버튼 */
+.progress-percent {
+  width: 50px;
+  text-align: right;
+  font-weight: 600;
+  color: #333;
+}
+
+/****************************************************
+   쇼핑 추천
+****************************************************/
+
+#shopTitle {
+  font-size: 22px !important;
+  margin-top: 10px;
+  color: #233165;
+}
+
+.shop-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+/****************************************************
+   예측 버튼
+****************************************************/
 .predict-btn {
-  font-size: 1rem;
-  padding: 14px 28px;
-  border-radius: 14px;
+  padding: 14px 30px;
   background: #5b7bff;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 16px;
 }
 
 .predict-btn:hover {
   background: #3e55e6;
 }
-
-/* 로딩 */
-#loading {
-  color: #4a6dff;
-  font-size: 1rem;
-}
-
-/****************************************************
-    (여기까지가 #home UI 개선)
-****************************************************/
-
-
-/****************************************************
-   🌈 Progress Bar — 완전 통합 최종본
-****************************************************/
-
-/* progress 전체 묶음 */
-#progressBarsContainer {
-  width: 100%;
-  margin-top: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* 한 줄: 라벨 + 막대바 + 퍼센트 */
-.progress-row {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  gap: 12px;
-}
-
-/* 왼쪽 라벨 */
-.progress-label {
-  width: 100px;      /* 적당한 고정폭 */
-  flex-shrink: 0;
-  font-weight: 600;
-  font-size: 14px;
-  color: #333;
-}
-
-/* 막대바 틀 */
-.progress-wrapper {
-  flex: 1;           /* 남은 공간 전부 차지 */
-  height: 14px;
-  background: #e5e8ef;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-/* 실제 막대 (JS에서 width=%로 변경됨) */
-.progress-bar {
-  height: 100%;
-  width: 0;          /* 초기 0 → JS가 width=XX%로 변경 */
-  background: linear-gradient(90deg, #00d4ff, #0096ff);
-  border-radius: 10px;
-  transition: width 1.2s cubic-bezier(.42,0,.58,1);
-}
-
-/* 퍼센트 숫자 */
-.progress-percent {
-  width: 50px;
-  flex-shrink: 0;
-  text-align: right;
-  font-weight: 600;
-  font-size: 14px;
-  color: #333;
-}
-
