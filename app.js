@@ -81,6 +81,8 @@ $btn.addEventListener("click", async () => {
     return;
   }
 
+  document.querySelector(".result-box")?.classList.remove("active");
+
   const fd = new FormData();
   fd.append("file", uploadFile);
 
@@ -149,6 +151,9 @@ $btn.addEventListener("click", async () => {
         <p>🌬️ 건조법: ${data.dry_method}</p>
         <p>⚠️ 주의사항: ${data.special_note}</p>
       `;
+
+       // 🔥 예측 성공 → 결과 박스 등장
+      document.querySelector(".result-box")?.classList.add("active");
 
       // 🔗 예측된 재질명으로 쇼핑몰 링크 생성
       const fabricName = data.ko_name || data.predicted_fabric;
