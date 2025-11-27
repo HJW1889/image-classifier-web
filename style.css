@@ -1039,3 +1039,44 @@ h1 {
 .progress-wrapper {
   flex-grow: 1;
 }
+
+/* ① progress-row: 라벨 + 막대 + 퍼센트 정렬 */
+.progress-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+/* ② 라벨은 고정폭 */
+.progress-label {
+  width: 90px;       /* 길이 보정: 너무 길지도 짧지도 않게 */
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
+/* ③ 퍼센트 글자 */
+.progress-percent {
+  width: 60px;       /* 퍼센트가 폭을 잡아먹지 않도록 */
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ④ 막대 틀: 남은 공간 전체 사용 */
+.progress-wrapper {
+  flex: 1;           /* 라벨/퍼센트 제외한 나머지 공간 전부 차지 */
+  height: 14px;
+  background: #e9eef5;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* ⑤ 실제 막대: JS가 width="XX%"로 덮어씀 */
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #00d4ff, #0096ff);
+  border-radius: 10px;
+  width: 0;          /* 초기 0 → JS가 XX%로 변경 */
+  transition: width 1.2s cubic-bezier(.42,0,.58,1);
+}
+
