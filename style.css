@@ -998,3 +998,40 @@ h1 {
 /****************************************************
     (여기까지가 #home UI 개선)
 ****************************************************/
+/* 막대바 전체 폭 확장 */
+#progressBarsContainer {
+  width: 100%;
+  max-width: 100%;   /* 부모 제한 제거 */
+}
+
+/* progress-row 자체도 넓게 펼쳐지게 */
+.progress-row {
+  width: 100%;
+  justify-content: space-between;
+}
+
+/* 틀(wrapper)을 넓게 */
+.progress-wrapper {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* 실제 막대 */
+.progressBars {
+  width: auto;
+  min-width: 70%;    /* 필요하면 조절: 70~100% */
+}
+
+/* 텍스트가 폭을 가로막지 않게 줄 정렬 */
+.result-row {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.result-row span:first-child {
+  flex-shrink: 0; /* 이름 텍스트 영역 줄어들지 않게 */
+}
+
+.progress-wrapper {
+  flex-grow: 1;
+}
