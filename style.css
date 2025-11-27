@@ -170,17 +170,8 @@ h1 {
   background-color: navy;
 }
 
-/* 미리보기 */
-#preview {
-  max-width: 100%;
-  max-height: 150px;  /*최대 폭 150*/
-  height: auto; /**/
-  border-radius: 6px;
-  object-fit: cover;      /* 이미지 비율 유지하며 꽉 채우기 */
-  margin: 10px 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
-  display: block;
-}
+/* 미리보기 #preview */
+ 
 
 /* 결과 텍스트 박스 (박스 느낌 제거 버전) */
 #result, #resultText {
