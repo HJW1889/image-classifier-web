@@ -729,12 +729,12 @@ h1 {
 
 /* 전체 섹션 */
 #contact {
-  padding: 60px 0;
-  background: #f8f9fb;
+  padding: 80px 0;
+  background: linear-gradient(180deg, #f6f8ff 0%, #eef1ff 100%);
   font-family: "Pretendard", sans-serif;
 }
 
-/* 레이아웃 정렬 */
+/* 레이아웃 */
 .contact-container {
   display: flex;
   gap: 40px;
@@ -743,25 +743,42 @@ h1 {
   padding: 0 20px;
 }
 
-/* 왼쪽 / 오른쪽 영역 */
-.contact-left, .contact-right {
+/* 왼쪽/오른쪽 카드 공통 */
+.contact-left, 
+.contact-right {
   flex: 1;
-  background: #ffffff;
-  padding: 30px;
+  background: #fff;
+  padding: 35px;
   border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(120, 135, 255, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 카드 상단 라인 효과 */
+.contact-left::before,
+.contact-right::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5px;
+  width: 100%;
+  background: linear-gradient(90deg, #6a7bff, #8ea1ff);
 }
 
 /* 타이틀 */
 .contact-left h1,
 .contact-right h2 {
-  margin-bottom: 25px;
-  font-size: 28px;
+  margin-bottom: 28px;
+  font-size: 26px;
   font-weight: 700;
-  color: #333;
+  color: #2f2f4f;
+  letter-spacing: -0.3px;
 }
 
-/* 입력 필드 그룹 */
+/* 입력 필드 */
 .field {
   display: flex;
   flex-direction: column;
@@ -778,32 +795,33 @@ h1 {
 /* input / textarea */
 .field input,
 .field textarea {
-  padding: 12px 14px;
-  border: 1px solid #dcdcdc;
-  border-radius: 12px;
-  background: #fafafa;
+  padding: 14px 16px;
+  border: 1px solid #d9dcff;
+  border-radius: 14px;
+  background: #f8f9ff;
   font-size: 15px;
-  transition: 0.2s;
+  transition: 0.25s ease;
   resize: none;
 }
 
-.field textarea {
-  height: 120px;
-}
-
+/* 포커스 효과 */
 .field input:focus,
 .field textarea:focus {
-  border-color: #7d8cff;
+  border-color: #7383ff;
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(125, 140, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(115, 131, 255, 0.22);
   outline: none;
+}
+
+.field textarea {
+  height: 130px;
 }
 
 /* 버튼 */
 button[type="submit"] {
   width: 100%;
   padding: 14px;
-  background: #7d8cff;
+  background: linear-gradient(135deg, #6d7bff, #8c9aff);
   color: #fff;
   border: none;
   border-radius: 14px;
@@ -815,46 +833,78 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background: #606ffc;
+  background: linear-gradient(135deg, #5b6aff, #7f8fff);
   transform: translateY(-2px);
 }
 
-/* 방명록 피드 */
+/* 오른쪽: 방명록 피드 */
 .contact-right ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  max-height: 400px;
+  max-height: 430px;
   overflow-y: auto;
 }
 
-/* 개별 피드 항목 */
+/* 피드 항목 */
 .contact-right ul li {
-  background: #fafbff;
-  padding: 18px;
-  border-radius: 14px;
+  background: #f9faff;
+  padding: 18px 20px;
+  border-radius: 16px;
   margin-bottom: 14px;
-  border: 1px solid #eceeff;
-  box-shadow: 0 4px 12px rgba(125, 140, 255, 0.05);
+  border: 1px solid #e1e4ff;
+  box-shadow: 0 4px 12px rgba(125, 140, 255, 0.07);
+  transition: 0.2s ease;
+}
+
+.contact-right ul li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(125, 140, 255, 0.12);
 }
 
 .contact-right ul li strong {
   font-size: 16px;
   display: block;
-  margin-bottom: 6px;
-  color: #444;
+  margin-bottom: 4px;
+  color: #373b63;
+  font-weight: 700;
 }
 
 .contact-right ul li .date {
-  font-size: 11px;
-  color: #888;
+  font-size: 12px;
+  color: #8d92b8;
+  margin-bottom: 8px;
+}
+
+.contact-right ul li p {
+  font-size: 14px;
+  color: #4d4d6a;
+  line-height: 1.55;
   margin-bottom: 6px;
+}
+
+/* 연락처 표시 */
+.contact-right small {
+  font-size: 12px;
+  color: #7281ff;
+}
+
+/* 스크롤바 디자인 */
+.contact-right ul::-webkit-scrollbar {
+  width: 6px;
+}
+.contact-right ul::-webkit-scrollbar-thumb {
+  background: #c9ceff;
+  border-radius: 10px;
+}
+.contact-right ul::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 /* 반응형 */
 @media (max-width: 850px) {
   .contact-container {
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
   }
 }
