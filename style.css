@@ -652,44 +652,43 @@ h1 {
 }
 
 /* ================================
-   🔥 방명록 UI 최종 통합 CSS 
+   방명록 UI 최종 정리본
    ================================ */
 
 #contact.contact-section {
-  padding: 70px 0;
-  background: #f6f7fb !important;
-  font-family: "Pretendard", sans-serif;
+  padding: 80px 0 !important;
+  background: linear-gradient(180deg, #f6f8ff, #eef1ff) !important;
+  font-family: "Pretendard", sans-serif !important;
 }
 
-/* 레이아웃 — 기존보다 우선순위 높게 */
+/* 좌우 큼직한 카드 레이아웃 */
 #contact.contact-section .contact-container {
   display: flex !important;
+  flex-direction: row !important;
   justify-content: space-between !important;
-  align-items: stretch;
   gap: 32px !important;
   max-width: 1200px !important;
+  width: 100% !important;
   margin: 0 auto !important;
-  padding: 0 28px !important;
+  align-items: stretch !important;
 }
 
-/* 카드 공통 */
+/* 공통 카드 스타일 */
 #contact.contact-section .contact-left,
 #contact.contact-section .contact-right {
   background: #ffffff !important;
-  padding: 32px !important;
+  padding: 28px 32px !important;
   border-radius: 20px !important;
-  box-shadow: 0 8px 22px rgba(0,0,0,0.07) !important;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.07) !important;
+  border: 1px solid rgba(115,135,255,0.15) !important;
   display: flex !important;
   flex-direction: column !important;
-  border: 1px solid rgba(130,140,255,0.15) !important;
 }
 
-/* 좌측(입력칸) */
+/* 비율 조절 */
 #contact.contact-section .contact-left {
   flex: 0.9 !important;
 }
-
-/* 우측(피드) */
 #contact.contact-section .contact-right {
   flex: 1.1 !important;
 }
@@ -699,7 +698,7 @@ h1 {
 #contact.contact-section h2 {
   font-size: 26px !important;
   font-weight: 700 !important;
-  color: #2e2e4a !important;
+  color: #2f2f4f !important;
   margin-bottom: 25px !important;
 }
 
@@ -707,7 +706,6 @@ h1 {
 #contact.contact-section .field {
   margin-bottom: 18px !important;
 }
-
 #contact.contact-section .field label {
   font-size: 14px !important;
   font-weight: 600 !important;
@@ -717,23 +715,23 @@ h1 {
 
 #contact.contact-section input,
 #contact.contact-section textarea {
-  padding: 14px 15px !important;
-  font-size: 15px !important;
+  padding: 13px 15px !important;
   border: 1px solid #dcdcdc !important;
+  border-radius: 12px !important;
   background: #fafafa !important;
-  border-radius: 10px !important;
+  font-size: 15px !important;
   transition: all 0.25s ease !important;
-  resize: none !important;
 }
 
 #contact.contact-section textarea {
   height: 130px !important;
 }
 
+/* focus 효과 */
 #contact.contact-section input:focus,
 #contact.contact-section textarea:focus {
   border-color: #7d8cff !important;
-  background: #ffffff !important;
+  background: #fff !important;
   box-shadow: 0 0 0 3px rgba(125,140,255,0.18) !important;
 }
 
@@ -741,15 +739,15 @@ h1 {
 #contact.contact-section button[type="submit"] {
   width: 100% !important;
   padding: 14px !important;
-  font-size: 16px !important;
   background: #7d8cff !important;
-  color: #fff !important;
+  border-radius: 14px !important;
   border: none !important;
+  color: #fff !important;
+  font-size: 15.5px !important;
   font-weight: 600 !important;
-  border-radius: 12px !important;
   cursor: pointer !important;
-  margin-top: 12px !important;
-  transition: all 0.25s ease !important;
+  margin-top: 8px !important;
+  transition: 0.25s ease !important;
 }
 
 #contact.contact-section button[type="submit"]:hover {
@@ -757,13 +755,35 @@ h1 {
   transform: translateY(-2px) !important;
 }
 
-/* 피드 리스트 */
+/* ===========================================
+   방명록 피드
+   =========================================== */
+
+/* 피드 컨테이너 */
 #contact.contact-section #guestbookFeed {
   list-style: none !important;
   padding: 0 !important;
   margin: 0 !important;
+
+  /* 스크롤 영역 지정 */
+  max-height: 380px !important;
   overflow-y: auto !important;
-  flex: 1 !important;
+
+  /* 부드러운 스크롤 */
+  scroll-behavior: smooth !important;
+  padding-right: 6px !important;
+}
+
+/* 스크롤바 디자인 */
+#contact.contact-section #guestbookFeed::-webkit-scrollbar {
+  width: 8px;
+}
+#contact.contact-section #guestbookFeed::-webkit-scrollbar-thumb {
+  background: #cdd2ff;
+  border-radius: 8px;
+}
+#contact.contact-section #guestbookFeed::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 /* 피드 항목 */
@@ -776,33 +796,42 @@ h1 {
   display: flex !important;
   flex-direction: column !important;
   gap: 6px !important;
-  transition: all 0.25s ease !important;
+  transition: 0.22s ease !important;
 }
 
 #contact.contact-section #guestbookFeed li:hover {
   transform: translateY(-3px) !important;
-  box-shadow: 0 6px 16px rgba(125,140,255,0.16) !important;
+  box-shadow: 0 8px 20px rgba(125,140,255,0.15) !important;
 }
 
 #contact.contact-section #guestbookFeed li strong {
   font-size: 16px !important;
+  font-weight: 700 !important;
   color: #333 !important;
 }
 
 #contact.contact-section #guestbookFeed li .date {
   font-size: 11px !important;
-  color: #888 !important;
-  margin-bottom: 2px !important;
+  color: #8a8a8a !important;
+}
+
+#contact.contact-section #guestbookFeed li p {
+  font-size: 14px !important;
+  color: #444 !important;
+  line-height: 1.45 !important;
+  white-space: pre-line !important;
 }
 
 /* 반응형 */
-@media (max-width: 850px) {
+@media (max-width: 900px) {
   #contact.contact-section .contact-container {
     flex-direction: column !important;
-    gap: 20px !important;
-    padding: 0 16px !important;
+  }
+  #contact.contact-section #guestbookFeed {
+    max-height: 300px !important;
   }
 }
+
 
 /* 방명록 컨테이너의 부모 .container 영향 완전 무시 */
 #contact .contact-container {
