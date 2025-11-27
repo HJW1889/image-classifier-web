@@ -845,31 +845,66 @@ h1 {
 
 /* 미리보기 */
 .preview-wrapper {
-  width: 100%;
-  max-width: 430px;
-  height: 430px;
-  margin: 0 auto;
+  width: 380px;
+  height: 380px;
   background: #f3f5ff;
   border: 1px solid #dbe2ff;
   border-radius: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden; /* 중요! */
 }
+
+#preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지 꽉 채우기 */
+  border-radius: 16px;
+}
+
+
+/* 홈 컨테이너에서 preview + result를 가로 정렬 */
+#home .analysis-row {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  flex-wrap: wrap; /* 모바일에서 세로로 내려가도록 */
+  margin-top: 10px;
+}
+
 
 /****************************************************
    🚀 결과 박스(result + resultText) 새 디자인
 ****************************************************/
 
 .result-box {
-  background: #f9faff;
-  padding: 25px 28px;
-  border-radius: 18px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-  border: 1px solid rgba(150,160,255,0.20);
+  opacity: 0;
+  transform: translateX(20px);
+  pointer-events: none;     /* 클릭 안됨 */
+  display: none;            /* 자리도 차지 안함 */
+  transition: opacity .4s ease, transform .4s ease;
+}
+
+.result-box.active {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 15px;
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* 예측 결과 박스 (카드형) */
+.result-box {
+  background: #f9faff;
+  padding: 22px 26px;
+  border-radius: 16px;
+  border: 1px solid rgba(150,160,255,0.25);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  max-width: 380px;
 }
 
 /* 기존 result, resultText를 박스 내부에 자연스럽게 */
