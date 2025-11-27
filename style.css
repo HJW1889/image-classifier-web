@@ -211,41 +211,6 @@ h1 {
   gap: 8px;                /* 텍스트와 막대 간 간격 */
 }
 
-/* 전체 막대바 묶음 */ 
-#progressBarsContainer {
-  margin-top: 10px;
-}
-
-/* 막대바 하나(진짜 바) */
-.progressBars {
-  height: 10px;
-  background: linear-gradient(90deg, #00d4ff, #0096ff);
-  border-radius: 6px;
-  transition: width 1.2s cubic-bezier(.42,0,.58,1);
-}
-
-/* 막대바 틀 */
-.progress-wrapper {
-  width: 100%;
-  height: 14px;
-  background: #ddd;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-/* 라벨 정렬 */
-.progress-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.progress {
-  height: 100%;
-  width: 85%;              /* JS로 변경 가능 */
-  background: linear-gradient(to right, #3498db, #2ecc71);
-}
-
 
 /* 로딩 애니메이션 */
 #loading {
@@ -440,31 +405,6 @@ h1 {
     width: 120px;           /* 모바일에 맞는 이미지 크기 */
     height: auto;
   }
-}
-
-
-.progress-label {
-  font-weight: 600;
-  text-align: right;
-}
-
-.progress-wrapper {
-  width: 100%;
-  height: 14px;
-  background: #e9eef5;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #00d4ff, #0096ff);
-  border-radius: 10px;
-}
-
-.progress-percent {
-  font-weight: 600;
-  color: #333;
 }
 
 
@@ -998,85 +938,63 @@ h1 {
 /****************************************************
     (여기까지가 #home UI 개선)
 ****************************************************/
-/* 막대바 전체 폭 확장 */
-/* 막대바 전체 묶음만 container 제한을 벗어나게 */
+
+
+/****************************************************
+   🌈 Progress Bar — 완전 통합 최종본
+****************************************************/
+
+/* progress 전체 묶음 */
 #progressBarsContainer {
-  width: 100vw; /* 화면 가로 전체 */
-  margin-left: calc(-50vw + 50%); /* 가운데 정렬 유지 */
-  padding: 0 20px; /* 좌우 여백 */
-  box-sizing: border-box;
-}
-
-/* 내부 막대는 전체 폭 사용 */
-.progress-row,
-.progress-wrapper {
   width: 100%;
-  max-width: 100%;
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.progressBars,
-.progress-bar {
-  min-width: 70%;    /* 필요하면 조절: 70~100% */
-  width: 100% !important;
-}
-
-/* 틀(wrapper)을 넓게 */
-.progress-wrapper {
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-/* 텍스트가 폭을 가로막지 않게 줄 정렬 */
-.result-row {
-  width: 100%;
-  justify-content: space-between;
-}
-
-.result-row span:first-child {
-  flex-shrink: 0; /* 이름 텍스트 영역 줄어들지 않게 */
-}
-
-.progress-wrapper {
-  flex-grow: 1;
-}
-
-/* ① progress-row: 라벨 + 막대 + 퍼센트 정렬 */
+/* 한 줄: 라벨 + 막대바 + 퍼센트 */
 .progress-row {
   display: flex;
   align-items: center;
   width: 100%;
-  gap: 10px;
+  gap: 12px;
 }
 
-/* ② 라벨은 고정폭 */
+/* 왼쪽 라벨 */
 .progress-label {
-  width: 90px;       /* 길이 보정: 너무 길지도 짧지도 않게 */
+  width: 100px;      /* 적당한 고정폭 */
   flex-shrink: 0;
   font-weight: 600;
+  font-size: 14px;
+  color: #333;
 }
 
-/* ③ 퍼센트 글자 */
-.progress-percent {
-  width: 60px;       /* 퍼센트가 폭을 잡아먹지 않도록 */
-  text-align: right;
-  flex-shrink: 0;
-}
-
-/* ④ 막대 틀: 남은 공간 전체 사용 */
+/* 막대바 틀 */
 .progress-wrapper {
-  flex: 1;           /* 라벨/퍼센트 제외한 나머지 공간 전부 차지 */
+  flex: 1;           /* 남은 공간 전부 차지 */
   height: 14px;
-  background: #e9eef5;
+  background: #e5e8ef;
   border-radius: 10px;
   overflow: hidden;
 }
 
-/* ⑤ 실제 막대: JS가 width="XX%"로 덮어씀 */
+/* 실제 막대 (JS에서 width=%로 변경됨) */
 .progress-bar {
   height: 100%;
+  width: 0;          /* 초기 0 → JS가 width=XX%로 변경 */
   background: linear-gradient(90deg, #00d4ff, #0096ff);
   border-radius: 10px;
-  width: 0;          /* 초기 0 → JS가 XX%로 변경 */
   transition: width 1.2s cubic-bezier(.42,0,.58,1);
+}
+
+/* 퍼센트 숫자 */
+.progress-percent {
+  width: 50px;
+  flex-shrink: 0;
+  text-align: right;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
 }
 
