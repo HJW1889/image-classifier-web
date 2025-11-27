@@ -603,6 +603,7 @@ h1 {
   margin-bottom: 50px;
 }
 
+
 /* 카드 */
 .intro-card {
   background: #fff;
@@ -643,7 +644,7 @@ h1 {
 
 /* 핵심 기능 */
 .features-grid {
-  display: grid;
+  display: flex;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 20px;
   margin-bottom: 50px;
@@ -656,6 +657,9 @@ h1 {
   text-align: center;
   box-shadow: 0 5px 15px rgba(0,0,0,0.05);
   transition: 0.2s ease;
+  font-size: 40px;
+  margin-bottom: 12px;
+  color: #5C7CFA;
 }
 
 /* 팀 */
