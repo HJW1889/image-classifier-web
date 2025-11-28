@@ -283,7 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 1) 방명록 목록 불러오기
   async function loadGuestbook() {
     feed.innerHTML = "";
-    const res = await fetch(API_guestbook);   // ✔ 수정 완료
+    const res = await fetch(API_guestbook);   // ✔ 수정됨
     const list = await res.json();
 
     list.forEach(item => {
@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    await fetch(API_guestbook, {              // ✔ 수정 완료
+    await fetch(API_guestbook, {        // ✔ 수정됨
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, contactInfo, message })
@@ -329,7 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const id = e.target.dataset.id;
 
     if (confirm("정말 삭제할까요?")) {
-      await fetch(`${API_guestbook}/${id}`, {  // ✔ 수정 완료
+      await fetch(`${API_guestbook}/${id}`, {   // ✔ 수정됨
         method: "DELETE"
       });
       loadGuestbook();
@@ -339,4 +339,5 @@ document.addEventListener("DOMContentLoaded", () => {
   // 4) 초기 로드
   loadGuestbook();
 });
+
 
