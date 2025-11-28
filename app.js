@@ -129,10 +129,10 @@ $btn.addEventListener("click", async () => {
         container.style.opacity = 1;
         container.style.transform = "translateY(0)";
     
-        document.querySelectorAll(".progress-bar").forEach((bar) => {
-          const percent = bar.dataset.percent;
-          bar.style.transition = "width 1.2s cubic-bezier(.42,0,.58,1)";
-          bar.style.width = percent + "%";
+        document.querySelectorAll(".progress-bar").forEach((container) => {
+          const percent = container.dataset.percent;
+          container.style.transition = "width 1.2s cubic-bezier(.42,0,.58,1)";
+          container.style.width = percent + "%";
         });
       }, 100);
   
