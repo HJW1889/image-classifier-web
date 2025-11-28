@@ -270,32 +270,81 @@ setInterval(async () => {
 }, 5 * 60 * 1000); // 5분 = 300,000 ms
 
 
-// 문의 폼 제출 기능만 별도
-document.getElementById("contactForm").addEventListener("submit", function (e) {
-  e.preventDefault(); // 새로고침 방지
+// -----------------------------
+// ⭐ 방명록 서버 API 연결 버전 ⭐
+// -----------------------------
 
-  const name = document.getElementById("name").value.trim();
-  const contact = document.getElementById("contactInfo").value.trim();
-  const message = document.getElementById("message").value.trim();
+// 백엔드 주소
+const API_guestbook = "https://backend-6i2t.onrender.com/guestbook";
+// 예: const API = "https://backend-6i2t.onrender.com/guestbook";
 
-  if (!name || !message) {
-    alert("이름과 메모는 필수입니다!");
-    return;
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("contactForm");
+  const feed = document.getElementById("guestbookFeed");
+
+  // -------------------------
+  // 1) 방명록 목록 불러오기
+  // -------------------------
+  async function loadGuestbook() {
+    feed.innerHTML = "";
+    const res = await fetch(API);
+    const list = await res.json();
+
+    list.forEach(item => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <strong>${item.name}</strong>
+        <div class="date">${item.created_at}</div>
+        <p>${item.message}</p>
+        ${item.contactInfo ? `<small>연락처: ${item.contactInfo}</small>` : ""}
+        <button class="deleteBtn" data-id="${item.id}">삭제</button>
+      `;
+      feed.appendChild(li);
+    });
   }
 
-  // 방명록 항목 생성
-  const li = document.createElement("li");
-  li.innerHTML = `
-      <strong>${name}</strong>
-      <div class="date">${new Date().toLocaleString()}</div>
-      <p>${message}</p>
-      ${contact ? `<small>연락처: ${contact}</small>` : ""}
-  `;
+  // -------------------------
+  // 2) 방명록 작성
+  // -------------------------
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault(); // 새로고침 방지
 
-  // 피드에 추가
-  document.getElementById("guestbookFeed").prepend(li);
+    const name = document.getElementById("name").value.trim();
+    const contactInfo = document.getElementById("contactInfo").value.trim();
+    const message = document.getElementById("message").value.trim();
 
-  // 폼 초기화
-  document.getElementById("contactForm").reset();
+    if (!name || !message) {
+      alert("이름과 메모는 필수입니다!");
+      return;
+    }
+
+    await fetch(API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, contactInfo, message })
+    });
+
+    form.reset();
+    loadGuestbook();
+  });
+
+  // -------------------------
+  // 3) 방명록 삭제
+  // -------------------------
+  feed.addEventListener("click", async (e) => {
+    if (!e.target.classList.contains("deleteBtn")) return;
+
+    const id = e.target.dataset.id;
+
+    if (confirm("정말 삭제할까요?")) {
+      await fetch(`${API}/${id}`, { method: "DELETE" });
+      loadGuestbook();
+    }
+  });
+
+  // -------------------------
+  // 4) 초기 로드 시 전체 불러오기
+  // -------------------------
+  loadGuestbook();
 });
 
