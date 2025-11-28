@@ -24,7 +24,7 @@ const $toggleWrapper = document.querySelector(".toggle-switch"); // 스위치 wr
 const $container = document.getElementById("progressBarsContainer");
 //const $resultStatus = document.getElementById("resultStatus");
 let cropper;
-let $cropBtn = document.createElement("button");
+let $cropBtn = document.createElement("crop-btn");
 
 const $mainResult = document.getElementById("mainResult");
 const $comparePanel = document.getElementById("comparePanel");
