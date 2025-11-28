@@ -785,6 +785,42 @@ h1 {
 }
 
 
+/* ===============================
+   방명록 삭제 버튼 디자인
+   =============================== */
+
+#contact.contact-section #guestbookFeed .deleteBtn {
+  align-self: flex-end !important;
+  background: #e8ecff !important;         /* 은은한 파스텔 블루 */
+  color: #5660ff !important;               /* 선명한 메인 포인트 */
+  border: none !important;
+  padding: 6px 12px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  transition: 0.22s ease !important;
+  margin-top: 6px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+
+/* hover 시 살짝 떠오르고 색 강조 */
+#contact.contact-section #guestbookFeed .deleteBtn:hover {
+  background: #d8ddff !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(100, 110, 255, 0.18) !important;
+}
+
+/* active 시 클릭감 */
+#contact.contact-section #guestbookFeed .deleteBtn:active {
+  transform: translateY(0px) !important;
+  box-shadow: none !important;
+}
+
+
 /****************************************************
    #home 전체 UI 대대적 개편
 ****************************************************/
