@@ -86,48 +86,46 @@ function showPreview(fileOrBlob) {
     $resultText.innerHTML = "";
     document.getElementById("shopTitle").style.display = "none"; // 제목 숨기기
     
-  // Cropper 버튼 초기화
-    if (!$cropBtn.parentNode) {
-      $cropBtn.textContent = "이미지 자르기";
-      $cropBtn.className = "predict-btn";
-      $previewWrapper.appendChild($cropBtn);
-
-      $cropBtn.addEventListener("click", () => {
-        // 기존 Cropper 제거
-        if (cropper) cropper.destroy();
-
-        // Cropper 초기화: 사용자가 드래그하여 선택
-        cropper = new Cropper($preview, {
-          viewMode: 1,
-          autoCrop: false,  // 자동 사각형 제거
-          background: false,
-          modal: true,
-          movable: true,
-          zoomable: true,
-          rotatable: false,
-          scalable: false
-        });
-
-        // 확인 버튼
-        let $confirmBtn = document.createElement("button");
-        $confirmBtn.textContent = "확인";
-        $confirmBtn.className = "predict-btn";
-        $previewWrapper.appendChild($confirmBtn);
-        $confirmBtn.addEventListener("click", () => {
-          if (!cropper) return;
-          cropper.getCroppedCanvas().toBlob(blob => {
-            const reader2 = new FileReader();
-            reader2.onload = e2 => {
-              $preview.src = e2.target.result;
-              $file._cameraBlob = blob;
-              cropper.destroy();
-              cropper = null;
-              $confirmBtn.remove();
-            };
-            reader2.readAsDataURL(blob);
-          }, "image/png");
-        });
+    // Cropper 버튼 초기화
+    $cropBtn.style.display = "inline-block";   // 보이게
+    $cropBtn.onclick = null;                   // 이전 이벤트 제거
+    
+    $cropBtn.addEventListener("click", () => {
+      if (cropper) cropper.destroy();
+    
+      cropper = new Cropper($preview, {
+        viewMode: 1,
+        autoCrop: false,
+        background: false,
+        modal: true,
+        movable: true,
+        zoomable: true,
+        rotatable: false,
+        scalable: false
       });
+    
+      // 확인 버튼
+      let $confirmBtn = document.createElement("button");
+      $confirmBtn.textContent = "확인";
+      $confirmBtn.className = "predict-btn";
+      $previewWrapper.appendChild($confirmBtn);
+    
+      $confirmBtn.addEventListener("click", () => {
+        if (!cropper) return;
+        cropper.getCroppedCanvas().toBlob(blob => {
+          const reader2 = new FileReader();
+          reader2.onload = e2 => {
+            $preview.src = e2.target.result;
+            $file._cameraBlob = blob;
+            cropper.destroy();
+            cropper = null;
+            $confirmBtn.remove();
+          };
+          reader2.readAsDataURL(blob);
+        }, "image/png");
+      });
+    });
+
     }
     $cropBtn.style.display = "inline-block";
   };
