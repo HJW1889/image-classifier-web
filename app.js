@@ -1,5 +1,3 @@
-내꺼 기존
-
 const API = "https://backend-6i2t.onrender.com/predict";
 
 const $dropArea = document.getElementById("drop-area");
