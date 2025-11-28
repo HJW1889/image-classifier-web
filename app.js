@@ -15,6 +15,27 @@ const $captureBtn = document.createElement("div");
 const $video = document.createElement("video");
 const $canvas = document.createElement("canvas");
 const $shopLinks = document.getElementById("shopLinks"); // 링크 요소 가져오기
+const $status = document.getElementById("status"); //
+const $btnAddCompare = document.getElementById("btn-add-compare"); //비교 버튼
+const $btnCompare = document.getElementById("btn-compare");
+const $toggle = document.getElementById("modeToggle");      // 실제 체크박스
+const $tooltip = document.getElementById("tooltip");        // 툴팁
+const $toggleWrapper = document.querySelector(".toggle-switch"); // 스위치 wrapper
+const $container = document.getElementById("progressBarsContainer");
+//const $resultStatus = document.getElementById("resultStatus");
+let cropper;
+let $cropBtn = document.createElement("button");
+
+const $mainResult = document.getElementById("mainResult");
+const $comparePanel = document.getElementById("comparePanel");
+const $compareSlots = document.getElementById("compareSlots");
+const $btnCompareStart = document.getElementById("btnCompareStart");
+const $btnNew = document.getElementById("btnNew");
+
+$btnCompareStart.style.display = "none";
+$btnNew.style.display = "none";
+
+const MAX_COMPARE = 4;
 
 // 드래그 & 드롭
 ["dragenter", "dragover"].forEach(eventName => {
@@ -60,7 +81,55 @@ function showPreview(fileOrBlob) {
     $result.textContent = "";
     $resultText.innerHTML = "";
     $shopLinks.style.display = "none"; // 새로운 이미지 올릴 때 링크 숨기기
+    $container.innerHTML = "";
+    $status.innerText = "";
+    $resultText.innerHTML = "";
     document.getElementById("shopTitle").style.display = "none"; // 제목 숨기기
+    
+  // Cropper 버튼 초기화
+    if (!$cropBtn.parentNode) {
+      $cropBtn.textContent = "이미지 자르기";
+      $cropBtn.className = "predict-btn";
+      $previewWrapper.appendChild($cropBtn);
+
+      $cropBtn.addEventListener("click", () => {
+        // 기존 Cropper 제거
+        if (cropper) cropper.destroy();
+
+        // Cropper 초기화: 사용자가 드래그하여 선택
+        cropper = new Cropper($preview, {
+          viewMode: 1,
+          autoCrop: false,  // 자동 사각형 제거
+          background: false,
+          modal: true,
+          movable: true,
+          zoomable: true,
+          rotatable: false,
+          scalable: false
+        });
+
+        // 확인 버튼
+        let $confirmBtn = document.createElement("button");
+        $confirmBtn.textContent = "확인";
+        $confirmBtn.className = "predict-btn";
+        $previewWrapper.appendChild($confirmBtn);
+        $confirmBtn.addEventListener("click", () => {
+          if (!cropper) return;
+          cropper.getCroppedCanvas().toBlob(blob => {
+            const reader2 = new FileReader();
+            reader2.onload = e2 => {
+              $preview.src = e2.target.result;
+              $file._cameraBlob = blob;
+              cropper.destroy();
+              cropper = null;
+              $confirmBtn.remove();
+            };
+            reader2.readAsDataURL(blob);
+          }, "image/png");
+        });
+      });
+    }
+    $cropBtn.style.display = "inline-block";
   };
   reader.readAsDataURL(fileOrBlob);
 }
@@ -72,6 +141,16 @@ function closeOverlay() {
   document.getElementById('accessibilityOverlay').style.display = 'none';
 }
 
+//서버 연결
+async function checkServerReady() {
+  try {
+    const res = await fetch("/server_ready");
+    const json = await res.json();
+    return json.ready;
+  } catch {
+    return false;
+  }
+}
 
 // 서버 업로드 및 예측
 $btn.addEventListener("click", async () => {
@@ -85,13 +164,18 @@ $btn.addEventListener("click", async () => {
 
   const fd = new FormData();
   fd.append("file", uploadFile);
-
   $loader.style.display = "inline-block";
   $scanLine.style.display = "block";
   $result.textContent = "";
   $resultText.innerHTML = "";
+  $container.innerHTML = "";
+  $status.innerText = "";
   $shopLinks.style.display = "none"; // 로딩 중엔 링크 숨김
+  
   document.getElementById("shopTitle").style.display = "none"; // 제목 숨기기
+
+  // 슬라이드 interval id 저장
+  if (!window.__fabric_slide_interval_id) window.__fabric_slide_interval_id = null;
 
   try {
     const res = await fetch(API, { method: "POST", body: fd });
