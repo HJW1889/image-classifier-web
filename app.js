@@ -274,20 +274,16 @@ setInterval(async () => {
 // ⭐ 방명록 서버 API 연결 버전 ⭐
 // -----------------------------
 
-// 백엔드 주소
 const API_guestbook = "https://backend-6i2t.onrender.com/guestbook";
-// 예: const API = "https://backend-6i2t.onrender.com/guestbook";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("contactForm");
   const feed = document.getElementById("guestbookFeed");
 
-  // -------------------------
   // 1) 방명록 목록 불러오기
-  // -------------------------
   async function loadGuestbook() {
     feed.innerHTML = "";
-    const res = await fetch(API);
+    const res = await fetch(API_guestbook);   // ✔ 수정 완료
     const list = await res.json();
 
     list.forEach(item => {
@@ -303,11 +299,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // -------------------------
   // 2) 방명록 작성
-  // -------------------------
   form.addEventListener("submit", async (e) => {
-    e.preventDefault(); // 새로고침 방지
+    e.preventDefault();
 
     const name = document.getElementById("name").value.trim();
     const contactInfo = document.getElementById("contactInfo").value.trim();
@@ -318,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    await fetch(API, {
+    await fetch(API_guestbook, {              // ✔ 수정 완료
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, contactInfo, message })
@@ -328,23 +322,21 @@ document.addEventListener("DOMContentLoaded", () => {
     loadGuestbook();
   });
 
-  // -------------------------
   // 3) 방명록 삭제
-  // -------------------------
   feed.addEventListener("click", async (e) => {
     if (!e.target.classList.contains("deleteBtn")) return;
 
     const id = e.target.dataset.id;
 
     if (confirm("정말 삭제할까요?")) {
-      await fetch(`${API}/${id}`, { method: "DELETE" });
+      await fetch(`${API_guestbook}/${id}`, {  // ✔ 수정 완료
+        method: "DELETE"
+      });
       loadGuestbook();
     }
   });
 
-  // -------------------------
-  // 4) 초기 로드 시 전체 불러오기
-  // -------------------------
+  // 4) 초기 로드
   loadGuestbook();
 });
 
