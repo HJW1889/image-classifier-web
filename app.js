@@ -82,6 +82,11 @@ $btn.addEventListener("click", async () => {
 
   document.querySelector(".result-box")?.classList.remove("active");
   document.querySelector(".action-buttons").style.display = "flex";
+  document.querySelector(".preview-wrapper").classList.add("has-image");
+  document.querySelector("#crop-btn").style.display = "none";
+  document.querySelector(".action-buttons").style.display = "flex";
+
+
 
   const fd = new FormData();
   fd.append("file", uploadFile);
