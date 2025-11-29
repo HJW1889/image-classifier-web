@@ -54,11 +54,6 @@
           <div class="preview-wrapper">
             <img id="preview">
             <div class="scan-line" id="scan-line"></div>
-            <div class="action-buttons">
-              <button id="crop-btn" class="predict-btn">이미지 자르기</button>
-              <button id="btnCompareStart" class="btn">비교해보기</button>
-              <button id="btnNew" class="btn">새로 분석하기</button>
-            </div>
           </div>
         
           <div class="result-box">
@@ -69,6 +64,12 @@
           </div>
         </div>
 
+        <!-- 🔥 버튼들은 preview-wrapper 바깥으로! -->
+        <div class="action-buttons">
+          <button id="crop-btn" class="predict-btn">이미지 자르기</button>
+          <button id="btnCompareStart" class="btn">비교해보기</button>
+          <button id="btnNew" class="btn">새로 분석하기</button>
+        </div>
         <!-- 결과 출력 영역 -->
         <!-- <div id="mainResult" class="main-result"></div>-->
 
