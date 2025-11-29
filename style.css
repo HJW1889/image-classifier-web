@@ -1269,3 +1269,55 @@ input:checked + .slider:before {
 .predict-btn:hover {
   background: #3e55e6;
 }
+
+/* ============================
+   Feedback (사용자 정정) UI
+   ============================ */
+
+/* 틀렸어요 버튼 */
+.feedback-wrong-btn {
+  background: #ffb6b6;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: 0.2s;
+}
+
+.feedback-wrong-btn:hover {
+  background: #ff9d9d;
+}
+
+/* 정정 폼 영역 */
+.correction-form {
+  margin-top: 12px;
+  padding: 10px;
+  background: #f4f4ff;
+  border-radius: 8px;
+  border: 1px solid #dcdcff;
+}
+
+/* 라벨 선택 박스 */
+.correct-label-select {
+  padding: 6px 10px;
+  border: 1px solid #ccccff;
+  border-radius: 6px;
+  background: white;
+}
+
+/* 제출 버튼 */
+.feedback-submit-btn {
+  margin-left: 8px;
+  padding: 8px 14px;
+  background: #a4c2ff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.feedback-submit-btn:hover {
+  background: #87adff;
+}
