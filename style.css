@@ -131,20 +131,23 @@ nav a:hover { color: royalblue; }
   object-fit: cover;
 }
 
+.preview-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;   /* 미리보기와 버튼 사이 간격 */
+}
+
 /* action-buttons → preview 아래 */
 .action-buttons {
-  display: none;
-  margin-top: 12px;
-  width: 380px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
   opacity: 0;
-  transition: .35s;
+  transition: .3s;
+  display: none;
 }
 
 .action-buttons.show {
   opacity: 1;
+  display: flex;
 }
 
 /* 미니멀 버튼 */
@@ -316,11 +319,17 @@ nav a:hover { color: royalblue; }
   background: rgba(0,0,0,0.12);
 }
 
+.feedback-wrapper {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+
 /* ⬇ 말풍선 (오른쪽 바깥으로 튀어나오는 형태) */
 .correction-form {
   position: absolute;
-  right: -10px;
-  bottom: 48px;
+  right: 0px;
+  bottom: 38px;
 
   min-width: 170px;
 
@@ -333,7 +342,8 @@ nav a:hover { color: royalblue; }
   display: none;
   flex-direction: column;
   gap: 10px;
-
+  
+  transform-origin: bottom right;
   animation: bubbleIn .25s ease forwards;
 }
 
