@@ -299,6 +299,11 @@ nav a:hover { color: royalblue; }
 
 /* 작은 버튼 */
 .feedback-wrong-btn {
+  writing-mode: horizontal-tb !important;
+  rotate: 0deg !important;
+  transform: none !important;
+  display: inline-block;
+  
   position: absolute;
   right: 12px;
   bottom: 12px;
