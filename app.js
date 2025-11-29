@@ -81,6 +81,7 @@ $btn.addEventListener("click", async () => {
   }
 
   document.querySelector(".result-box")?.classList.remove("active");
+  document.querySelector(".action-buttons").style.display = "flex";
 
   const fd = new FormData();
   fd.append("file", uploadFile);
