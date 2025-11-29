@@ -100,7 +100,7 @@ nav a:hover { color: royalblue; }
 }
 
 /* ===============================
-   미리보기
+   미리보기 / 레이아웃 복구
 =============================== */
 
 .analysis-row {
@@ -111,6 +111,7 @@ nav a:hover { color: royalblue; }
   flex-wrap: wrap;
 }
 
+/* 미리보기 */
 .preview-wrapper {
   width: 380px;
   height: 380px;
@@ -130,74 +131,62 @@ nav a:hover { color: royalblue; }
   object-fit: cover;
 }
 
-/* 가위 아이콘 crop 버튼 */
-.crop-overlay-btn {
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
-
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-
-  background: rgba(0, 0, 0, 0.55);
-  border: none;
-
+/* action-buttons → preview 아래 */
+.action-buttons {
+  display: none;
+  margin-top: 12px;
+  width: 380px;
   display: flex;
   justify-content: center;
-  align-items: center;
-
-  cursor: pointer;
+  gap: 10px;
   opacity: 0;
-  pointer-events: none;
-  transition: opacity .25s;
+  transition: .35s;
 }
 
-/* 업로드 후 등장 */
-.preview-wrapper.has-image .crop-overlay-btn {
+.action-buttons.show {
   opacity: 1;
-  pointer-events: auto;
 }
 
-.crop-overlay-btn:hover {
-  background: rgba(0, 0, 0, 0.75);
+/* 미니멀 버튼 */
+.action-buttons .btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #ccc;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  transition: .2s;
+}
+.action-buttons .btn:hover {
+  background: #f0f0f0;
 }
 
 /* ===============================
-   결과 박스
+   result-box height rollback
 =============================== */
 
 .result-box {
   display: none;
   opacity: 0;
   pointer-events: none;
-  transform: translateX(20px);
-  transition: .35s;
 
   background: #f9faff;
-  padding: 22px 26px;
+  padding: 25px 28px;
   border-radius: 16px;
   border: 1px solid rgba(150,160,255,0.25);
   box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-  min-width: 260px;
-  max-width: 380px;
-  flex: 1;
+
+  width: 360px;
+  min-height: 360px;  /* ← 롤백된 높이 */
   position: relative;
-  padding-bottom: 46px;
+  transition: .35s;
 }
 
 .result-box.active {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  display: block;
   opacity: 1;
   pointer-events: auto;
-  transform: translateX(0);
-}
-
-#result, #resultText {
-  margin: 0;
-  padding: 0;
 }
 
 /* ===============================
@@ -248,35 +237,64 @@ nav a:hover { color: royalblue; }
 }
 
 /* ===============================
-   미니멀 버튼 (비교/새로 분석)
+   예측하기 버튼 (푸터)
 =============================== */
 
-.action-buttons {
-  display: none;
-  width: 100%;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 10px;
+.predict-btn {
+  padding: 14px 30px;
+  background: #5b7bff;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: .25s;
 }
 
-.action-buttons .btn {
-  padding: 9px 18px;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  color: #333;
-  font-size: 14px;
-  cursor: pointer;
-  transition: .2s;
-}
-.action-buttons .btn:hover {
-  background: #f3f3f3;
+.predict-btn:hover {
+  background: #3e55e6;
 }
 
 /* ===============================
-   피드백 버튼 (은은한 회색)
+   Crop 버튼 (오버레이)
 =============================== */
 
+.crop-overlay-btn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.55);
+  border: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: .25s;
+}
+
+.preview-wrapper.has-image .crop-overlay-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.crop-overlay-btn:hover {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+/* ===============================
+   예측이 틀렸어요 + 말풍선
+=============================== */
+
+/* 작은 버튼 */
 .feedback-wrong-btn {
   position: absolute;
   right: 12px;
@@ -285,56 +303,78 @@ nav a:hover { color: royalblue; }
   padding: 6px 10px;
   font-size: 12px;
 
-  background: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.12);
   color: #333;
 
   border-radius: 6px;
   cursor: pointer;
   transition: .2s;
 }
+
 .feedback-wrong-btn:hover {
   background: rgba(0,0,0,0.12);
 }
 
-/* 정정 폼 */
+/* ⬇ 말풍선 (오른쪽 바깥으로 튀어나오는 형태) */
 .correction-form {
-  margin-top: 12px;
+  position: absolute;
+  right: -10px;
+  bottom: 48px;
+
+  min-width: 170px;
+
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #d4d8ff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+
   padding: 12px;
   display: none;
-
-  background: #f6f7ff;
-  border-radius: 12px;
-  border: 1px solid #d8dcff;
-
-  display: flex;
+  flex-direction: column;
   gap: 10px;
-  flex-wrap: wrap;
-  align-items: center;
 
-  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  animation: bubbleIn .25s ease forwards;
 }
 
-.correction-form label,
+@keyframes bubbleIn {
+  0% { opacity: 0; transform: translateY(8px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* 말풍선 꼬리 */
+.correction-form::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  right: 14px;
+
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border-left: 1px solid #d4d8ff;
+  border-bottom: 1px solid #d4d8ff;
+  transform: rotate(45deg);
+}
+
+/* 옵션 폼 */
 .correct-label-select {
-  background: #fff;
-  border: 1px solid #ccd2ff;
+  width: 100%;
   padding: 6px 10px;
-  border-radius: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccd2ff;
 }
 
 .feedback-submit-btn {
-  padding: 7px 14px;
+  padding: 8px 12px;
+  border-radius: 6px;
   border: none;
-  background: #bcd0ff;
-  border-radius: 10px;
+  background: #a9bdff;
   cursor: pointer;
-  transition: .2s;
 }
 .feedback-submit-btn:hover {
-  background: #a7c1ff;
+  background: #96afff;
 }
-
 
 
 /* 로딩 애니메이션 */
