@@ -1173,7 +1173,9 @@ input:checked + .slider:before {
   border-radius: 16px;
   border: 1px solid rgba(150,160,255,0.25);
   box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  min-width: 260px;
   max-width: 380px;
+  flex: 1;
 }
 
 /* 기존 result, resultText를 박스 내부에 자연스럽게 */
@@ -1275,6 +1277,7 @@ input:checked + .slider:before {
 ****************************************************/
 .result-box {
   position: relative;
+  padding-bottom: 40px; /* 🔥 버튼 들어갈 공간 확보 */
 }
 
 /* 작고 은은하게 */
@@ -1290,7 +1293,6 @@ input:checked + .slider:before {
   padding: 6px 10px;
   border-radius: 6px;
   font-size: 12px;
-
   cursor: pointer;
   transition: 0.2s;
 }
