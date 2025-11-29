@@ -229,7 +229,6 @@ nav a:hover { color: royalblue; }
   display: none;    /* 결과 나오기 전에는 숨김 */
   margin-top: 14px;
   width: 100%;
-  display: flex;
   justify-content: center;
   gap: 12px;
 }
@@ -275,17 +274,6 @@ nav a:hover { color: royalblue; }
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-
-/* 미리보기 스캔 */
-.preview-wrapper {
-  position: relative;      /* scan-line 덮을 수 있게 */
-  display: flex;          /* flex로 고정 */
-  width: auto;          /* auto → 이미지 폭 맞춤 */
-  height: auto;
-  justify-content: center; /* 가로 중앙 정렬 */
-  align-items: center;     /* 세로 중앙 정렬 */
-  overflow: hidden;       /* 스캔 라인 및 이미지가 박스 밖으로 안 나가게 */
 }
 
 .scan-line {
@@ -361,19 +349,31 @@ nav a:hover { color: royalblue; }
   flex-shrink: 0;         /* 컨테이너 줄어들어도 푸터 안쪽 유지 */
 }
 
-/* 이미지 잘라내기 */
-.preview-wrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;  /* ← 세로 정렬 */
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+/* 이미지 자르기 버튼: 미리보기 위에 떠 있는 오버레이 */
+#crop-btn {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  opacity: 0;              /* 기본은 숨김 느낌 */
+  pointer-events: none;
+  transition: opacity .25s;
 }
 
-#crop-btn {
-  margin-top: 10px;
+/* 미리보기 이미지가 들어왔을 때 보여주고 싶으면 JS에서 이 클래스만 붙이면 됨 */
+.preview-wrapper.has-image #crop-btn {
+  opacity: 1;
+  pointer-events: auto;
 }
+
 
 .crop-overlay-btn {
   position: absolute;
