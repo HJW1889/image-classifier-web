@@ -72,7 +72,33 @@
           <button id="btnCompareStart" class="btn">비교해보기</button>
           <button id="btnNew" class="btn">새로 분석하기</button>
         </div>
-       
+
+                <!-- 🔽 사용자 피드백 UI 추가 -->
+        <div id="feedbackSection" style="display:none;">
+          <button id="wrongBtn" class="feedback-wrong-btn">예측이 틀렸어요</button>
+        
+          <div id="correctionForm" class="correction-form" style="display:none;">
+            <label>정답 라벨 선택:</label>
+            <select id="correctLabel" class="correct-label-select">
+              <option value="COTTON">면</option>
+              <option value="DENIM">데님</option>
+              <option value="FUR">모피</option>
+              <option value="PUFFER">패딩</option>              
+              <option value="LINEN">린넨</option>
+              <option value="NYLON">나일론</option>
+              <option value="ACRYLIC">아크릴</option>              
+              <option value="POLYESTER">폴리에스터</option>
+              <option value="RAYON">레이온</option>
+              <option value="SILK">실크</option>
+              <option value="SPANDEX">스판덱스</option>
+              <option value="VELVET">벨벳</option>
+              <option value="WOOL">울</option>
+              <!-- 필요하면 나중에 클래스 더 추가 가능 -->
+            </select>
+            <button id="submitCorrection" class="feedback-submit-btn">제출하기</button>
+          </div>
+        </div>
+     
           
         <!-- 쇼핑몰 연동 -->
         <h3 id="shopTitle" style="display:none; text-align:left; margin-bottom:10px;">🛍 AI 추천</h3>
