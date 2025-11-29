@@ -80,13 +80,18 @@ $btn.addEventListener("click", async () => {
     return;
   }
 
+
   document.querySelector(".result-box")?.classList.remove("active");
+  document.querySelector(".action-buttons").classList.add("show");
   document.querySelector(".action-buttons").style.display = "flex";
   document.querySelector(".preview-wrapper").classList.add("has-image");
   document.querySelector("#crop-btn").style.display = "none";
   document.querySelector(".action-buttons").style.display = "flex";
-
-
+  
+  wrongBtn.onclick = () => {
+    correctionForm.style.display =
+      correctionForm.style.display === "flex" ? "none" : "flex";
+  };
 
   const fd = new FormData();
   fd.append("file", uploadFile);
