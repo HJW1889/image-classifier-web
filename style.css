@@ -226,12 +226,14 @@ nav a:hover { color: royalblue; }
 
 
 .action-buttons {
-  display: none;        /* 기본 상태 */
+  display: none;    /* 결과 나오기 전에는 숨김 */
+  margin-top: 14px;
   width: 100%;
+  display: flex;
   justify-content: center;
   gap: 12px;
-  margin-top: -5px;
 }
+
 
 .action-buttons .btn {
   padding: 10px 20px;
@@ -372,6 +374,35 @@ nav a:hover { color: royalblue; }
 #crop-btn {
   margin-top: 10px;
 }
+
+.crop-overlay-btn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .25s;
+}
+
+/* 미리보기 있을 때 보여줌 */
+.preview-wrapper.has-image .crop-overlay-btn {
+  opacity: 1;
+}
+
+/* 분석하면 사라지기 */
+.result-box.active ~ .action-buttons .crop-overlay-btn {
+  display: none !important;
+}
+
 
 /* --- SSE 상태 표시 전용 --- */
 #status {
