@@ -163,6 +163,50 @@ nav a:hover { color: royalblue; }
   background: none;
 }
 
+#progressBarsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-label {
+  width: 100px;
+  flex-shrink: 0;
+  font-weight: 600;
+  color: #333;
+}
+
+.progress-wrapper {
+  flex: 1;
+  height: 14px;
+  background: #e6e9f3;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #7aa3ff, #4f6dff);
+  border-radius: 10px;
+  transition: width 1.2s cubic-bezier(.42,0,.58,1);
+}
+
+.progress-percent {
+  width: 50px;
+  text-align: right;
+  color: #333;
+  font-weight: 600;
+}
+
+
 /* 사용자 피드백 버튼 */
 .feedback-wrong-btn {
   position: absolute;
