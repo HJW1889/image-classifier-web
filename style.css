@@ -481,21 +481,36 @@ input:checked + .slider:before {
   margin-top: 10px;
 }
 
+/****************************************************
+  🔵 비교 / 새로 분석 버튼 (미리보기 아래)
+****************************************************/
 .action-buttons {
-  display: none;
-  margin-top: 10px;
+  display: none; /* 예측 전에는 숨김 */
+  margin: 0 auto;
+  width: 100%;
   display: flex;
-  gap: 10px;
+  justify-content: center;
+  gap: 12px;
+  margin-top: -10px; 
 }
 
-.btn {
-  padding: 8px 16px;
-  border-radius: 6px;
-  border: none;
+.action-buttons .btn {
+  padding: 12px 22px;
+  border-radius: 10px;
+  background: #e4e9ff;
+  border: 1px solid #c9d2ff;
+  color: #3a4b8b;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  background: #4caf50;
-  color: white;
+  transition: 0.2s;
 }
+
+.action-buttons .btn:hover {
+  background: #d6dfff;
+  border-color: #b8c4ff;
+}
+
 
 .compare-panel { /*큰 컨테이너*/
   width: 100%;
