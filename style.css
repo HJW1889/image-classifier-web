@@ -1298,6 +1298,9 @@ input:checked + .slider:before {
 }
 
 .feedback-wrong-btn:hover {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
   background: rgba(255, 150, 150, 0.35);
 }
 
