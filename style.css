@@ -488,7 +488,6 @@ input:checked + .slider:before {
   display: none; /* 예측 전에는 숨김 */
   margin: 0 auto;
   width: 100%;
-  display: flex;
   justify-content: center;
   gap: 12px;
   margin-top: -10px; 
