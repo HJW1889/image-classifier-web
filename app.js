@@ -153,6 +153,8 @@ $btn.addEventListener("click", async () => {
 
        // 🔥 예측 성공 → 결과 박스 등장
       document.querySelector(".result-box")?.classList.add("active");
+       // 사용자 피드백 섹션
+      document.getElementById("feedbackSection").style.display = "block";
 
       // 🔗 예측된 재질명으로 쇼핑몰 링크 생성
       const fabricName = data.ko_name || data.predicted_fabric;
@@ -338,3 +340,38 @@ document.addEventListener("DOMContentLoaded", () => {
   // 4) 초기 로드
   loadGuestbook();
 });
+
+// "예측이 틀렸어요" 버튼 → 정정 폼 표시
+document.getElementById("wrongBtn").addEventListener("click", () => {
+    document.getElementById("correctionForm").style.display = "block";
+});
+
+// 제출 버튼 → feedback-server로 전송
+document.getElementById("submitCorrection").addEventListener("click", () => {
+    const corrected = document.getElementById("correctLabel").value;
+
+    if (!window.uploadedFile) {
+        alert("이미지가 없습니다. 다시 업로드해주세요.");
+        return;
+    }
+
+    sendFeedback(window.predictedClass, corrected, window.uploadedFile);
+});
+
+// 서버로 전송하는 함수
+async function sendFeedback(predicted, corrected, file) {
+    const formData = new FormData();
+    formData.append("predicted", predicted);
+    formData.append("corrected", corrected);
+    formData.append("image", file);
+
+    const res = await fetch("https://feedback-server-derm.onrender.com/feedback", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await res.json();
+    console.log("Feedback response:", data);
+    alert("정정 정보가 성공적으로 전송되었습니다! 감사합니다 😊");
+}
+
