@@ -306,9 +306,9 @@ nav a:hover { color: royalblue; }
   padding: 6px 10px;
   font-size: 12px;
 
-  background: rgba(0,0,0,0.06);
-  border: 1px solid rgba(0,0,0,0.12);
-  color: #333;
+  background: rgba(150,180,255,0.25);
+  border: 1px solid rgba(120,150,255,0.35);
+  color: #3d4f9e;
 
   border-radius: 6px;
   cursor: pointer;
@@ -316,7 +316,7 @@ nav a:hover { color: royalblue; }
 }
 
 .feedback-wrong-btn:hover {
-  background: rgba(0,0,0,0.12);
+  background: rgba(150,180,255,0.35);
 }
 
 .feedback-wrapper {
@@ -328,8 +328,8 @@ nav a:hover { color: royalblue; }
 /* ⬇ 말풍선 (오른쪽 바깥으로 튀어나오는 형태) */
 .correction-form {
   position: absolute;
-  right: 0px;
-  bottom: 38px;
+  right: -10px;
+  bottom: 40px;
 
   min-width: 170px;
 
