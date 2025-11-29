@@ -1270,54 +1270,84 @@ input:checked + .slider:before {
   background: #3e55e6;
 }
 
-/* ============================
-   Feedback (사용자 정정) UI
-   ============================ */
+/****************************************************
+  🔴 “예측이 틀렸어요” 버튼 (result-box 내부, 작고 은은하게)
+****************************************************/
+.result-box {
+  position: relative;
+}
 
-/* 틀렸어요 버튼 */
+/* 작고 은은하게 */
 .feedback-wrong-btn {
-  background: #ffb6b6;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+
+  background: rgba(255, 180, 180, 0.25);
+  color: #b44;
+  border: 1px solid rgba(255,140,140,0.4);
+
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+
   cursor: pointer;
-  font-size: 14px;
-  margin-top: 10px;
   transition: 0.2s;
 }
 
 .feedback-wrong-btn:hover {
-  background: #ff9d9d;
+  background: rgba(255, 150, 150, 0.35);
 }
 
-/* 정정 폼 영역 */
+
+/****************************************************
+  🗨 정정 폼: 말풍선 느낌 + 가로 정렬
+****************************************************/
 .correction-form {
   margin-top: 12px;
-  padding: 10px;
-  background: #f4f4ff;
-  border-radius: 8px;
-  border: 1px solid #dcdcff;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f6f7ff;
+  border: 1px solid #d8dcff;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
 }
 
-/* 라벨 선택 박스 */
+/* 말풍선 */
+.correction-form label {
+  background: white;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid #e4e7ff;
+  font-size: 13px;
+  color: #566;
+}
+
+/* 선택박스도 말풍선 스타일 */
 .correct-label-select {
   padding: 6px 10px;
-  border: 1px solid #ccccff;
-  border-radius: 6px;
-  background: white;
+  border-radius: 10px;
+  border: 1px solid #ccd2ff;
+  font-size: 13px;
+  background: #ffffff;
 }
 
 /* 제출 버튼 */
 .feedback-submit-btn {
-  margin-left: 8px;
-  padding: 8px 14px;
-  background: #a4c2ff;
+  padding: 7px 14px;
+  border-radius: 10px;
   border: none;
-  border-radius: 6px;
+  background: #bcd0ff;
+  font-size: 13px;
   cursor: pointer;
   transition: 0.2s;
 }
 
 .feedback-submit-btn:hover {
-  background: #87adff;
+  background: #a7c1ff;
 }
