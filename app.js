@@ -264,64 +264,63 @@ if ($cropBtn && $preview) {
 // 초기 상태로 완전 리셋 (공통)
 // =========================
 function goToInitialState() {
-  // 파일 입력 초기화
   if ($file) {
     $file.value = "";
     $file._cameraBlob = null;
   }
 
-  // 프리뷰
   if ($preview) {
     $preview.src = "";
     $preview.style.display = "none";
   }
+
   if ($previewWrapper) {
-    // 비디오/캔버스가 들어가 있을 수도 있으므로 이미지 슬롯으로 복원
     $previewWrapper.innerHTML = "";
     $previewWrapper.appendChild($preview);
     if ($scanLine) $previewWrapper.appendChild($scanLine);
     $previewWrapper.classList.remove("has-image");
   }
 
-  // 결과 관련
   if ($result) $result.innerHTML = "";
   if ($container) $container.innerHTML = "";
   if ($resultText) $resultText.innerHTML = "";
 
-  // 박스/버튼/피드백
   if ($resultBox) $resultBox.classList.remove("active");
   if ($actionButtons) {
     $actionButtons.style.display = "none";
     $actionButtons.classList.remove("show");
   }
+
   if ($feedbackSection) $feedbackSection.style.display = "none";
   if ($correctionForm) $correctionForm.style.display = "none";
 
-  // 쇼핑몰
   if ($shopLinks) {
     $shopLinks.style.display = "none";
     $shopLinks.innerHTML = "";
   }
   if ($shopTitle) $shopTitle.style.display = "none";
 
-  // 상태/버튼
   if ($status) $status.innerText = "";
   if ($cropBtn) $cropBtn.style.display = "none";
+
+  // ⛔ 삭제해야 했던 문제 라인
+  // if ($comparePanel) $comparePanel.style.display = "none";
+
   if ($btnCompareStart) $btnCompareStart.style.display = "none";
   if ($btnNew) $btnNew.style.display = "none";
+
   if ($predictStatus) $predictStatus.innerText = "";
 
-  // 슬라이드 interval 제거
   if (window.__fabric_slide_interval_id) {
     clearInterval(window.__fabric_slide_interval_id);
     window.__fabric_slide_interval_id = null;
   }
 
-  // 업로드/결과 상태도 초기화
   window.uploadedFile = null;
   window.predictedClass = null;
   lastResultSnapshot = null;
 }
+
 
 // ============================
 // 📦 백업(비교) 시스템 (신규 모듈)
