@@ -3,6 +3,7 @@ const API = "https://backend-6i2t.onrender.com/predict";
 const $dropArea = document.getElementById("drop-area");
 const $file = document.getElementById("file");
 const $preview = document.getElementById("preview");
+const $cropBtn = document.getElementById("crop-btn");
 const $btn = document.getElementById("btn");
 const $result = document.getElementById("result");
 const $loader = document.getElementById("loading");
