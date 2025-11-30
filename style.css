@@ -173,7 +173,7 @@ nav a:hover { color: royalblue; }
 /* 설명문은 아래로 */
 #drop-area p {
   margin-top: 20px;
-  color: #5a73ff; /* ⬅ 밝고 선명한 파랑 */
+  color: #6f8bff; /* ⬅ 은은한 파랑 */
   opacity: 0.8;  /* ⬅ 약간 은은하게 */
 }
 
