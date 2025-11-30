@@ -711,7 +711,77 @@ input:checked + .slider:before {
   pointer-events: auto;
 }
 
-/*비교 패널*/
+/* ============================================================
+   📦 백업(비교) 카드 디자인
+============================================================ */
+
+/* 패널 기본 */
+#comparePanel {
+  display: none;
+  padding: 15px;
+  background: #f7f9ff;
+  border-radius: 12px;
+  border: 1px solid #e4e8ff;
+  margin-top: 20px;
+}
+
+/* 아이템 영역 */
+#compareSlots {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* 카드 */
+.compare-slot {
+  width: 230px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+  padding: 12px;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+.compare-slot:hover {
+  transform: translateY(-4px);
+}
+
+/* 이미지 */
+.backup-img img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* 텍스트 영역 */
+.backup-info {
+  font-size: 13px;
+  color: #444;
+}
+
+/* 🔥 개별 삭제 버튼 */
+.delete-backup-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 50%;
+  background: #ff6b6b;
+  color: #fff;
+  font-size: 16px;
+  line-height: 22px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.delete-backup-btn:hover {
+  background: #ff3b3b;
+  transform: scale(1.12);
+}
+
 .compare-grid {
   display: flex;
   flex-wrap: wrap;
