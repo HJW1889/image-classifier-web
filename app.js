@@ -44,11 +44,11 @@ const $btnNew = document.getElementById("btnNew");
 if ($btnCompareStart) $btnCompareStart.style.display = "none";
 if ($btnNew) $btnNew.style.display = "none";
 
-const MAX_COMPARE = 4;
+const MAX_COMPARE = 4;         // 딱 여기 한 번만!
 
-let cropper;                  // Cropper 인스턴스
-let compareHistory = [];      // [{ html, img }]
-let compareMode = false;      // 비교 모드 on/off
+let cropper;                   // Cropper 인스턴스
+let compareHistory = [];       // [{ html, img }]
+let compareActive = false;     // 비교 모드 on/off
 let lastResultSnapshot = null; // 마지막 예측 결과 스냅샷
 
 // 슬라이드 interval id
@@ -308,15 +308,6 @@ function goToInitialState() {
   window.predictedClass = null;
   lastResultSnapshot = null;
 }
-
-/* ============================
-   백업(비교해보기) 기능
-============================= */
-
-// 비교해보기 → 백업
-let compareHistory = [];       // { html, img }
-let compareActive = false;
-const MAX_COMPARE = 4;         // 최대 저장 개수
 
 // -----------------------
 // "백업" 버튼 클릭 시
