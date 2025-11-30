@@ -149,6 +149,12 @@ nav a:hover { color: royalblue; }
   align-items: center;
 }
 
+#drop-area label.upload-btn,
+#drop-area button.camera-btn {
+  display: inline-flex;
+  margin-bottom: 0;
+}
+
 /* 드롭존 내 업로드/촬영 버튼을 가로로 정렬 */
 #drop-area {
   display: flex;
