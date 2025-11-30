@@ -33,6 +33,7 @@ const $toggle = document.getElementById("modeToggle");
 const $tooltip = document.getElementById("tooltip");
 const $toggleWrapper = document.querySelector(".toggle-switch");
 const $container = document.getElementById("progressBarsContainer");
+const $predictStatus = document.getElementById("predictStatusMessage"); // 드롭존 아래 상태 문구
 
 // 비교 관련
 const $comparePanel = document.getElementById("comparePanel");
@@ -131,6 +132,18 @@ function showPreview(fileOrBlob) {
 }
 
 // =========================
+// 접근성 오버레이 (있으면)
+// =========================
+function showOverlay() {
+  const overlay = document.getElementById("accessibilityOverlay");
+  if (overlay) overlay.style.display = "flex";
+}
+function closeOverlay() {
+  const overlay = document.getElementById("accessibilityOverlay");
+  if (overlay) overlay.style.display = "none";
+}
+
+// =========================
 // "예측이 틀렸어요" → 말풍선 토글
 // =========================
 if ($wrongBtn && $correctionForm) {
@@ -189,17 +202,22 @@ if ($toggleWrapper && $tooltip && $toggle) {
 }
 
 // =========================
-// 이미지 크롭 기능 (Cropper.js) — 자동 적용 버전
+// 이미지 크롭 기능 (Cropper.js)
 // =========================
-
 if ($cropBtn) {
+  let confirmBtn = null;
+
   $cropBtn.addEventListener("click", () => {
     if (!$preview || !$preview.src) {
       alert("먼저 이미지를 업로드하세요!");
       return;
     }
 
-    // 크롭 시작
+    if (cropper) {
+      cropper.destroy();
+      cropper = null;
+    }
+
     cropper = new Cropper($preview, {
       viewMode: 1,
       autoCrop: false,
@@ -207,30 +225,37 @@ if ($cropBtn) {
       modal: true,
       movable: true,
       zoomable: true,
+      rotatable: false,
+      scalable: false
+    });
 
-      // 드래그로 박스 선택 끝났을 때 자동 반영
-      cropend() {
-        cropper.getCroppedCanvas().toBlob((blob) => {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            // 미리보기 갱신
-            $preview.src = e.target.result;
+    if (!confirmBtn) {
+      confirmBtn = document.createElement("button");
+      confirmBtn.textContent = "확인";
+      confirmBtn.className = "predict-btn crop-confirm-btn";
+      if ($previewWrapper) $previewWrapper.appendChild(confirmBtn);
 
-            // 업로드 상태 갱신
+      confirmBtn.addEventListener("click", () => {
+        if (!cropper) return;
+        cropper.getCroppedCanvas().toBlob(blob => {
+          const reader2 = new FileReader();
+          reader2.onload = e2 => {
+            $preview.src = e2.target.result;
             $file._cameraBlob = blob;
             window.uploadedFile = blob;
-
-            // 종료
             cropper.destroy();
             cropper = null;
+            if (confirmBtn) {
+              confirmBtn.remove();
+              confirmBtn = null;
+            }
           };
-          reader.readAsDataURL(blob);
+          reader2.readAsDataURL(blob);
         }, "image/png");
-      }
-    });
+      });
+    }
   });
 }
-
 
 // =========================
 // 초기 상태로 완전 리셋 (새로 분석하기)
