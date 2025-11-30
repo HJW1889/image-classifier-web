@@ -309,11 +309,102 @@ function goToInitialState() {
   lastResultSnapshot = null;
 }
 
-// =========================
-// 비교 기능 (신버전 UI에 맞게 재설계)
-// =========================
+/* ============================
+   백업(비교해보기) 기능
+============================= */
+
+// 비교해보기 → 백업
+let compareHistory = [];       // { html, img }
+let compareActive = false;
+const MAX_COMPARE = 4;         // 최대 저장 개수
+
+// -----------------------
+// "백업" 버튼 클릭 시
+// -----------------------
+if ($btnCompareStart) {
+  $btnCompareStart.addEventListener("click", () => {
+    
+    // 1) 현재 결과가 없으면 저장 금지
+    const hasResult =
+      ($result && $result.innerHTML.trim()) ||
+      ($resultText && $resultText.innerHTML.trim());
+
+    if (!hasResult) {
+      showMessage("먼저 예측을 완료해주세요!");
+      return;
+    }
+
+    // 2) 현재 스냅샷 생성
+    const snap = saveCurrentResultSnapshot();
+
+    // 3) 중복 저장 방지
+    const last = compareHistory[compareHistory.length - 1];
+    if (!last || last.html !== snap.html) {
+      compareHistory.push(snap);
+    }
+
+    // 4) 백업 패널 활성화 & 렌더링
+    compareActive = true;
+    if ($comparePanel) $comparePanel.style.display = "block";
+    renderCompareSlots();
+
+    // 5) 최대 개수 안내
+    if (compareHistory.length >= MAX_COMPARE) {
+      showMessage("최대 4개까지 백업됩니다. 더 저장하려면 새로고침을 눌러주세요.");
+      return;
+    }
+
+    // 6) 분석 초기화
+    goToInitialState();
+  });
+}
+
+// -----------------------
+// "새로고침" 버튼 클릭 시
+// -----------------------
+$btnNew.addEventListener("click", () => {
+  compareActive = false;
+  compareHistory = [];
+
+  if ($comparePanel) $comparePanel.style.display = "none";
+
+  renderCompareSlots();
+  goToInitialState();
+});
+
+// -----------------------
+// 예측 완료 후 버튼 show
+// -----------------------
+function onPredictCompleted(resultHTML) {
+  if (resultHTML) {
+    $resultBox.innerHTML = resultHTML;
+  }
+
+  if ($btnCompareStart) $btnCompareStart.style.display = "inline-block";
+  if ($btnNew) $btnNew.style.display = "inline-block";
+}
+
+// -----------------------
+// 비교 모드일 때 자동 백업
+// -----------------------
+function addSnapshotIfSpace() {
+  if (!compareActive) return;
+
+  const snap = saveCurrentResultSnapshot();
+  const last = compareHistory[compareHistory.length - 1];
+
+  if (!last || last.html !== snap.html) {
+    compareHistory.push(snap);
+    renderCompareSlots();
+  }
+}
+
+// -----------------------
+// 백업 패널 렌더링
+// -----------------------
 function renderCompareSlots() {
   if (!$compareSlots) return;
+
   $compareSlots.innerHTML = "";
 
   compareHistory.forEach(item => {
@@ -324,84 +415,52 @@ function renderCompareSlots() {
   });
 }
 
-// 현재 화면 상태를 카드 형태로 스냅샷
+// -----------------------
+// 스냅샷 생성기
+// -----------------------
 function saveCurrentResultSnapshot() {
   const imgSrc = $preview?.src || "";
+
   const html = `
     <div class="compare-card">
-      <div class="compare-image">
-        ${imgSrc ? `<img src="${imgSrc}" alt="preview" />` : ""}
-      </div>
+      <div class="compare-image"><img src="${imgSrc}" alt="preview" /></div>
       <div class="compare-result">
-        <div class="raw-bars">
-          ${$container ? $container.innerHTML : ""}
-        </div>
-        <div class="raw-text">
-          ${$resultText ? $resultText.innerHTML : ""}
-        </div>
+        <div class="raw-result">${$result.innerHTML}</div>
+        <div class="raw-bars">${$container.innerHTML}</div>
+        <div class="raw-text">${$resultText.innerHTML}</div>
       </div>
     </div>
   `;
+
   return { html, img: imgSrc };
 }
 
-// 예측이 끝난 뒤 DOM을 기준으로 스냅샷 업데이트
-function updateLastResultSnapshot() {
-  lastResultSnapshot = saveCurrentResultSnapshot();
+// -----------------------
+// 초기 상태로 되돌리기
+// -----------------------
+function goToInitialState() {
+  // 프리뷰 리셋
+  $preview.src = "";
+  $preview.style.display = "none";
 
-  if (compareMode && compareHistory.length < MAX_COMPARE) {
-    const last = compareHistory[compareHistory.length - 1];
-    if (!last || last.html !== lastResultSnapshot.html) {
-      compareHistory.push(lastResultSnapshot);
-      renderCompareSlots();
-    }
-  }
+  // 결과 리셋
+  $result.innerHTML = "";
+  $container.innerHTML = "";
+  $resultText.innerHTML = "";
+
+  // 버튼 숨기기
+  if ($btnCompareStart) $btnCompareStart.style.display = "none";
+  if ($btnNew) $btnNew.style.display = "none";
+
+  // 쇼핑몰 영역 숨기기
+  if ($shopLinks) $shopLinks.style.display = "none";
+  if ($shopTitle) $shopTitle.style.display = "none";
+
+  // 기타 상태 제거
+  if ($status) $status.innerText = "";
+  if ($cropBtn) $cropBtn.style.display = "none";
 }
 
-// "비교해보기" 버튼 클릭 → 현재 결과를 비교목록에 추가하고, 비교 모드 ON + 새 분석 준비
-if ($btnCompareStart) {
-  $btnCompareStart.addEventListener("click", () => {
-    const hasResult =
-      ($resultText && $resultText.innerHTML.trim()) ||
-      ($container && $container.innerHTML.trim());
-
-    if (!hasResult) {
-      showMessage("먼저 예측을 완료해주세요!");
-      return;
-    }
-
-    // 방금 결과 기준으로 스냅샷 생성
-    const snap = saveCurrentResultSnapshot();
-    const last = compareHistory[compareHistory.length - 1];
-    if (compareHistory.length < MAX_COMPARE && (!last || last.html !== snap.html)) {
-      compareHistory.push(snap);
-    }
-
-    compareMode = true;
-
-    if ($comparePanel) $comparePanel.style.display = "block";
-    renderCompareSlots();
-
-    if (compareHistory.length >= MAX_COMPARE) {
-      showMessage("최대 4개까지 기록됩니다. 새로 분석하기로 초기화할 수 있어요!");
-    }
-
-    // 이제 메인 화면은 새 분석을 위해 초기화
-    goToInitialState();
-  });
-}
-
-// "새로 분석하기" 버튼 → 비교 포함 전체 리셋
-if ($btnNew) {
-  $btnNew.addEventListener("click", () => {
-    compareMode = false;
-    compareHistory = [];
-    lastResultSnapshot = null;
-    if ($comparePanel) $comparePanel.style.display = "none";
-    renderCompareSlots();
-    goToInitialState();
-  });
-}
 
 // =========================
 // 서버 업로드 및 예측 (스트리밍 사용)
