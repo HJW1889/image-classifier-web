@@ -24,19 +24,18 @@ const $captureBtn = document.createElement("div");
 const $video = document.createElement("video");
 const $canvas = document.createElement("canvas");
 const $shopTitle = document.getElementById("shopTitle");
-const $shopLinks = document.getElementById("shopLinks"); // 쇼핑 링크 컨테이너
+const $shopLinks = document.getElementById("shopLinks");
 const $status = document.getElementById("status");
 const $actionButtons = document.querySelector(".action-buttons");
 const $resultBox = document.querySelector(".result-box");
 const $feedbackSection = document.getElementById("feedbackSection");
-const $toggle = document.getElementById("modeToggle");      // 실제 체크박스
-const $tooltip = document.getElementById("tooltip");        // 툴팁
-const $toggleWrapper = document.querySelector(".toggle-switch"); // 스위치 wrapper
+const $toggle = document.getElementById("modeToggle");
+const $tooltip = document.getElementById("tooltip");
+const $toggleWrapper = document.querySelector(".toggle-switch");
 const $container = document.getElementById("progressBarsContainer");
+const $predictStatus = document.getElementById("predictStatusMessage"); // 드롭존 아래 상태 문구
 
-let cropper; // Cropper 인스턴스
-
-const $mainResult = document.getElementById("mainResult");
+// 비교 관련
 const $comparePanel = document.getElementById("comparePanel");
 const $compareSlots = document.getElementById("compareSlots");
 const $btnCompareStart = document.getElementById("btnCompareStart");
@@ -47,7 +46,12 @@ if ($btnNew) $btnNew.style.display = "none";
 
 const MAX_COMPARE = 4;
 
-// 전역 슬라이드 interval id
+let cropper;                  // Cropper 인스턴스
+let compareHistory = [];      // [{ html, img }]
+let compareMode = false;      // 비교 모드 on/off
+let lastResultSnapshot = null; // 마지막 예측 결과 스냅샷
+
+// 슬라이드 interval id
 if (!window.__fabric_slide_interval_id) {
   window.__fabric_slide_interval_id = null;
 }
@@ -98,16 +102,21 @@ function showPreview(fileOrBlob) {
         $scanLine.style.width = $preview.clientWidth + "px";
         $scanLine.style.left = $preview.offsetLeft + "px";
       }
+      $preview.style.display = "block";
     };
     $preview.src = e.target.result;
 
     // 상태 리셋
     $result.textContent = "";
     $resultText.innerHTML = "";
-    if ($shopLinks) $shopLinks.style.display = "none";
+    if ($shopLinks) {
+      $shopLinks.style.display = "none";
+      $shopLinks.innerHTML = "";
+    }
     if ($shopTitle) $shopTitle.style.display = "none";
     if ($container) $container.innerHTML = "";
     if ($status) $status.innerText = "";
+    if ($predictStatus) $predictStatus.innerText = "";
 
     if ($previewWrapper) {
       $previewWrapper.classList.add("has-image");
@@ -138,7 +147,7 @@ function closeOverlay() {
 // "예측이 틀렸어요" → 말풍선 토글
 // =========================
 if ($wrongBtn && $correctionForm) {
-  $correctionForm.style.display = "none"; // 기본은 숨김
+  $correctionForm.style.display = "none";
 
   $wrongBtn.addEventListener("click", () => {
     if ($correctionForm.style.display === "none" || $correctionForm.style.display === "") {
@@ -204,7 +213,6 @@ if ($cropBtn) {
       return;
     }
 
-    // 기존 Cropper 제거
     if (cropper) {
       cropper.destroy();
       cropper = null;
@@ -221,7 +229,6 @@ if ($cropBtn) {
       scalable: false
     });
 
-    // 확인 버튼이 이미 있으면 중복 생성 방지
     if (!confirmBtn) {
       confirmBtn = document.createElement("button");
       confirmBtn.textContent = "확인";
@@ -234,8 +241,8 @@ if ($cropBtn) {
           const reader2 = new FileReader();
           reader2.onload = e2 => {
             $preview.src = e2.target.result;
-            $file._cameraBlob = blob;     // 잘라낸 이미지 업로드용 저장
-            window.uploadedFile = blob;   // 피드백용도 갱신
+            $file._cameraBlob = blob;
+            window.uploadedFile = blob;
             cropper.destroy();
             cropper = null;
             if (confirmBtn) {
@@ -251,35 +258,67 @@ if ($cropBtn) {
 }
 
 // =========================
-// 초기 상태로 리셋 (비교/새 분석용)
+// 초기 상태로 완전 리셋 (새로 분석하기)
 // =========================
 function goToInitialState() {
+  // 프리뷰
   if ($preview) {
     $preview.src = "";
     $preview.style.display = "none";
   }
+  if ($previewWrapper) {
+    $previewWrapper.classList.remove("has-image");
+    // 스캔라인 위치는 다음 이미지에서 다시 세팅
+  }
+
+  // 결과 관련
   if ($result) $result.innerHTML = "";
   if ($container) $container.innerHTML = "";
   if ($resultText) $resultText.innerHTML = "";
-  if ($btnCompareStart) $btnCompareStart.style.display = "none";
-  if ($btnNew) $btnNew.style.display = "none";
-  if ($shopLinks) $shopLinks.style.display = "none";
+
+  // 박스/버튼/피드백
+  if ($resultBox) $resultBox.classList.remove("active");
+  if ($actionButtons) {
+    $actionButtons.style.display = "none";
+    $actionButtons.classList.remove("show");
+  }
+  if ($feedbackSection) $feedbackSection.style.display = "none";
+  if ($correctionForm) $correctionForm.style.display = "none";
+
+  // 쇼핑몰
+  if ($shopLinks) {
+    $shopLinks.style.display = "none";
+    $shopLinks.innerHTML = "";
+  }
   if ($shopTitle) $shopTitle.style.display = "none";
+
+  // 상태/버튼
   if ($status) $status.innerText = "";
   if ($cropBtn) $cropBtn.style.display = "none";
-  if ($previewWrapper) $previewWrapper.classList.remove("has-image");
+  if ($btnCompareStart) $btnCompareStart.style.display = "none";
+  if ($btnNew) $btnNew.style.display = "none";
+  if ($predictStatus) $predictStatus.innerText = "";
+
+  // 슬라이드 interval 제거
+  if (window.__fabric_slide_interval_id) {
+    clearInterval(window.__fabric_slide_interval_id);
+    window.__fabric_slide_interval_id = null;
+  }
+
+  // 업로드/결과 상태도 초기화
+  window.uploadedFile = null;
+  window.predictedClass = null;
+  lastResultSnapshot = null;
 }
 
 // =========================
-// 예측 결과 비교 기능
+// 비교 기능 (신버전 UI에 맞게 재설계)
 // =========================
-let compareHistory = []; // { html, img }
-let compareActive = false;
-
 function renderCompareSlots() {
   if (!$compareSlots) return;
   $compareSlots.innerHTML = "";
-  compareHistory.forEach((item) => {
+
+  compareHistory.forEach(item => {
     const slot = document.createElement("div");
     slot.className = "compare-slot";
     slot.innerHTML = item.html;
@@ -287,69 +326,79 @@ function renderCompareSlots() {
   });
 }
 
+// 현재 화면 상태를 카드 형태로 스냅샷
 function saveCurrentResultSnapshot() {
   const imgSrc = $preview?.src || "";
   const html = `
     <div class="compare-card">
-      <div class="compare-image"><img src="${imgSrc}" alt="preview" /></div>
+      <div class="compare-image">
+        ${imgSrc ? `<img src="${imgSrc}" alt="preview" />` : ""}
+      </div>
       <div class="compare-result">
-        <div class="raw-result">${$result.innerHTML}</div>
-        <div class="raw-bars">${$container.innerHTML}</div>
-        <div class="raw-text">${$resultText.innerHTML}</div>
+        <div class="raw-bars">
+          ${$container ? $container.innerHTML : ""}
+        </div>
+        <div class="raw-text">
+          ${$resultText ? $resultText.innerHTML : ""}
+        </div>
       </div>
     </div>
   `;
   return { html, img: imgSrc };
 }
 
-function addSnapshotIfSpace() {
-  if (!compareActive) return;
-  if (compareHistory.length >= MAX_COMPARE) {
-    showMessage("이미 4개까지 저장되었습니다.");
-    return;
-  }
-  const snap = saveCurrentResultSnapshot();
-  const last = compareHistory[compareHistory.length - 1];
-  if (!last || last.html !== snap.html) {
-    compareHistory.push(snap);
-    renderCompareSlots();
+// 예측이 끝난 뒤 DOM을 기준으로 스냅샷 업데이트
+function updateLastResultSnapshot() {
+  lastResultSnapshot = saveCurrentResultSnapshot();
+
+  if (compareMode && compareHistory.length < MAX_COMPARE) {
+    const last = compareHistory[compareHistory.length - 1];
+    if (!last || last.html !== lastResultSnapshot.html) {
+      compareHistory.push(lastResultSnapshot);
+      renderCompareSlots();
+    }
   }
 }
 
+// "비교해보기" 버튼 클릭 → 현재 결과를 비교목록에 추가하고, 비교 모드 ON + 새 분석 준비
 if ($btnCompareStart) {
   $btnCompareStart.addEventListener("click", () => {
     const hasResult =
-      ($result && $result.innerHTML.trim()) ||
-      ($resultText && $resultText.innerHTML.trim());
+      ($resultText && $resultText.innerHTML.trim()) ||
+      ($container && $container.innerHTML.trim());
 
     if (!hasResult) {
       showMessage("먼저 예측을 완료해주세요!");
       return;
     }
 
+    // 방금 결과 기준으로 스냅샷 생성
     const snap = saveCurrentResultSnapshot();
     const last = compareHistory[compareHistory.length - 1];
-    if (!last || last.html !== snap.html) {
+    if (compareHistory.length < MAX_COMPARE && (!last || last.html !== snap.html)) {
       compareHistory.push(snap);
     }
 
-    compareActive = true;
+    compareMode = true;
+
     if ($comparePanel) $comparePanel.style.display = "block";
     renderCompareSlots();
 
     if (compareHistory.length >= MAX_COMPARE) {
-      showMessage("최대 4개까지 기록됩니다. 새로 분석하기만 가능해요!");
+      showMessage("최대 4개까지 기록됩니다. 새로 분석하기로 초기화할 수 있어요!");
     }
 
-    // 메인 영역 초기화 후 새 이미지 업로드 가능
+    // 이제 메인 화면은 새 분석을 위해 초기화
     goToInitialState();
   });
 }
 
+// "새로 분석하기" 버튼 → 비교 포함 전체 리셋
 if ($btnNew) {
   $btnNew.addEventListener("click", () => {
-    compareActive = false;
+    compareMode = false;
     compareHistory = [];
+    lastResultSnapshot = null;
     if ($comparePanel) $comparePanel.style.display = "none";
     renderCompareSlots();
     goToInitialState();
@@ -357,14 +406,21 @@ if ($btnNew) {
 }
 
 // =========================
-// 서버 업로드 및 예측 (스트리밍 버전)
+// 서버 업로드 및 예측 (스트리밍 사용)
 // =========================
 $btn.addEventListener("click", async () => {
-  let uploadFile = ($file.files && $file.files[0]) || $file._cameraBlob || window.uploadedFile;
+  let uploadFile =
+    ($file.files && $file.files[0]) ||
+    $file._cameraBlob ||
+    window.uploadedFile;
+
   if (!uploadFile) {
     alert("이미지를 선택하거나 촬영하세요!");
     return;
   }
+
+  // 예측 중 상태 메시지
+  if ($predictStatus) $predictStatus.innerText = "예측 중...";
 
   // 상태 초기화
   if ($resultBox) $resultBox.classList.remove("active");
@@ -376,7 +432,7 @@ $btn.addEventListener("click", async () => {
   if ($correctionForm) $correctionForm.style.display = "none";
 
   if ($previewWrapper) $previewWrapper.classList.add("has-image");
-  if ($cropBtn) $cropBtn.style.display = "none"; // 예측 중에는 숨김
+  if ($cropBtn) $cropBtn.style.display = "none";
 
   const fd = new FormData();
   fd.append("file", uploadFile);
@@ -385,7 +441,10 @@ $btn.addEventListener("click", async () => {
   if ($scanLine) $scanLine.style.display = "block";
   $result.textContent = "";
   $resultText.innerHTML = "";
-  if ($shopLinks) $shopLinks.style.display = "none";
+  if ($shopLinks) {
+    $shopLinks.style.display = "none";
+    $shopLinks.innerHTML = "";
+  }
   if ($shopTitle) $shopTitle.style.display = "none";
   if ($container) $container.innerHTML = "";
   if ($status) $status.innerText = "";
@@ -414,7 +473,7 @@ $btn.addEventListener("click", async () => {
 
       chunk += decoder.decode(value, { stream: true });
       let lines = chunk.split("\n");
-      chunk = lines.pop(); // 마지막 불완전 줄은 다음 반복에서 처리
+      chunk = lines.pop();
 
       for (const line of lines) {
         const trimmed = line.trim();
@@ -428,7 +487,7 @@ $btn.addEventListener("click", async () => {
           continue;
         }
 
-        // 진행 상태 표시
+        // 진행 상태
         if (parsed.status && $status) {
           $status.innerText = parsed.status;
         }
@@ -437,13 +496,12 @@ $btn.addEventListener("click", async () => {
         if (parsed.result) {
           const r = parsed.result;
 
-          // --- 프로그래스바 (신버전 구조 유지) ---
+          // --- 프로그래스바 (신버전 구조 유지 + 애니메이션) ---
           if (r?.predictions?.length && $container) {
             let progressBarsHtml = "";
 
             r.predictions.forEach((p) => {
               const percent = (p.score * 100).toFixed(1);
-
               progressBarsHtml += `
                 <div class="progress-row">
                   <span class="progress-label">${p.label}</span>
@@ -457,7 +515,6 @@ $btn.addEventListener("click", async () => {
 
             $container.innerHTML = progressBarsHtml;
 
-            // fade-in + 애니메이션 (추가)
             $container.style.opacity = 0;
             $container.style.transform = "translateY(20px)";
             $container.style.transition = "opacity 0.5s, transform 0.5s";
@@ -476,11 +533,9 @@ $btn.addEventListener("click", async () => {
             $result.textContent = "";
           } else if (parsed.error) {
             $result.textContent = "백엔드 에러: " + parsed.error;
-          } else if (!$container.innerHTML) {
-            $result.textContent = "예측 결과를 받지 못했습니다.";
           }
 
-          // --- 상세 정보 + 쇼핑몰 슬라이드 + 피드백/버튼 ---
+          // --- 상세 정보 + 쇼핑몰 슬라이드(구버전 방식) + 피드백/버튼 ---
           if (r.ko_name) {
             const koName = r.ko_name || "";
             const predictedFabric = r.predicted_fabric || "";
@@ -495,7 +550,6 @@ $btn.addEventListener("click", async () => {
               <p>⚠️ 주의사항: ${special}</p>
             `;
 
-            // 결과 박스 + 액션 버튼 + 피드백 섹션 등장
             if ($resultBox) $resultBox.classList.add("active");
             if ($actionButtons) {
               $actionButtons.style.display = "flex";
@@ -503,11 +557,9 @@ $btn.addEventListener("click", async () => {
             }
             if ($feedbackSection) $feedbackSection.style.display = "block";
 
-            // 피드백용 전역 predicted 값 저장
             window.predictedClass = predictedFabric || koName;
             window.uploadedFile = uploadFile;
 
-            // 쇼핑몰 링크 + 이미지 슬라이드
             const fabric = (predictedFabric || "").toLowerCase();
             const query = encodeURIComponent(koName || predictedFabric);
 
@@ -533,12 +585,10 @@ $btn.addEventListener("click", async () => {
                   </a>
                 `)
                 .join("");
-
               $shopLinks.style.display = "flex";
             }
             if ($shopTitle) $shopTitle.style.display = "block";
 
-            // 슬라이드 interval 재설정
             if (window.__fabric_slide_interval_id) {
               clearInterval(window.__fabric_slide_interval_id);
               window.__fabric_slide_interval_id = null;
@@ -557,21 +607,24 @@ $btn.addEventListener("click", async () => {
             }, 2000);
           }
 
-          // 비교 모드일 때는 결과 자동 스냅샷 추가
-          addSnapshotIfSpace();
-
-          // 비교 버튼은 예측 완료 후 활성화
+          // 비교 버튼 활성화
           if ($btnCompareStart) $btnCompareStart.style.display = "inline-block";
           if ($btnNew) $btnNew.style.display = "inline-block";
+
+          // 마지막 결과 스냅샷 갱신
+          updateLastResultSnapshot();
+
+          // 예측 완료 상태 문구
+          if ($predictStatus) $predictStatus.innerText = "예측 완료!";
         }
 
         if (parsed.error) {
           $result.textContent = "백엔드 에러: " + parsed.error;
+          if ($predictStatus) $predictStatus.innerText = "에러가 발생했습니다.";
         }
       }
     }
 
-    // 남아있는 마지막 청크 처리(옵션)
     const trailing = chunk.trim();
     if (trailing) {
       try {
@@ -584,6 +637,7 @@ $btn.addEventListener("click", async () => {
   } catch (e) {
     $result.textContent = "에러: " + (e.message || e);
     $resultText.innerText = "에러: " + (e.message || e);
+    if ($predictStatus) $predictStatus.innerText = "에러가 발생했습니다.";
   } finally {
     $loader.style.display = "none";
     if ($scanLine) $scanLine.style.display = "none";
@@ -626,10 +680,8 @@ $cameraBtn.addEventListener("click", async () => {
 
       const blob = await new Promise(resolve => $canvas.toBlob(resolve, "image/png"));
 
-      // 스트림 종료
       stream.getTracks().forEach(track => track.stop());
 
-      // 미리보기 표시
       showPreview(blob);
       if ($previewWrapper) {
         $previewWrapper.innerHTML = "";
@@ -637,12 +689,8 @@ $cameraBtn.addEventListener("click", async () => {
         if ($scanLine) $previewWrapper.appendChild($scanLine);
       }
 
-      // 카메라 블롭 저장
       $file._cameraBlob = blob;
       window.uploadedFile = blob;
-
-      // 필요하면 자동 예측 시작
-      // $btn.click();
     };
   } catch (err) {
     alert("카메라를 사용할 수 없습니다: " + err.message);
@@ -661,7 +709,7 @@ setInterval(async () => {
   } catch (err) {
     console.warn("서버 ping 실패:", err);
   }
-}, 5 * 60 * 1000); // 5분
+}, 5 * 60 * 1000);
 
 // =========================
 // ⭐ 방명록 서버 API 연결 ⭐
@@ -674,7 +722,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!form || !feed) return;
 
-  // 1) 방명록 목록 불러오기
   async function loadGuestbook() {
     feed.innerHTML = "";
     const res = await fetch(API_guestbook);
@@ -693,7 +740,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 2) 방명록 작성
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -716,7 +762,6 @@ document.addEventListener("DOMContentLoaded", () => {
     loadGuestbook();
   });
 
-  // 3) 방명록 삭제
   feed.addEventListener("click", async (e) => {
     if (!e.target.classList.contains("deleteBtn")) return;
 
@@ -730,7 +775,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 4) 초기 로드
   loadGuestbook();
 });
 
@@ -757,7 +801,6 @@ if ($submitCorrection && $correctLabel) {
   });
 }
 
-// 서버로 정정 피드백 전송
 async function sendFeedback(predicted, corrected, file) {
   const formData = new FormData();
   formData.append("predicted", predicted);
