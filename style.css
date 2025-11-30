@@ -215,7 +215,7 @@ nav a:hover { color: royalblue; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;   /* 미리보기와 버튼 사이 간격 */
+  gap: 30px;   /* 미리보기와 버튼 사이 간격 */
 }
 
 /* action-buttons → preview 아래 */
