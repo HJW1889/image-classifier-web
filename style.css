@@ -67,7 +67,10 @@ nav a:hover { color: royalblue; }
   border: 1px solid rgba(150,160,255,0.18);
 }
 
-/* 드롭존 */
+/* ===============================
+   드롭존 (#home .header)
+=============================== */
+
 #home .header {
   background: #f8faff;
   border: 2px dashed #6e8bff;
@@ -75,17 +78,26 @@ nav a:hover { color: royalblue; }
   padding: 30px 20px;
   text-align: center;
   transition: 0.25s;
+
+  /* 기본 세로 정렬은 유지하되
+     '버튼 두 개만' inline-flex로 가로로 나란히 배치됨 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 #home .header:hover {
   border-color: #4d66ff;
   background: #f1f4ff;
   box-shadow: 0 4px 18px rgba(0,0,0,0.05);
 }
+
 #file { display: none; }
+
 
 /* ===============================
    업로드 / 촬영 → 라운드 박스 아이콘 버튼
-   (upload-btn, camera-btn 그대로 사용)
 =============================== */
 
 .upload-btn,
@@ -95,26 +107,25 @@ nav a:hover { color: royalblue; }
 
   background: #ffffff;
   border-radius: 18px;
-  border: 3px solid #5a73ff;   /* 두꺼운 테두리 */
-  
-  display: flex;
-  flex-direction: column;
+  border: 3px solid #5a73ff;
+
+  display: inline-flex;            /* ← 핵심: 가로 정렬 가능하도록 inline-flex */
+  flex-direction: column;          /* 아이콘 + 텍스트는 세로 정렬 */
   justify-content: center;
   align-items: center;
 
   font-size: 13px;
   font-weight: 700;
   color: #334;
-  
+
   cursor: pointer;
   transition: 0.25s ease;
 
   box-shadow: 0 6px 16px rgba(80, 110, 255, 0.25);
-
-  padding: 0; /* 기존 패딩 제거 */
+  padding: 0;
 }
 
-/* hover */
+/* hover 효과 */
 .upload-btn:hover,
 .camera-btn:hover {
   transform: translateY(-4px);
@@ -122,7 +133,7 @@ nav a:hover { color: royalblue; }
   box-shadow: 0 10px 20px rgba(70, 100, 255, 0.35);
 }
 
-/* 버튼 아이콘 (기존 텍스트 대신 아이콘 넣기) */
+/* 아이콘 */
 .upload-btn img,
 .camera-btn img {
   width: 42px;
@@ -132,7 +143,7 @@ nav a:hover { color: royalblue; }
   pointer-events: none;
 }
 
-/* 버튼 텍스트 스타일 (아래에 붙음) */
+/* 텍스트 */
 .upload-btn span,
 .camera-btn span {
   margin-top: 4px;
@@ -140,55 +151,28 @@ nav a:hover { color: royalblue; }
   font-weight: 700;
 }
 
-/* 두 버튼 배치 — 기존 드롭존 내부 배치 유지 */
-#home .header {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  justify-content: center;
-  align-items: center;
-}
 
-#drop-area label.upload-btn,
-#drop-area button.camera-btn {
-  display: inline-flex;
-  margin-bottom: 0;
-}
+/* ===============================
+   ★ 업로드/촬영 버튼 가로 정렬 핵심 부분 ★
+=============================== */
 
-/* 드롭존 내 업로드/촬영 버튼을 가로로 정렬 */
-#drop-area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* 버튼 묶음을 가로로 배치 (새 class 없이 셀렉터만 사용) */
-#drop-area label.upload-btn,
-#drop-area button.camera-btn {
-  display: flex;
-  flex-direction: column;  /* 아이콘 + 텍스트는 세로 유지 */
-}
-
-/* 두 버튼을 감싸는 구조가 없으므로 자체적으로 가로 정렬 */
+/* 드롭존 안에서 label.upload-btn + button.camera-btn 을 같은 줄로 */
 #drop-area .upload-btn,
 #drop-area .camera-btn {
+  display: inline-flex;   /* ← inline-flex라서 가로 배치됨 */
   margin-bottom: 0;
 }
 
-/* 두 버튼 사이 간격 */
+/* 버튼 사이 간격 */
 #drop-area .upload-btn {
-  margin-right: 26px;   /* 좌 버튼 오른쪽으로 여백 */
+  margin-right: 26px;
 }
 
-/* 버튼/카메라 버튼을 같은 줄에 배치 */
-#drop-area input[type="file"] + .upload-btn + #camera-btn {
-  display: inline-flex;
-}
-
-/* p 설명문은 다시 아래로 */
+/* 설명문은 아래로 */
 #drop-area p {
   margin-top: 20px;
 }
+
 
 
 /* ===============================
