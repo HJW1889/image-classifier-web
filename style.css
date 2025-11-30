@@ -140,6 +140,7 @@ nav a:hover { color: royalblue; }
 
 /* action-buttons → preview 아래 */
 .action-buttons {
+  display: flex;
   opacity: 0;
   transition: .3s;
   gap: 18px
