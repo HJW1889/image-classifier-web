@@ -691,8 +691,6 @@ if ($cameraBtn) {
       });
 
       $captureBtn.className = "capture-circle";
-      if ($previewWrapper) $previewWrapper.appendChild($captureBtn);
-
       $captureBtn.onclick = async () => {
         $canvas.width = $video.videoWidth;
         $canvas.height = $video.videoHeight;
