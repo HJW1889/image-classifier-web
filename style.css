@@ -334,8 +334,8 @@ nav a:hover { color: royalblue; }
 /* ⬇ 말풍선 (오른쪽 바깥으로 튀어나오는 형태) */
 .correction-form {
   position: absolute;
-  right: -10px;
-  bottom: 40px;
+  right: -14px;
+  bottom: 42px;
 
   min-width: 170px;
 
