@@ -33,7 +33,6 @@ const $toggle = document.getElementById("modeToggle");
 const $tooltip = document.getElementById("tooltip");
 const $toggleWrapper = document.querySelector(".toggle-switch");
 const $container = document.getElementById("progressBarsContainer");
-const $predictStatus = document.getElementById("predictStatusMessage"); // 드롭존 아래 상태 문구
 
 // 비교 관련
 const $comparePanel = document.getElementById("comparePanel");
