@@ -149,6 +149,8 @@ nav a:hover { color: royalblue; }
   margin-top: 4px;
   font-size: 13px;
   font-weight: 700;
+  color: #5a73ff; /* ⬅ 밝고 선명한 파랑 */
+  opacity: 0.8;  /* ⬅ 약간 은은하게 */
 }
 
 
@@ -171,6 +173,8 @@ nav a:hover { color: royalblue; }
 /* 설명문은 아래로 */
 #drop-area p {
   margin-top: 20px;
+  color: #5a73ff; /* ⬅ 밝고 선명한 파랑 */
+  opacity: 0.8;  /* ⬅ 약간 은은하게 */
 }
 
 
