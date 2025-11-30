@@ -435,32 +435,6 @@ function saveCurrentResultSnapshot() {
   return { html, img: imgSrc };
 }
 
-// -----------------------
-// 초기 상태로 되돌리기
-// -----------------------
-function goToInitialState() {
-  // 프리뷰 리셋
-  $preview.src = "";
-  $preview.style.display = "none";
-
-  // 결과 리셋
-  $result.innerHTML = "";
-  $container.innerHTML = "";
-  $resultText.innerHTML = "";
-
-  // 버튼 숨기기
-  if ($btnCompareStart) $btnCompareStart.style.display = "none";
-  if ($btnNew) $btnNew.style.display = "none";
-
-  // 쇼핑몰 영역 숨기기
-  if ($shopLinks) $shopLinks.style.display = "none";
-  if ($shopTitle) $shopTitle.style.display = "none";
-
-  // 기타 상태 제거
-  if ($status) $status.innerText = "";
-  if ($cropBtn) $cropBtn.style.display = "none";
-}
-
 
 // =========================
 // 서버 업로드 및 예측 (스트리밍 사용)
