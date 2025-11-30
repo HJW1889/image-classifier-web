@@ -303,9 +303,6 @@ function goToInitialState() {
   if ($status) $status.innerText = "";
   if ($cropBtn) $cropBtn.style.display = "none";
 
-  // ⛔ 삭제해야 했던 문제 라인
-  // if ($comparePanel) $comparePanel.style.display = "none";
-
   if ($btnCompareStart) $btnCompareStart.style.display = "none";
   if ($btnNew) $btnNew.style.display = "none";
 
