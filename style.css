@@ -149,6 +149,41 @@ nav a:hover { color: royalblue; }
   align-items: center;
 }
 
+/* 드롭존 내 업로드/촬영 버튼을 가로로 정렬 */
+#drop-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 버튼 묶음을 가로로 배치 (새 class 없이 셀렉터만 사용) */
+#drop-area label.upload-btn,
+#drop-area button.camera-btn {
+  display: flex;
+  flex-direction: column;  /* 아이콘 + 텍스트는 세로 유지 */
+}
+
+/* 두 버튼을 감싸는 구조가 없으므로 자체적으로 가로 정렬 */
+#drop-area .upload-btn,
+#drop-area .camera-btn {
+  margin-bottom: 0;
+}
+
+/* 두 버튼 사이 간격 */
+#drop-area .upload-btn {
+  margin-right: 26px;   /* 좌 버튼 오른쪽으로 여백 */
+}
+
+/* 버튼/카메라 버튼을 같은 줄에 배치 */
+#drop-area input[type="file"] + .upload-btn + #camera-btn {
+  display: inline-flex;
+}
+
+/* p 설명문은 다시 아래로 */
+#drop-area p {
+  margin-top: 20px;
+}
+
 
 /* ===============================
    미리보기 / 레이아웃 복구
