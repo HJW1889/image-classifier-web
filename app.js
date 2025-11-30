@@ -210,12 +210,6 @@ if ($cropBtn) {
       return;
     }
 
-    // 기존 cropper 제거
-    if (cropper) {
-      cropper.destroy();
-      cropper = null;
-    }
-
     // Cropper 실행
     cropper = new Cropper($preview, {
       viewMode: 1,
