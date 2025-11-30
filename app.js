@@ -297,7 +297,6 @@ function goToInitialState() {
   lastResultSnapshot = null;
 }
 
-/*
 // =========================
 // 비교 기능 (신버전 UI에 맞게 재설계)
 // =========================
@@ -390,45 +389,8 @@ if ($btnNew) {
     renderCompareSlots();
     goToInitialState();
   });
-}*/
 
-//비교해보기
-let compareHistory = []; // { html, img } 형태로 저장
-let compareActive = false;
 
-/* 예측 결과 UI 업데이트 함수
-function renderMainResult(resultHTML) {
-  $mainResult.innerHTML = resultHTML;
-}*/
-
-// 비교 해보기 버튼 클릭
-if ($btnCompareStart) {
-  $btnCompareStart.addEventListener("click", () => {
-    // 결과가 비어있으면 저장 금지
-    const hasResult = ($result && $result.innerHTML.trim()) || ($resultText && $resultText.innerHTML.trim());
-    if (!hasResult) {
-      showMessage("먼저 예측을 완료해주세요!");
-      return;
-    }
-    // 현재 snapshot 생성
-    const snap = saveCurrentResultSnapshot();
-    // 같은 내용 중복 저장 방지(간단 체크)
-    const last = compareHistory[compareHistory.length - 1];
-    if (!last || last.html !== snap.html) {
-      compareHistory.push(snap);
-    }
-    // 패널 열기 + 렌더
-    compareActive = true;
-    if ($comparePanel) $comparePanel.style.display = "block";
-    renderCompareSlots();
-    if (compareHistory.length >= MAX_COMPARE) {
-      showMessage("최대 4개까지 기록됩니다. 새로 분석하기만 가능해요!");
-      return;
-    }
-    // 초기화
-    goToInitialState();
-  });
-}
 
 // 새로 분석하기 버튼
 $btnNew.addEventListener("click", () => {
