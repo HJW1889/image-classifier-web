@@ -131,18 +131,6 @@ function showPreview(fileOrBlob) {
 }
 
 // =========================
-// 접근성 오버레이 (있으면)
-// =========================
-function showOverlay() {
-  const overlay = document.getElementById("accessibilityOverlay");
-  if (overlay) overlay.style.display = "flex";
-}
-function closeOverlay() {
-  const overlay = document.getElementById("accessibilityOverlay");
-  if (overlay) overlay.style.display = "none";
-}
-
-// =========================
 // "예측이 틀렸어요" → 말풍선 토글
 // =========================
 if ($wrongBtn && $correctionForm) {
@@ -203,6 +191,7 @@ if ($toggleWrapper && $tooltip && $toggle) {
 // =========================
 // 이미지 크롭 기능 (Cropper.js) — 자동 적용 버전
 // =========================
+
 if ($cropBtn) {
   $cropBtn.addEventListener("click", () => {
     if (!$preview || !$preview.src) {
@@ -210,31 +199,28 @@ if ($cropBtn) {
       return;
     }
 
-    // Cropper 실행
+    // 크롭 시작
     cropper = new Cropper($preview, {
       viewMode: 1,
-      autoCrop: false, // 사용자가 드래그해서 선택
+      autoCrop: false,
       background: false,
       modal: true,
       movable: true,
       zoomable: true,
-      rotatable: false,
-      scalable: false,
 
-      // 사용자가 드래그로 cropbox를 생성한 직후 발동
+      // 드래그로 박스 선택 끝났을 때 자동 반영
       cropend() {
-        // crop된 canvas를 blob으로 추출
         cropper.getCroppedCanvas().toBlob((blob) => {
           const reader = new FileReader();
-          reader.onload = (e2) => {
-            // 미리보기 업데이트
-            $preview.src = e2.target.result;
+          reader.onload = (e) => {
+            // 미리보기 갱신
+            $preview.src = e.target.result;
 
-            // 업로드용 blob 저장
+            // 업로드 상태 갱신
             $file._cameraBlob = blob;
             window.uploadedFile = blob;
 
-            // Cropper 종료
+            // 종료
             cropper.destroy();
             cropper = null;
           };
@@ -244,6 +230,7 @@ if ($cropBtn) {
     });
   });
 }
+
 
 // =========================
 // 초기 상태로 완전 리셋 (새로 분석하기)
