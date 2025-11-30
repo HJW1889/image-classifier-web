@@ -5,6 +5,8 @@ const $file = document.getElementById("file");
 const $preview = document.getElementById("preview");
 const $cropBtn = document.getElementById("crop-btn");
 const $btn = document.getElementById("btn");
+const $wrongBtn = document.getElementById("wrongBtn");
+const $correctionForm = document.getElementById("correctionForm");
 const $result = document.getElementById("result");
 const $loader = document.getElementById("loading");
 const $scanLine = document.querySelector(".scan-line");
@@ -84,26 +86,13 @@ $btn.addEventListener("click", async () => {
 
   document.querySelector(".result-box")?.classList.remove("active");
   document.querySelector(".action-buttons").classList.add("show");
-  document.querySelector(".action-buttons").style.display = "flex";
   document.querySelector(".preview-wrapper").classList.add("has-image");
   document.querySelector("#crop-btn").style.display = "none";
   document.querySelector(".action-buttons").style.display = "flex";
   
-  wrongBtn.onclick = () => {
+  wrongBtn.addEventListener("click", () => {
     correctionForm.style.display =
       correctionForm.style.display === "flex" ? "none" : "flex";
-  };
-
-  const wrongBtn = document.getElementById("wrongBtn");
-  const correctionForm = document.getElementById("correctionForm");
-  
-  wrongBtn.addEventListener("click", () => {
-    // toggle
-    if (correctionForm.style.display === "none" || correctionForm.style.display === "") {
-      correctionForm.style.display = "flex";
-    } else {
-      correctionForm.style.display = "none";
-    }
   });
 
 
