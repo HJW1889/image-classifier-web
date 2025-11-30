@@ -94,6 +94,19 @@ $btn.addEventListener("click", async () => {
       correctionForm.style.display === "flex" ? "none" : "flex";
   };
 
+  const wrongBtn = document.getElementById("wrongBtn");
+  const correctionForm = document.getElementById("correctionForm");
+  
+  wrongBtn.addEventListener("click", () => {
+    // toggle
+    if (correctionForm.style.display === "none" || correctionForm.style.display === "") {
+      correctionForm.style.display = "flex";
+    } else {
+      correctionForm.style.display = "none";
+    }
+  });
+
+
   const fd = new FormData();
   fd.append("file", uploadFile);
 
