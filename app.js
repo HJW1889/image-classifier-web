@@ -394,6 +394,7 @@ function handleCompareStart() {
   if (!last || last.html !== snap.html) {
     compareHistory.push(snap);
   }
+}
 
 function handleNewAnalysis() {
   compareActive = true;  // 비교 기능 유지
