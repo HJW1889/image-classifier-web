@@ -359,11 +359,14 @@ function saveCurrentResultSnapshot() {
 function renderCompareSlots() {
   $compareSlots.innerHTML = "";
 
-  // 카드가 하나도 없으면 comparePanel 숨김
+  // 비교 기록이 0개면 패널 숨김
   if (compareHistory.length === 0) {
     $comparePanel.style.display = "none";
     return;
   }
+
+  // compareHistory가 있으면 반드시 comparePanel 표시
+  $comparePanel.style.display = "block";
 
   compareHistory.forEach((item, idx) => {
     const slot = document.createElement("div");
@@ -371,31 +374,24 @@ function renderCompareSlots() {
 
     slot.innerHTML = `
       <button class="compare-delete" data-idx="${idx}">×</button>
-
       <div class="compare-image">
         <img src="${item.img}" />
       </div>
-
-      <div class="compare-result">
-        ${item.html}
-      </div>
+      <div class="compare-result">${item.html}</div>
     `;
 
     $compareSlots.appendChild(slot);
   });
 
-  // 삭제 버튼
   document.querySelectorAll(".compare-delete").forEach(btn => {
     btn.addEventListener("click", () => {
       const i = Number(btn.dataset.idx);
       compareHistory.splice(i, 1);
-      renderCompareSlots();   // ← 다시 렌더링 (0개면 comparePanel 숨김)
+      renderCompareSlots();
     });
   });
-
-  // 백업 내용이 있으면 comparePanel 보여주기
-  $comparePanel.style.display = "block";
 }
+
 
 
 function handleCompareStart() {
