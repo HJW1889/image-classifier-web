@@ -266,15 +266,18 @@ nav a:hover { color: royalblue; }
   box-shadow: 0 3px 8px rgba(90,120,255,0.25);
 }
 
-/* 비교 패널 전체 */
+
+/* 비교 패널 전체 + 스크롤 박스 */
 #comparePanel {
-  display: none;                 /* 기본은 숨김 */
+  display: none;                 /* 기본은 숨김 (JS에서 block으로 켜줌) */
   width: 100%;
+  clear: both;
+  margin-top: 20px;
+
+  padding: 15px 0;
   background: #f7f8ff;
   border-radius: 12px;
   border: 1px solid #d8dcff;
-  margin-top: 20px;
-  padding: 15px 0;
 
   /* 🔥 가로 스크롤 */
   overflow-x: auto;
@@ -287,8 +290,9 @@ nav a:hover { color: royalblue; }
 }
 
 /* 카드들을 담는 컨테이너 */
-#compareSlots {
-  display: inline-flex;          /* 🔥 flex인데 width 자동 확장 가능 */
+#compareSlots,
+.compare-slots {
+  display: inline-flex;          /* 🔥 가로로 나열 */
   gap: 15px;
   padding: 10px 15px;
 }
@@ -296,13 +300,13 @@ nav a:hover { color: royalblue; }
 /* 개별 카드 */
 .compare-card {
   flex: 0 0 240px;               /* 🔥 가로 240px 고정 */
-  background: #fff;
+  background: #ffffff;
   border: 1px solid #e0e3ff;
   border-radius: 10px;
   padding: 12px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   position: relative;
-  display: inline-block;         /* 🔥 스크롤 안정화 */
+  display: inline-block;         /* 스크롤 안정화 */
 }
 
 /* 이미지 */
@@ -313,7 +317,7 @@ nav a:hover { color: royalblue; }
   border-radius: 8px;
 }
 
-/* 내용 */
+/* 텍스트 */
 .compare-result {
   margin-top: 10px;
   font-size: 14px;
@@ -339,6 +343,7 @@ nav a:hover { color: royalblue; }
 .compare-delete:hover {
   background: #ff3b3b;
 }
+
 
 
 
