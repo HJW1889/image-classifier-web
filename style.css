@@ -266,23 +266,22 @@ nav a:hover { color: royalblue; }
   box-shadow: 0 3px 8px rgba(90,120,255,0.25);
 }
 
-/* 비교 패널 전체 영역 */
+/* 비교 패널 전체 + 스크롤 박스 */
 #comparePanel {
-  display: none;
+  display: none;          /* 기본은 숨김 */
   width: 100%;
   clear: both;
   margin-top: 20px;
-}
 
-.compare-panel {
-  margin-top: 20px;
   padding: 15px 0;
   background: #f7f8ff;
   border-radius: 12px;
   border: 1px solid #d8dcff;
-  overflow-x: auto;       /* 👈 가로 스크롤 활성화 */
+
+  overflow-x: auto;       /* 👈 가로 스크롤 */
   overflow-y: hidden;
-  white-space: nowrap;    /* 👈 요소들을 한 줄로 */
+  white-space: nowrap;    /* 👈 한 줄 유지 */
+  box-sizing: border-box;
 }
 
 /* 가로 슬라이더 */
@@ -337,6 +336,7 @@ nav a:hover { color: royalblue; }
 .compare-delete:hover {
   background: #ff3b3b;
 }
+
 
 
 
