@@ -329,16 +329,6 @@ function goToInitialState() {
   window.uploadedFile = null;
   window.predictedClass = null;
 
-  // 🔥 comparePanel / compareHistory는 절대 건드리지 않음!!
-  // goToInitialState 마지막 부분에 추가
-  setTimeout(() => {
-    if (compareHistory.length > 0) {
-        $comparePanel.style.display = "block";
-    }
-  }, 0);
-}
-
-
 // ============================
 // 📦 백업(비교) 시스템 (팀원 로직 기반)
 // ============================
