@@ -1559,61 +1559,90 @@ input:checked + .slider:before {
   
   .compare-card {
     flex: 0 0 240px !important;
-  }  /* 🔥 방명록만 따로! (특정성 높임) */
+  }  
+  
+  /* ========================
+   🔥 방명록 세로 배치 (입력 위 + 피드 아래)
+========================== */
+@media (max-width: 480px) {
+  /* 🔥 1. 방명록 컨테이너 세로 전체 */
   #contact .contact-container {
     flex-direction: column !important;
-    gap: 20px !important;
+    gap: 24px !important;
     width: 100% !important;
     max-width: 100% !important;
-    align-items: stretch !important; /* 전체 너비 꽉 채움 */
+    padding: 20px !important;
   }
 
-  #contact .contact-left,
+  /* 🔥 2. 입력폼 (상단 - 넓고 여유롭게) */
+  #contact .contact-left {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 32px 24px !important;
+    min-height: 280px !important;
+    order: 1 !important; /* 위쪽 고정 */
+  }
+
+  /* 🔥 3. 피드 (하단 - 풀스크롤) */
   #contact .contact-right {
     width: 100% !important;
     max-width: 100% !important;
-    flex: none !important; /* flex 성장 방지 */
-    padding: 24px 20px !important;
-    box-sizing: border-box !important;
+    padding: 24px 24px 32px !important;
+    min-height: 320px !important;
+    order: 2 !important; /* 아래쪽 고정 */
   }
 
+  /* 🔥 4. 피드 스크롤 영역 최적화 */
   #contact #guestbookFeed {
-    max-height: 280px !important;
+    max-height: 320px !important;
+    min-height: 200px !important;
     width: 100% !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
+    padding-right: 8px !important;
   }
 
-  /* 🔥 방명록 입력 폼 */
+  /* 🔥 5. 입력 폼 필드 여유롭게 */
+  #contact .field {
+    margin-bottom: 20px !important;
+  }
+
   #contact input,
   #contact textarea {
     width: 100% !important;
-    padding: 14px 16px !important;
+    padding: 16px 18px !important;
     font-size: 16px !important;
+    border-radius: 14px !important;
     box-sizing: border-box !important;
   }
 
-  #contact button[type="submit"] {
-    width: 100% !important;
-    padding: 16px !important;
-    margin-top: 12px !important;
+  #contact textarea {
+    height: 120px !important;
+    resize: vertical !important;
   }
 
-@media (max-width: 480px) {
-  section#contact .contact-container {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 24px !important;
-    padding: 20px !important;
+  /* 🔥 6. 제출 버튼 강조 */
+  #contact button[type="submit"] {
     width: 100% !important;
+    padding: 18px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    margin-top: 16px !important;
+    border-radius: 14px !important;
   }
-  
-  section#contact .contact-left,
-  section#contact .contact-right {
-    background: #ffffff !important;
-    border-radius: 20px !important;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.07) !important;
-    width: 100% !important;
-    min-height: 300px !important;
+
+  /* 🔥 7. 제목들 중앙 정렬 */
+  #contact .contact-left h1,
+  #contact .contact-right h2 {
+    text-align: center !important;
+    margin-bottom: 24px !important;
+    font-size: 22px !important;
+  }
+
+  /* 🔥 8. 로컬 상태 표시 하단 고정 */
+  .local-status {
+    margin-top: 12px !important;
+    padding: 8px 0 !important;
   }
 }
+
