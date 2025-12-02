@@ -996,3 +996,25 @@ async function sendFeedback(predicted, corrected, file) {
     alert("정정 정보 전송 중 오류가 발생했습니다: " + err.message);
   }
 }
+
+const wrapper = document.getElementById("pageWrapper");
+const indexBtn = document.getElementById("indexBtn");
+const closeBtn = document.getElementById("closeCompare");
+
+// 비교 페이지 열기
+function openCompare() {
+  wrapper.style.transform = "translateX(-50%)";
+  indexBtn.classList.add("hidden");
+}
+
+// 비교 페이지 닫기
+function closeComparePage() {
+  wrapper.style.transform = "translateX(0)";
+  indexBtn.classList.remove("hidden");
+}
+
+indexBtn.addEventListener("click", openCompare);
+closeBtn.addEventListener("click", closeComparePage);
+
+indexBtn.classList.remove("hidden");
+openCompare();
