@@ -1308,6 +1308,113 @@ input:checked + .slider:before {
 }
 
 
+/* ========================
+   🔥 모바일 헤더(내비게이션바) 완전 재디자인
+========================== */
+@media (max-width: 480px) {
+  /* 🔥 1. 헤더 전체 압축 */
+  header {
+    padding: 12px 16px !important;
+    min-height: 60px !important; /* 높이 고정 */
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+    background: #fff !important;
+    border-bottom: 1px solid #e5e5e5 !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
+  }
+
+  /* 🔥 2. 로고 간결화 */
+  .logo {
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .logo .dot {
+    width: 10px !important;
+    height: 10px !important;
+    margin-right: 6px !important;
+  }
+
+  .logo .brand {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    color: #232323 !important;
+  }
+
+  /* 🔥 3. 네비 + 토글 가로 1줄 배치 */
+  nav {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 🔥 4. 네비 링크 (작고 촘촘) */
+  nav a {
+    font-size: 14px !important;
+    padding: 6px 10px !important; /* 터치 44px 기준 */
+    margin: 0 !important;
+    border-radius: 8px !important;
+    min-width: 44px !important; /* 터치 영역 보장 */
+    text-align: center !important;
+    transition: all 0.2s !important;
+  }
+
+  nav a:hover, nav a:active {
+    background: rgba(110,140,255,0.15) !important;
+    color: #4d66ff !important;
+  }
+
+  /* 🔥 5. 토글 스위치 소형화 */
+  .mode-container {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .toggle-switch {
+    width: 48px !important;
+    height: 24px !important;
+    transform: scale(0.85) !important;
+  }
+
+  .slider {
+    border-radius: 20px !important;
+  }
+
+  .slider:before {
+    width: 18px !important;
+    height: 18px !important;
+    left: 3px !important;
+    bottom: 3px !important;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(24px) !important;
+  }
+
+  /* 🔥 6. 툴팁 모바일 숨김 (공간 절약) */
+  .tooltip {
+    display: none !important;
+  }
+
+  /* 🔥 7. 햄버거 메뉴 대체 (옵션) */
+  .mode-container::before {
+    content: "⚙️" !important;
+    font-size: 16px !important;
+    display: none;
+  }
+
+  /* 🔥 8. 홈 섹션 상단 여백 보정 */
+  #home {
+    padding-top: 80px !important; /* 헤더 60px + 여백 */
+  }
+}
 
 /* ========================
    🔥 모바일 레이아웃 붕괴 완전 해결
@@ -1452,5 +1559,61 @@ input:checked + .slider:before {
   
   .compare-card {
     flex: 0 0 240px !important;
+  }  /* 🔥 방명록만 따로! (특정성 높임) */
+  #contact .contact-container {
+    flex-direction: column !important;
+    gap: 20px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    align-items: stretch !important; /* 전체 너비 꽉 채움 */
+  }
+
+  #contact .contact-left,
+  #contact .contact-right {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important; /* flex 성장 방지 */
+    padding: 24px 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  #contact #guestbookFeed {
+    max-height: 280px !important;
+    width: 100% !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  /* 🔥 방명록 입력 폼 */
+  #contact input,
+  #contact textarea {
+    width: 100% !important;
+    padding: 14px 16px !important;
+    font-size: 16px !important;
+    box-sizing: border-box !important;
+  }
+
+  #contact button[type="submit"] {
+    width: 100% !important;
+    padding: 16px !important;
+    margin-top: 12px !important;
+  }
+
+@media (max-width: 480px) {
+  section#contact .contact-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+    padding: 20px !important;
+    width: 100% !important;
+  }
+  
+  section#contact .contact-left,
+  section#contact .contact-right {
+    background: #ffffff !important;
+    border-radius: 20px !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.07) !important;
+    width: 100% !important;
+    min-height: 300px !important;
   }
 }
