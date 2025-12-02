@@ -1309,192 +1309,148 @@ input:checked + .slider:before {
 
 
 
-
 /* ========================
-   🔥 모바일 완전 재구성 (480px 이하)
+   🔥 모바일 레이아웃 붕괴 완전 해결
 ========================== */
 @media (max-width: 480px) {
-  /* 🔧 1. 기본 레이아웃 */
-  html, body {
-    font-size: 16px;
-    line-height: 1.5;
-    -webkit-text-size-adjust: 100%;
-  }
-
-  /* 🔧 2. 헤더 최적화 */
-  header {
-    padding: 12px 16px !important;
-    flex-direction: column !important;
-    gap: 12px !important;
-  }
-
-  .logo .brand {
-    font-size: 20px !important;
-  }
-
-  nav {
-    width: 100% !important;
-    justify-content: center !important;
-    gap: 12px !important;
-  }
-
-  nav a {
-    padding: 8px 12px !important;
-    font-size: 15px !important;
-    border-radius: 6px;
-  }
-
-  /* 🔧 3. 홈 섹션 */
-  #home {
-    padding: 60px 12px 40px !important;
-  }
-
-  #home h1 {
-    font-size: 24px !important;
-    margin-bottom: 32px !important;
-    padding: 0 12px;
-  }
-
-  #home .container {
-    width: 100% !important;
-    max-width: none !important;
-    padding: 24px 16px !important;
-    margin: 0 auto 20px !important;
-  }
-
-  /* 🔧 4. 드롭존 */
-  #home .header {
-    padding: 28px 20px !important;
-    margin-bottom: 24px !important;
-  }
-
-  .upload-btn, .camera-btn {
-    width: 76px !important;
-    height: 76px !important;
-  }
-
-  /* 🔥 5. 미리보기 완전 고정 (비율 유지) */
+  /* 🔥 1. 분석 영역 완전 재정의 */
   .analysis-row {
+    display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     gap: 24px !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
-  .preview-wrapper {
+  .preview-column {
     width: 100% !important;
-    max-width: 320px !important;
-    height: 320px !important; /* 🔥 고정 높이 */
+    max-width: 340px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  /* 🔥 2. 미리보기 완전 고정 (깨짐 방지) */
+  .preview-wrapper {
+    position: relative !important;
+    width: 320px !important;
+    height: 320px !important;
+    max-width: 100% !important;
     margin: 0 auto !important;
-    aspect-ratio: 1 !important; /* 🔥 정사각형 보장 */
+    background: #f3f5ff !important;
+    border: 1px solid #dbe2ff !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    flex-shrink: 0 !important; /* 크기 변형 방지 */
   }
 
   #preview {
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover !important; /* 🔥 비율 유지 */
+    object-fit: cover !important;
+    display: block !important;
   }
 
-  /* 🔥 6. 결과 박스 (넘침 방지) */
+  /* 🔥 3. 크롭 버튼 위치 고정 */
+  .crop-overlay-btn {
+    position: absolute !important;
+    bottom: 12px !important;
+    right: 12px !important;
+    z-index: 10 !important;
+  }
+
+  /* 🔥 4. 결과 박스 완전 제어 */
   .result-box {
-    width: 100% !important;
-    max-width: 320px !important;
+    width: 320px !important;
+    max-width: 100% !important;
     min-height: 300px !important;
     margin: 0 auto !important;
-    padding: 20px 16px !important;
-    box-sizing: border-box !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
   }
 
-  /* 🔥 7. 액션 버튼 (세로 배치) */
-  .action-buttons {
-    flex-direction: column !important;
-    gap: 12px !important;
-    width: 100% !important;
-    max-width: 320px !important;
-  }
-
-  .action-buttons .btn {
-    width: 100% !important;
-    padding: 14px !important;
-    font-size: 16px !important;
-  }
-
-  /* 🔥 8. 비교 패널 (가로 스크롤) */
+  /* 🔥 5. 백업 패널 (오른쪽 쏠림 방지) */
   #comparePanel {
     width: 100% !important;
-    padding: 16px !important;
+    max-width: 100% !important;
     margin: 24px 0 !important;
-    overflow-x: auto !important;
+    padding: 16px !important;
+    clear: both !important; /* 플로트 초기화 */
+    box-sizing: border-box !important;
   }
 
   .compare-slots {
     display: flex !important;
     gap: 12px !important;
-    min-width: max-content !important;
+    width: max-content !important;
+    overflow-x: auto !important;
+    padding: 8px 0 !important;
   }
 
   .compare-card, .compare-slot {
-    flex: 0 0 260px !important; /* 🔥 모바일 적정 크기 */
+    flex: 0 0 260px !important;
+    min-width: 260px !important;
     max-width: 260px !important;
   }
 
-  /* 🔥 9. 쇼핑 링크 (2열) */
-  #shopLinks {
-    flex-direction: row !important;
+  /* 🔥 6. 컨테이너 강제 중앙 정렬 */
+  #home .container {
+    width: 100% !important;
+    max-width: 360px !important;
+    margin: 0 auto !important;
+    padding: 24px 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 🔥 7. 쇼핑 링크 고정 */
+  .shop-links {
+    width: 100% !important;
+    max-width: 340px !important;
+    display: flex !important;
     flex-wrap: wrap !important;
     gap: 12px !important;
     justify-content: center !important;
+    margin: 20px auto !important;
   }
 
   .shop-links a {
-    width: 150px !important;
-    height: 120px !important;
-    flex: 1 1 150px !important;
+    width: 160px !important;
+    height: 130px !important;
+    flex: 1 1 160px !important;
   }
 
-  /* 🔥 10. 예측 버튼 */
-  .predict-btn {
+  /* 🔥 8. 액션 버튼들 중앙 */
+  .action-buttons {
     width: 100% !important;
-    padding: 16px !important;
-    font-size: 16px !important;
-  }
-
-  .footer {
-    padding: 16px !important;
-    justify-content: center !important;
-  }
-
-  /* 🔥 11. 프로그레스바 반응형 */
-  .progress-label {
-    width: 70px !important;
-    font-size: 13px !important;
-  }
-
-  /* 🔥 12. 방명록 모바일 */
-  #contact .contact-container {
+    max-width: 320px !important;
+    display: flex !important;
     flex-direction: column !important;
-    gap: 20px !important;
+    gap: 12px !important;
+    margin: 0 auto !important;
   }
 
-  #guestbookFeed {
-    max-height: 280px !important;
+  /* 🔥 9. 모든 overflow 제어 */
+  #home, #home .container, .analysis-row {
+    overflow-x: hidden !important;
   }
 
-  /* 🔥 13. 토글/피드백 */
-  .toggle-switch {
-    transform: scale(0.9) !important;
-  }
-
-  .feedback-wrong-btn {
-    padding: 8px 12px !important;
-    font-size: 13px !important;
+  /* 🔥 10. 스크롤바 숨김 */
+  #comparePanel::-webkit-scrollbar {
+    height: 4px !important;
   }
 }
 
-/* 🔥 14. 초소형 화면 (iPhone SE 등) */
+/* 🔥 초소형 화면 추가 보강 */
 @media (max-width: 360px) {
   .preview-wrapper, .result-box {
-    max-width: 300px !important;
+    width: 300px !important;
   }
   
-  .compare-card, .compare-slot {
-    flex
+  .compare-card {
+    flex: 0 0 240px !important;
+  }
+}
