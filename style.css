@@ -1463,24 +1463,31 @@ input:checked + .slider:before {
   }
 
   /* 🔧 8. 방명록 모바일 최적화 */
+/* 🔥 방명록 CSS 선택자 완화 */
+  #contact .contact-container,
   #contact.contact-section .contact-container {
     flex-direction: column !important;
     gap: 24px !important;
   }
 
+  #contact #guestbookFeed,
+  #contact.contact-section #guestbookFeed {
+    max-height: 280px !important;
+  }
+
+  #contact .contact-left,
+  #contact .contact-right,
   #contact.contact-section .contact-left,
   #contact.contact-section .contact-right {
     padding: 24px 20px !important;
   }
 
-  #contact.contact-section #guestbookFeed {
-    max-height: 280px !important;
-  }
-
+  #contact input,
+  #contact textarea,
   #contact.contact-section input,
   #contact.contact-section textarea {
     padding: 14px 16px !important;
-    font-size: 16px !important; /* 모바일 입력 편의 */
+    font-size: 16px !important;
   }
 
   /* 🔧 9. 푸터 & 기타 버튼들 */
