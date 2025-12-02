@@ -266,11 +266,14 @@ if ($cropBtn && $preview) {
 // 초기 상태로 완전 리셋 (공통)
 // =========================
 function goToInitialState() {
+
+  // 🔥 파일 입력 초기화
   if ($file) {
     $file.value = "";
     $file._cameraBlob = null;
   }
 
+  // 🔥 미리보기 초기화
   if ($preview) {
     $preview.src = "";
     $preview.style.display = "none";
@@ -283,41 +286,50 @@ function goToInitialState() {
     $previewWrapper.classList.remove("has-image");
   }
 
+  // 🔥 결과 초기화
   if ($result) $result.innerHTML = "";
   if ($container) $container.innerHTML = "";
   if ($resultText) $resultText.innerHTML = "";
 
+  // 🔥 결과 박스 비활성화
   if ($resultBox) $resultBox.classList.remove("active");
-  if ($actionButtons) {
-    $actionButtons.style.display = "none";
-    $actionButtons.classList.remove("show");
-  }
 
+  // 🔥 action 버튼(백업/새로 분석) 숨김 ← 백업 기록은 유지됨
+  if ($btnCompareStart) $btnCompareStart.style.display = "none";
+  if ($btnNew) $btnNew.style.display = "none";
+
+  // 🔥 피드백 숨김
   if ($feedbackSection) $feedbackSection.style.display = "none";
   if ($correctionForm) $correctionForm.style.display = "none";
 
+  // 🔥 쇼핑몰 추천 초기화
   if ($shopLinks) {
     $shopLinks.style.display = "none";
     $shopLinks.innerHTML = "";
   }
   if ($shopTitle) $shopTitle.style.display = "none";
 
+  // 🔥 상태 메시지 초기화
   if ($status) $status.innerText = "";
-  if ($cropBtn) $cropBtn.style.display = "none";
-
-  if ($btnCompareStart) $btnCompareStart.style.display = "none";
-  if ($btnNew) $btnNew.style.display = "none";
-
   if ($predictStatus) $predictStatus.innerText = "";
 
+  // 🔥 크롭 버튼 숨기기 (새 이미지 선택하면 다시 나타남)
+  const cropBtn = document.getElementById("crop-btn");
+  if (cropBtn) cropBtn.style.display = "none";
+
+  // 🔥 자동 슬라이드 초기화
   if (window.__fabric_slide_interval_id) {
     clearInterval(window.__fabric_slide_interval_id);
     window.__fabric_slide_interval_id = null;
   }
 
+  // 내부 상태 리셋
   window.uploadedFile = null;
   window.predictedClass = null;
+
+  // 🔥 comparePanel / compareHistory는 절대 건드리지 않음!!
 }
+
 
 // ============================
 // 📦 백업(비교) 시스템 (팀원 로직 기반)
