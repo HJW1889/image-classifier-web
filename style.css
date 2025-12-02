@@ -261,7 +261,7 @@ nav a:hover { color: royalblue; }
 
 /* 비교 패널 전체 영역 */
 #comparePanel {
-  display: block !important;
+  display: none !important;
   width: 100%;
   clear: both;
   margin-top: 20px;
