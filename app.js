@@ -977,31 +977,32 @@ async function sendFeedback(predicted, corrected, file) {
 // =========================
 // 페이지 슬라이더 (홈 ↔ 비교패널)
 // =========================
+
+// 책갈피 버튼 + 패널 제어
 const comparePanel = document.getElementById("comparePanel");
 const indexBtn = document.getElementById("indexBtn");
-const closeBtn = document.getElementById("closeCompare");
+const pageWrapper = document.getElementById("pageWrapper");
 
-// 이 세 가지 요소가 "모두" 있을 때만 이벤트를 건다
-if (comparePanel && indexBtn && closeBtn) {
-
-  // 비교 패널 열기
+if (comparePanel && indexBtn && pageWrapper) {
   function openCompare() {
     comparePanel.classList.add("open");
-    indexBtn.classList.add("hidden");
+    pageWrapper.classList.add("has-compare");  // 홈섹션 왼쪽으로 밀기
+    indexBtn.classList.add("hidden");          // 버튼 숨김
   }
 
-  // 비교 패널 닫기
-  function closeComparePanel() {
+  function closeCompare() {
     comparePanel.classList.remove("open");
-    indexBtn.classList.remove("hidden");
+    pageWrapper.classList.remove("has-compare");  // 홈섹션 원위치
+    indexBtn.classList.remove("hidden");          // 버튼 다시 보임
   }
 
-  // 책갈피(인덱스) 버튼 클릭 → 열림
-  indexBtn.addEventListener("click", openCompare);
-
-  // 닫기 버튼
-  closeBtn.addEventListener("click", closeComparePanel);
-
-  // 기본 상태 — 책갈피는 보여야 하므로
-  indexBtn.classList.remove("hidden");
+  // 인덱스 버튼 클릭 → 토글
+  indexBtn.addEventListener("click", () => {
+    if (comparePanel.classList.contains("open")) {
+      closeCompare();
+    } else {
+      openCompare();
+    }
+  });
 }
+
