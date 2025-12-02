@@ -421,19 +421,21 @@ function handleCompareStart() {
 }
 
 function handleNewAnalysis() {
-  compareActive = false;
-  compareHistory = [];
-  if ($comparePanel) $comparePanel.style.display = "none";
-  renderCompareSlots();
-  goToInitialState();
+  compareActive = true;  // 비교 기능 유지
+  // → 기존 백업 유지!
+  renderCompareSlots();  
+  // 🔥 goToInitialState(false) → "결과만 초기화"
+  goToInitialState(false);
 }
 
+// 이벤트 연결 그대로 유지
 if ($btnCompareStart) {
   $btnCompareStart.addEventListener("click", handleCompareStart);
 }
 if ($btnNew) {
   $btnNew.addEventListener("click", handleNewAnalysis);
 }
+
 
 // =========================
 // 데모 모드 (팀원 코드 기반 + 통합)
