@@ -38,7 +38,12 @@ const $container = document.getElementById("progressBarsContainer");
 const $predictStatus = document.getElementById("predictStatusMessage"); // (HTML엔 없어도 됨, 있으면 상태 표시)
 
 const $comparePanel = document.getElementById("comparePanel");
-const $compareSlots = document.getElementById("compareSlots");
+// 기존
+// const $compareSlots = document.getElementById("compareSlots");  
+
+// 수정
+const $compareSlots = document.querySelector("#comparePage #compareSlots");
+
 const $btnCompareStart = document.getElementById("btnCompareStart");
 const $btnNew = document.getElementById("btnNew");
 
