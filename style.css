@@ -259,6 +259,46 @@ nav a:hover { color: royalblue; }
   box-shadow: 0 3px 8px rgba(90,120,255,0.25);
 }
 
+/* 비교 패널 전체 영역 */
+.compare-panel {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f7f8ff;
+  border-radius: 12px;
+  border: 1px solid #d8dcff;
+}
+
+/* 카드 나열 방식 — 2열 grid */
+.compare-slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 15px;
+}
+
+/* 각 백업 카드 */
+.compare-card {
+  background: #ffffff;
+  border: 1px solid #e0e3ff;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* 이미지 영역 고정 */
+.compare-card .compare-image img {
+  width: 100%;
+  max-height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* 텍스트 깨지지 않도록 */
+.compare-result {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+
 
 /* ===============================
    result-box height rollback
