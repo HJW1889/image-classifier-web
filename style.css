@@ -1562,85 +1562,53 @@ input:checked + .slider:before {
   }  
   
 /* ========================
-   🔥 모바일 방명록만 세로 배치 (PC 그대로)
+   🔥 방명록 모바일 세로 (최고 우선순위 !!)
 ========================== */
 @media (max-width: 480px) {
-  /* 🔥 방명록 컨테이너 세로 강제 */
-  section#contact .contact-container {
+  /* 🔥 1단계: 컨테이너 강제 세로 */
+  #contact .contact-container {
+    display: flex !important;
     flex-direction: column !important;
     gap: 24px !important;
     width: 100% !important;
-    padding: 20px !important;
-    align-items: stretch !important;
+    padding: 20px !important !important;
   }
 
-  /* 🔥 입력폼 (상단 - 넉넉) */
-  section#contact .contact-left {
+  /* 🔥 2단계: 좌우 박스 전체 너비 */
+  #contact .contact-left,
+  #contact .contact-right {
     width: 100% !important;
-    padding: 32px 24px !important;
-    min-height: 300px !important;
-    border-radius: 20px !important;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.07) !important;
-  }
-
-  /* 🔥 피드 (하단 - 풀스크롤) */
-  section#contact .contact-right {
-    width: 100% !important;
-    padding: 28px 24px !important;
-    min-height: 340px !important;
-    border-radius: 20px !important;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.07) !important;
-  }
-
-  /* 🔥 피드 스크롤 최적화 */
-  section#contact #guestbookFeed {
-    max-height: 340px !important;
-    width: 100% !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-  }
-
-  /* 🔥 입력 폼 필드 */
-  section#contact input,
-  section#contact textarea {
-    width: 100% !important;
-    padding: 16px 18px !important;
-    font-size: 16px !important;
-    border-radius: 14px !important;
+    max-width: 100% !important;
+    flex: none !important;
     box-sizing: border-box !important;
-    margin-bottom: 16px !important;
   }
 
-  section#contact textarea {
-    height: 130px !important;
-    resize: vertical !important;
+  /* 🔥 3단계: 입력폼 상단 넉넉 */
+  #contact .contact-left {
+    padding: 32px 24px !important;
+    min-height: 320px !important;
   }
 
-  /* 🔥 제출 버튼 */
-  section#contact button[type="submit"] {
+  /* 🔥 4단계: 피드 하단 풀스크롤 */
+  #contact .contact-right {
+    padding: 28px 24px !important;
+    min-height: 360px !important;
+  }
+
+  /* 🔥 5단계: 모든 입력 100% */
+  #contact input,
+  #contact textarea,
+  #contact button[type="submit"] {
     width: 100% !important;
-    padding: 18px !important;
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    border-radius: 14px !important;
-    margin-top: 8px !important;
+    box-sizing: border-box !important;
   }
 
-  /* 🔥 제목 중앙 */
-  section#contact h1,
-  section#contact h2 {
-    text-align: center !important;
-    margin-bottom: 28px !important;
-    font-size: 24px !important;
-    font-weight: 700 !important;
-  }
-
-  /* 🔥 필드 레이블 */
-  section#contact .field label {
-    display: block !important;
-    margin-bottom: 8px !important;
-    font-weight: 600 !important;
-    font-size: 14px !important;
+  /* 🔥 6단계: 피드 스크롤 */
+  #guestbookFeed {
+    max-height: 360px !important;
+    overflow-y: auto !important;
+    width: 100% !important;
   }
 }
+
 
