@@ -313,10 +313,6 @@ function goToInitialState() {
   if ($status) $status.innerText = "";
   if ($predictStatus) $predictStatus.innerText = "";
 
-  // 🔥 크롭 버튼 숨기기 (새 이미지 선택하면 다시 나타남)
-  const cropBtn = document.getElementById("crop-btn");
-  if (cropBtn) cropBtn.style.display = "none";
-
   // 🔥 자동 슬라이드 초기화
   if (window.__fabric_slide_interval_id) {
     clearInterval(window.__fabric_slide_interval_id);
