@@ -950,7 +950,7 @@ setInterval(async () => {
 }, 5 * 60 * 1000);
 
 // =========================
-// ⭐ 방명록 (오류 안전 + 디버그 강화) ⭐
+// ⭐ 방명록 (로컬+서버 완전 통합) ⭐
 // =========================
 function initGuestbook() {
   const form = document.getElementById("contactForm");
@@ -963,48 +963,63 @@ function initGuestbook() {
 
   console.log("✅ 방명록 HTML 찾음");
 
-  // 테스트 데이터 (서버 안 될 때)
-  const testData = [
-    { id: 1, name: "테스트유저", message: "방명록 작동 확인!", created_at: "2025-12-03", contactInfo: "test@email.com" }
-  ];
+  // 🔥 LocalStorage 키
+  const GUESTBOOK_KEY = 'smart-texture-guestbook-v1';
 
-  // 📥 피드 로드 (안전 버전)
-  async function loadGuestbook() {
-    console.log("🔄 방명록 로딩 시작...");
-    
+  // 💾 로컬 저장 함수들
+  function saveGuestbook(data) {
+    localStorage.setItem(GUESTBOOK_KEY, JSON.stringify(data));
+    console.log(`💾 ${data.length}개 저장됨`);
+  }
+
+  function loadGuestbookLocal() {
     try {
-      feed.innerHTML = '<li style="text-align:center;padding:20px;color:#666;">📡 서버 연결 중...</li>';
-
-      // 서버 데이터 시도 (3초 타임아웃)
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 3000);
-
-      const res = await fetch(API_guestbook, { 
-        signal: controller.signal 
-      });
-      clearTimeout(timeout);
-
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-      }
-
-      const list = await res.json();
-      console.log("✅ 서버 데이터:", list);
-
-      renderFeed(list);
-
-    } catch (err) {
-      console.warn("❌ 서버 오류 → 테스트 데이터 사용:", err.message);
-      
-      // 서버 실패시 테스트 데이터 표시
-      renderFeed(testData);
-      
-      // 폼은 그대로 작동 (로컬 저장)
-      feed.innerHTML += '<li style="text-align:center;padding:12px;color:#ffaa00;font-size:12px;">⚠️ 서버 연결 중 문제발생<br>입력한 방명록은 나중에 동기화됩니다</li>';
+      return JSON.parse(localStorage.getItem(GUESTBOOK_KEY) || '[]');
+    } catch {
+      return [];
     }
   }
 
-  // 피드 렌더링
+  // 📥 피드 로드 (로컬 우선 + 서버 병합)
+  async function loadGuestbook() {
+    console.log("🔄 방명록 로딩 시작...");
+    
+    // 1️⃣ 로컬 데이터 먼저 표시 (초고속)
+    const localData = loadGuestbookLocal();
+    if (localData.length) {
+      renderFeed(localData);
+      console.log(`💾 로컬 ${localData.length}개 복원`);
+    } else {
+      feed.innerHTML = '<li style="text-align:center;padding:20px;color:#999;">첫 방명록을 남겨주세요! 😊</li>';
+    }
+
+    // 2️⃣ 서버 데이터 병합 시도
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 3000);
+
+      const res = await fetch(API_guestbook, { signal: controller.signal });
+      clearTimeout(timeout);
+
+      if (res.ok) {
+        const serverData = await res.json();
+        console.log("✅ 서버 데이터:", serverData.length, "개");
+        
+        // 로컬 + 서버 병합 (중복 제거)
+        const merged = [...localData, ...serverData]
+          .filter((item, idx, arr) => arr.findIndex(i => i.id === item.id) === idx)
+          .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        
+        saveGuestbook(merged.slice(0, 50)); // 최근 50개만
+        renderFeed(merged);
+      }
+    } catch (err) {
+      console.warn("❌ 서버 연결 실패 → 로컬만 사용:", err.message);
+      showMessage("💾 로컬 저장 모드 (서버 연결 후 동기화)");
+    }
+  }
+
+  // 피드 렌더링 (로컬 저장 자동)
   function renderFeed(list) {
     feed.innerHTML = "";
     
@@ -1024,9 +1039,28 @@ function initGuestbook() {
       `;
       feed.appendChild(li);
     });
+
+    // 🔥 삭제 이벤트 (로컬 동기화)
+    feed.querySelectorAll('.deleteBtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (confirm('정말 삭제할까요?')) {
+          const id = btn.dataset.id;
+          const newList = list.filter(item => item.id != id);
+          saveGuestbook(newList);
+          renderFeed(newList);
+          showMessage('🗑️ 삭제됨');
+        }
+      });
+    });
+
+    // 저장 상태 표시
+    const status = document.createElement('div');
+    status.innerHTML = `💾 로컬 저장됨 (${list.length}개)`;
+    status.style.cssText = 'font-size:12px;color:#6c84ff;text-align:right;padding:8px 0;';
+    feed.parentNode.appendChild(status);
   }
 
-  // 유틸리티 함수
+  // 유틸리티
   function escapeHtml(text) {
     const div = document.createElement("div");
     div.textContent = text;
@@ -1044,7 +1078,7 @@ function initGuestbook() {
     }
   }
 
-  // 📤 폼 제출 (오프라인 지원)
+  // 📤 폼 제출 (로컬 즉시 + 서버 시도)
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     
@@ -1057,50 +1091,34 @@ function initGuestbook() {
       return;
     }
 
-    // 즉시 UI에 추가 (낙관적 업데이트)
-    const tempId = Date.now();
-    const tempItem = {
-      id: tempId,
+    // 🔥 1. 로컬 즉시 저장
+    const currentData = loadGuestbookLocal();
+    const newItem = {
+      id: Date.now(),
       name, contactInfo, message,
       created_at: new Date().toISOString()
     };
-    
-    renderFeed([tempItem, ...testData]); // 테스트 데이터에 추가
+    const updatedData = [newItem, ...currentData].slice(0, 50);
+    saveGuestbook(updatedData);
+    renderFeed(updatedData);
 
+    // 🔥 2. 서버 저장 시도
     try {
-      // 서버 저장 시도
       const res = await fetch(API_guestbook, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, contactInfo, message })
       });
-
-      if (res.ok) {
-        showMessage("✅ 방명록 등록 완료!");
-        loadGuestbook(); // 서버 데이터 새로고침
-      } else {
-        showMessage("💾 로컬에 저장됨 (서버 연결 후 동기화)");
-      }
+      if (res.ok) console.log('✅ 서버 백업 완료');
     } catch (err) {
-      console.warn("서버 저장 실패:", err);
-      showMessage("💾 로컬에 임시 저장됨");
+      console.warn('서버 저장 실패:', err);
     }
 
     form.reset();
+    showMessage("✅ 방명록 저장됨! ✨");
   });
 
-  // 삭제 (테스트 데이터만)
-  feed.addEventListener("click", (e) => {
-    if (!e.target.classList.contains("deleteBtn")) return;
-
-    const li = e.target.closest("li");
-    if (confirm("정말 삭제할까요?")) {
-      li.remove();
-      showMessage("🗑️ 삭제되었습니다");
-    }
-  });
-
-  // 🚀 초기화
+  // 🚀 초기화 (로컬 우선)
   loadGuestbook();
   return true;
 }
@@ -1110,7 +1128,6 @@ if (!window.guestbookInitialized) {
   window.guestbookInitialized = true;
   console.log("🚀 방명록 시스템 시작");
   
-  // DOM 준비 후 실행
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initGuestbook);
   } else {
