@@ -932,6 +932,7 @@ input:checked + .slider:before {
 #pageWrapper {
   display: flex;
   width: 200%;   /* 2개의 페이지를 한줄로 */
+  transform: translateX(0);   /* 홈이 먼저 보이도록 */
   transition: transform 0.45s ease;
 }
 
