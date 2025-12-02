@@ -327,6 +327,7 @@ function goToInitialState() {
   // 내부 상태 리셋
   window.uploadedFile = null;
   window.predictedClass = null;
+}
 
 // ============================
 // 📦 백업(비교) 시스템 (팀원 로직 기반)
