@@ -37,12 +37,8 @@ const $toggleWrapper = document.querySelector(".toggle-switch");
 const $container = document.getElementById("progressBarsContainer");
 const $predictStatus = document.getElementById("predictStatusMessage"); // (HTML엔 없어도 됨, 있으면 상태 표시)
 
-// 기존
-// const $compareSlots = document.getElementById("compareSlots");  
-
-// 수정
-const $compareSlots = document.querySelector("#comparePage #compareSlots");
-
+const $comparePanel = document.getElementById("comparePanel");
+const $compareSlots = document.getElementById("compareSlots");
 const $btnCompareStart = document.getElementById("btnCompareStart");
 const $btnNew = document.getElementById("btnNew");
 
@@ -327,7 +323,16 @@ function goToInitialState() {
   // 내부 상태 리셋
   window.uploadedFile = null;
   window.predictedClass = null;
+
+  // 🔥 comparePanel / compareHistory는 절대 건드리지 않음!!
+  // goToInitialState 마지막 부분에 추가
+  setTimeout(() => {
+    if (compareHistory.length > 0) {
+        $comparePanel.style.display = "block";
+    }
+  }, 0);
 }
+
 
 // ============================
 // 📦 백업(비교) 시스템 (팀원 로직 기반)
@@ -351,6 +356,14 @@ function saveCurrentResultSnapshot() {
 function renderCompareSlots() {
   $compareSlots.innerHTML = "";
 
+  // 비교 기록이 0개면 패널 숨김
+  if (compareHistory.length === 0) {
+    $comparePanel.style.display = "none";
+    return;
+  }
+
+  // compareHistory가 있으면 반드시 comparePanel 표시
+  $comparePanel.style.display = "block";
 
   compareHistory.forEach((item, idx) => {
     const slot = document.createElement("div");
@@ -394,12 +407,22 @@ function handleCompareStart() {
   if (!last || last.html !== snap.html) {
     compareHistory.push(snap);
   }
+
+  compareActive = true;
+  if ($comparePanel) $comparePanel.style.display = "block";
+  renderCompareSlots();
+
+  if (compareHistory.length >= MAX_COMPARE) {
+    showMessage("최대 4개까지 기록됩니다. 새로 분석하기만 가능해요!");
+  }
 }
 
 function handleNewAnalysis() {
   compareActive = true;  // 비교 기능 유지
   // → 기존 백업 유지!
-  renderCompareSlots();
+  renderCompareSlots();  
+  // 🔥 goToInitialState(false) → "결과만 초기화"
+  goToInitialState(false);
 }
 
 // 이벤트 연결 그대로 유지
@@ -676,17 +699,43 @@ async function runPrediction(uploadFile) {
             const fabric = (predictedFabric || "").toLowerCase();
             const query = encodeURIComponent(koName || predictedFabric);
 
+            // 브랜드별 이미지 배열
             const shopImages = {
               naver: [`./images/naver/${fabric}1.jpg`, `./images/naver/${fabric}2.jpg`],
               musinsa: [`./images/musinsa/${fabric}3.jpg`, `./images/musinsa/${fabric}4.jpg`],
               spao: [`./images/spao/${fabric}5.jpg`, `./images/spao/${fabric}6.jpg`]
             };
-
-            const shopLinksData = [
+            // 검색어 수정 & 숨기기 조건
+            let spaoQuery = r.ko_name;   // 기본 검색어
+            let hideSpao = false;
+            // 스파오 전용 검색어 변경 매핑
+            const spaoKeywordMap = {
+              "스판덱스": "스판",
+              "폴리에스터": "폴리",
+              "실크": "실키",
+              "모피": "플리스"
+            };
+            // 매핑된 값 교체
+            if (spaoKeywordMap[r.ko_name]) {
+              spaoQuery = spaoKeywordMap[r.ko_name];
+            }
+            // 벨벳은 스파오 완전 숨김
+            if (r.ko_name === "벨벳") {
+              hideSpao = true;
+            }
+            // 쇼핑몰 리스트 구성
+            let shopLinksData = [
               { name: "네이버 쇼핑", url: `https://search.shopping.naver.com/search/all?query=${query}`, images: shopImages.naver },
-              { name: "무신사", url: `https://www.musinsa.com/search/musinsa/integration?keyword=${query}`, images: shopImages.musinsa },
-              { name: "스파오", url: `https://www.spao.com/product/search.html?keyword=${query}`, images: shopImages.spao }
+              { name: "무신사", url: `https://www.musinsa.com/search/musinsa/integration?keyword=${query}`, images: shopImages.musinsa }
             ];
+            // 스파오 표시 여부 체크
+            if (!hideSpao) {
+              shopLinksData.push({
+                name: "스파오",
+                url: `https://www.spao.com/product/search.html?keyword=${encodeURIComponent(spaoQuery)}`,
+                images: shopImages.spao
+              });
+            }
 
             if ($shopLinks) {
               $shopLinks.innerHTML = shopLinksData
@@ -851,8 +900,39 @@ async function startCamera() {
   }
 }
 
-if ($cameraBtn) {
-  $cameraBtn.addEventListener("click", startCamera);
+// 촬영 버튼 클릭 → startCamera 실행
+function isMobile() {
+  return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+}
+
+function handleCameraClick() {
+  if (isMobile()) {
+    // 모바일: 카메라 앱 실행
+    const mobileInput = document.createElement("input");
+    mobileInput.type = "file";
+    mobileInput.accept = "image/*";
+    mobileInput.capture = "environment";
+    mobileInput.style.display = "none";
+
+    mobileInput.addEventListener("change", (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      $file._cameraBlob = file;
+
+      // 미리보기 박스에 표시
+      showPreview(file);
+      $previewWrapper.appendChild($preview);
+    });
+
+    document.body.appendChild(mobileInput);
+    mobileInput.click();
+    document.body.removeChild(mobileInput);
+
+  } else {
+    // PC: 기존 카메라 장치
+    startCamera();
+  }
 }
 
 // =========================
@@ -973,36 +1053,3 @@ async function sendFeedback(predicted, corrected, file) {
     alert("정정 정보 전송 중 오류가 발생했습니다: " + err.message);
   }
 }
-
-// =========================
-// 페이지 슬라이더 (홈 ↔ 비교패널)
-// =========================
-
-// 책갈피 버튼 + 패널 제어
-const comparePanel = document.getElementById("comparePanel");
-const indexBtn = document.getElementById("indexBtn");
-const pageWrapper = document.getElementById("pageWrapper");
-
-if (comparePanel && indexBtn && pageWrapper) {
-  function openCompare() {
-    comparePanel.classList.add("open");
-    pageWrapper.classList.add("has-compare");  // 홈섹션 왼쪽으로 밀기
-    indexBtn.classList.add("hidden");          // 버튼 숨김
-  }
-
-  function closeCompare() {
-    comparePanel.classList.remove("open");
-    pageWrapper.classList.remove("has-compare");  // 홈섹션 원위치
-    indexBtn.classList.remove("hidden");          // 버튼 다시 보임
-  }
-
-  // 인덱스 버튼 클릭 → 토글
-  indexBtn.addEventListener("click", () => {
-    if (comparePanel.classList.contains("open")) {
-      closeCompare();
-    } else {
-      openCompare();
-    }
-  });
-}
-
