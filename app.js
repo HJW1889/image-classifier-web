@@ -399,9 +399,7 @@ function handleCompareStart() {
 function handleNewAnalysis() {
   compareActive = true;  // 비교 기능 유지
   // → 기존 백업 유지!
-  renderCompareSlots();  
-  // 🔥 goToInitialState(false) → "결과만 초기화"
-  goToInitialState(false);
+  renderCompareSlots();
 }
 
 // 이벤트 연결 그대로 유지
@@ -983,23 +981,27 @@ const comparePanel = document.getElementById("comparePanel");
 const indexBtn = document.getElementById("indexBtn");
 const closeBtn = document.getElementById("closeCompare");
 
-// 비교 패널 열기
-function openCompare() {
-  comparePanel.classList.add("open");
-  indexBtn.classList.add("hidden");
-}
+// 이 세 가지 요소가 "모두" 있을 때만 이벤트를 건다
+if (comparePanel && indexBtn && closeBtn) {
 
-// 비교 패널 닫기
-function closeComparePanel() {
-  comparePanel.classList.remove("open");
+  // 비교 패널 열기
+  function openCompare() {
+    comparePanel.classList.add("open");
+    indexBtn.classList.add("hidden");
+  }
+
+  // 비교 패널 닫기
+  function closeComparePanel() {
+    comparePanel.classList.remove("open");
+    indexBtn.classList.remove("hidden");
+  }
+
+  // 책갈피(인덱스) 버튼 클릭 → 열림
+  indexBtn.addEventListener("click", openCompare);
+
+  // 닫기 버튼
+  closeBtn.addEventListener("click", closeComparePanel);
+
+  // 기본 상태 — 책갈피는 보여야 하므로
   indexBtn.classList.remove("hidden");
 }
-
-// 책갈피(인덱스) 버튼 클릭 → 열림
-indexBtn.addEventListener("click", openCompare);
-
-// 닫기 버튼
-closeBtn.addEventListener("click", closeComparePanel);
-
-// 기본 상태 — 책갈피는 보여야 하므로
-indexBtn.classList.remove("hidden");
