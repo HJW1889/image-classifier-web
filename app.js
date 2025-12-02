@@ -351,13 +351,13 @@ function renderCompareSlots() {
 
     slot.innerHTML = `
       <button class="compare-delete" data-idx="${idx}">×</button>
+
       <div class="compare-image">
-        <img src="${item.img}" alt="backup">
+        <img src="${item.img}" alt="backup" />
       </div>
+
       <div class="compare-result">
-        <div class="raw-result">${$result.innerHTML}</div>
-        <div class="raw-bars">${$container.innerHTML}</div>
-        <div class="raw-text">${$resultText.innerHTML}</div>
+        ${item.html}
       </div>
     `;
 
@@ -373,6 +373,7 @@ function renderCompareSlots() {
     });
   });
 }
+
 
 
 function handleCompareStart() {
