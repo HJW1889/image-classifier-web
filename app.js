@@ -950,35 +950,56 @@ setInterval(async () => {
 }, 5 * 60 * 1000);
 
 // =========================
-// ⭐ 방명록 서버 API 연결 ⭐ (네 코드 기준)
+// ⭐ 방명록 서버 API 연결 (개선 버전) ⭐
 // =========================
-document.addEventListener("DOMContentLoaded", () => {
+function initGuestbook() {
   const form = document.getElementById("contactForm");
   const feed = document.getElementById("guestbookFeed");
 
-  if (!form || !feed) return;
-
-  async function loadGuestbook() {
-    feed.innerHTML = "";
-    const res = await fetch(API_guestbook);
-    const list = await res.json();
-
-    list.forEach(item => {
-      const li = document.createElement("li");
-      li.innerHTML = `
-        <strong>${item.name}</strong>
-        <div class="date">${item.created_at}</div>
-        <p>${item.message}</p>
-        ${item.contactInfo ? `<small>연락처: ${item.contactInfo}</small>` : ""}
-        <button class="deleteBtn" data-id="${item.id}">삭제</button>
-      `;
-      feed.appendChild(li);
-    });
+  if (!form || !feed) {
+    console.warn("방명록 요소를 찾을 수 없습니다:", { form, feed });
+    return false;
   }
 
+  console.log("✅ 방명록 초기화 완료");
+
+  // 📥 피드 로드 함수
+  async function loadGuestbook() {
+    try {
+      feed.innerHTML = '<li style="text-align:center; padding:20px;">로딩 중...</li>';
+      const res = await fetch(API_guestbook);
+      
+      if (!res.ok) throw new Error("서버 응답 오류");
+      
+      const list = await res.json();
+      feed.innerHTML = ""; // 로딩 메시지 제거
+
+      if (list.length === 0) {
+        feed.innerHTML = '<li style="text-align:center; padding:20px; color:#999;">아직 방명록이 없습니다.</li>';
+        return;
+      }
+
+      list.forEach(item => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <strong>${item.name}</strong>
+          <div class="date">${item.created_at}</div>
+          <p>${item.message}</p>
+          ${item.contactInfo ? `<small>연락처: ${item.contactInfo}</small>` : ""}
+          <button class="deleteBtn" data-id="${item.id}">삭제</button>
+        `;
+        feed.appendChild(li);
+      });
+    } catch (err) {
+      console.error("방명록 로드 실패:", err);
+      feed.innerHTML = '<li style="text-align:center; padding:20px; color:#ff6b6b;">로딩 중 오류 발생</li>';
+    }
+  }
+
+  // 📤 폼 제출
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
+    
     const name = document.getElementById("name").value.trim();
     const contactInfo = document.getElementById("contactInfo").value.trim();
     const message = document.getElementById("message").value.trim();
@@ -988,31 +1009,72 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    await fetch(API_guestbook, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, contactInfo, message })
-    });
+    try {
+      const res = await fetch(API_guestbook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, contactInfo, message })
+      });
 
-    form.reset();
-    loadGuestbook();
+      if (!res.ok) throw new Error("서버 저장 실패");
+      
+      form.reset();
+      showMessage("방명록이 등록되었습니다! ✨");
+      loadGuestbook(); // 즉시 피드 갱신
+    } catch (err) {
+      console.error("방명록 저장 실패:", err);
+      alert("저장 중 오류가 발생했습니다: " + err.message);
+    }
   });
 
+  // 🗑️ 삭제 버튼
   feed.addEventListener("click", async (e) => {
     if (!e.target.classList.contains("deleteBtn")) return;
 
     const id = e.target.dataset.id;
+    if (!confirm("정말 삭제할까요?")) return;
 
-    if (confirm("정말 삭제할까요?")) {
-      await fetch(`${API_guestbook}/${id}`, {
-        method: "DELETE"
-      });
+    try {
+      const res = await fetch(`${API_guestbook}/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("삭제 실패");
+      
+      showMessage("방명록이 삭제되었습니다.");
       loadGuestbook();
+    }  catch (err) {
+      console.error("삭제 실패:", err);
+      alert("삭제 중 오류가 발생했습니다.");
     }
   });
 
+  // 🚀 초기 로드
   loadGuestbook();
-});
+  
+  return true;
+}
+
+// 🔥 여러 시점에서 실행 보장
+function setupGuestbook() {
+  // 1. DOM 로드 후 즉시 실행
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initGuestbook);
+  } else {
+    initGuestbook();
+  }
+  
+  // 2. 1초 후 재시도 (SPA/동적 로드 대비)
+  setTimeout(initGuestbook, 1000);
+  
+  // 3. 3초 후 최종 확인
+  setTimeout(() => {
+    if (!document.querySelector("#guestbookFeed li")) {
+      console.log("🔄 방명록 재초기화 시도");
+      initGuestbook();
+    }
+  }, 3000);
+}
+
+// 전역 실행
+setupGuestbook();
 
 // =========================
 // 정정 피드백 제출
