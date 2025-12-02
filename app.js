@@ -328,6 +328,12 @@ function goToInitialState() {
   window.predictedClass = null;
 
   // 🔥 comparePanel / compareHistory는 절대 건드리지 않음!!
+  // goToInitialState 마지막 부분에 추가
+  setTimeout(() => {
+    if (compareHistory.length > 0) {
+        $comparePanel.style.display = "block";
+    }
+  }, 0);
 }
 
 
