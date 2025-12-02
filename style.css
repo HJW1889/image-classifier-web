@@ -929,6 +929,45 @@ input:checked + .slider:before {
   margin-top: 10px;
 }
 
+#pageWrapper {
+  display: flex;
+  width: 200%;   /* 2개의 페이지를 한줄로 */
+  transition: transform 0.45s ease;
+}
+
+/* 개별 페이지 크기 */
+.page {
+  width: 50%;            /* 화면에 반반 나눠서 2페이지 */
+  min-width: 50%;
+  height: auto;
+  overflow-y: auto;
+}
+
+.page-home {
+  background: white;
+}
+
+.page-compare {
+  background: #f8f9ff;
+  border-left: 1px solid #ddd;
+}
+
+/* 인덱스 버튼 */
+.index-btn {
+  position: fixed;
+  right: 15px;
+  top: 50%;
+  background: #4d66ff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transform: translateY(-50%);
+}
+.hidden { display:none; }
+
+
 /* 전체 영역 */
 .project {
   padding: 100px 20px;
