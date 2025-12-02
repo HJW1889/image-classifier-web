@@ -266,40 +266,43 @@ nav a:hover { color: royalblue; }
   box-shadow: 0 3px 8px rgba(90,120,255,0.25);
 }
 
-/* 비교 패널 전체 + 스크롤 박스 */
+/* 비교 패널 전체 */
 #comparePanel {
-  display: none;          /* 기본은 숨김 */
+  display: none;                 /* 기본은 숨김 */
   width: 100%;
-  clear: both;
-  margin-top: 20px;
-
-  padding: 15px 0;
   background: #f7f8ff;
   border-radius: 12px;
   border: 1px solid #d8dcff;
+  margin-top: 20px;
+  padding: 15px 0;
 
-  overflow-x: auto;       /* 👈 가로 스크롤 */
+  /* 🔥 가로 스크롤 */
+  overflow-x: auto;
   overflow-y: hidden;
-  white-space: nowrap;    /* 👈 한 줄 유지 */
+
+  /* 🔥 내부 요소 한 줄 고정 */
+  white-space: nowrap;
+
   box-sizing: border-box;
 }
 
-/* 가로 슬라이더 */
-.compare-slots {
-  display: inline-flex;   /* 👈 한 줄 정렬 */
+/* 카드들을 담는 컨테이너 */
+#compareSlots {
+  display: inline-flex;          /* 🔥 flex인데 width 자동 확장 가능 */
   gap: 15px;
   padding: 10px 15px;
 }
 
-/* 각 백업 카드 */
+/* 개별 카드 */
 .compare-card {
-  flex: 0 0 240px;        /* 👈 가로 길이 고정 */
-  background: #ffffff;
+  flex: 0 0 240px;               /* 🔥 가로 240px 고정 */
+  background: #fff;
   border: 1px solid #e0e3ff;
   border-radius: 10px;
   padding: 12px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  position: relative;     /* 삭제 버튼 위치 기준 */
+  position: relative;
+  display: inline-block;         /* 🔥 스크롤 안정화 */
 }
 
 /* 이미지 */
@@ -310,13 +313,13 @@ nav a:hover { color: royalblue; }
   border-radius: 8px;
 }
 
-/* 텍스트 */
+/* 내용 */
 .compare-result {
   margin-top: 10px;
   font-size: 14px;
 }
 
-/* ❌ 카드별 삭제 버튼 */
+/* 삭제 버튼 */
 .compare-delete {
   position: absolute;
   top: 8px;
@@ -336,7 +339,6 @@ nav a:hover { color: royalblue; }
 .compare-delete:hover {
   background: #ff3b3b;
 }
-
 
 
 
