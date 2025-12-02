@@ -283,6 +283,7 @@ function goToInitialState() {
     $previewWrapper.innerHTML = "";
     $previewWrapper.appendChild($preview);
     if ($scanLine) $previewWrapper.appendChild($scanLine);
+    if ($cropBtn) $previewWrapper.appendChild($cropBtn);  // ⭐ 이 줄 추가!
     $previewWrapper.classList.remove("has-image");
   }
 
