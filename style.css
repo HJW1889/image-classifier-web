@@ -266,6 +266,37 @@ nav a:hover { color: royalblue; }
   box-shadow: 0 3px 8px rgba(90,120,255,0.25);
 }
 
+
+/* 비교 패널 전체 + 스크롤 박스 */
+#comparePanel {
+  display: none;                 /* 기본은 숨김 (JS에서 block으로 켜줌) */
+  width: 100%;
+  clear: both;
+  margin-top: 20px;
+
+  padding: 15px 0;
+  background: #f7f8ff;
+  border-radius: 12px;
+  border: 1px solid #d8dcff;
+
+  /* 🔥 가로 스크롤 */
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  /* 🔥 내부 요소 한 줄 고정 */
+  white-space: nowrap;
+
+  box-sizing: border-box;
+}
+
+/* 카드들을 담는 컨테이너 */
+#compareSlots,
+.compare-slots {
+  display: inline-flex;          /* 🔥 가로로 나열 */
+  gap: 15px;
+  padding: 10px 15px;
+}
+
 /* 개별 카드 */
 .compare-card {
   flex: 0 0 240px;               /* 🔥 가로 240px 고정 */
@@ -796,155 +827,107 @@ input:checked + .slider:before {
 }
 
 /* ============================================================
-   📖 책 펼침 효과 (홈 + 비교패널 나란히)
+   📦 백업(비교) 카드 디자인
 ============================================================ */
 
-/* 인덱스 버튼 (책갈피 + 닫기 버튼) */
-#indexBtn {
-  position: fixed;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-  padding: 15px 25px;
-  background: linear-gradient(135deg, #4d66ff, #3b53e6);
-  color: white;
-  border-radius: 25px 0 0 25px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  z-index: 1002;
-  box-shadow: -6px 0 20px rgba(77,102,255,0.4);
-  white-space: nowrap;
-  transition: all 0.3s ease;
-}
-
-#indexBtn:hover {
-  background: linear-gradient(135deg, #3b53e6, #2a45cc);
-  box-shadow: -8px 0 24px rgba(77,102,255,0.5);
-}
-
-/* 비교패널 열린 상태에서 인덱스 버튼 = 닫기 버튼 */
-#indexBtn::after {
-  content: "닫기";
-  display: block;
-  font-size: 12px;
-  opacity: 0.9;
-  margin-top: 2px;
-}
-
-/* ========================================================
-   핵심: 홈섹션도 슬라이드!
-============================================================ */
-#pageWrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-/* 비교패널 열리면 홈섹션은 왼쪽 50%로 밀림 */
-#pageWrapper.has-compare {
-  transform: translateX(-50vw);
-}
-
-/* 비교패널 - 오른쪽 50% 책 페이지 */
+/* 패널 기본 */
 #comparePanel {
-  position: fixed;
-  top: 0;
-  right: -50vw;  /* 처음엔 완전 오른쪽 밖 */
-  width: 50vw;
-  height: 100vh;
-  background: linear-gradient(90deg, #f8faff 0%, #f0f4ff 100%);
-  border-left: 3px solid #d4d8ff;
-  box-shadow: -10px 0 40px rgba(0,0,0,0.2);
-  z-index: 1001;
-  transition: right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  padding: 50px 40px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
+  display: none;
+  padding: 15px;
+  background: #f7f9ff;
+  border-radius: 12px;
+  border: 1px solid #e4e8ff;
+  margin-top: 20px;
 }
 
-#comparePanel.open {
-  right: 0;  /* 책 오른쪽 페이지로 등장 */
-}
-
-/* 패널 제목 */
-#comparePanel h5 {
-  font-size: 22px;
-  color: #2c3e50;
-  font-weight: 700;
-  margin: 0 0 30px 0;
-  padding-bottom: 20px;
-  border-bottom: 3px solid #e1e5ff;
-}
-
-/* 비교 슬롯들 */
+/* 아이템 영역 */
 #compareSlots {
-  flex: 1;
   display: flex;
-  flex-direction: column;
-  gap: 25px;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
-/* 비교 카드 */
-.compare-card {
-  background: white;
-  border-radius: 20px;
-  padding: 25px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-  border: 1px solid #e8ecff;
-  transition: all 0.3s ease;
+/* 카드 */
+.compare-slot {
+  width: 230px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+  padding: 12px;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+.compare-slot:hover {
+  transform: translateY(-4px);
 }
 
-.compare-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 35px rgba(0,0,0,0.15);
-}
-
-.compare-card .compare-image img {
+/* 이미지 */
+.backup-img img {
   width: 100%;
-  height: 180px;
+  height: 130px;
   object-fit: cover;
-  border-radius: 15px;
-  margin-bottom: 18px;
+  border-radius: 10px;
+  margin-bottom: 10px;
 }
 
-.compare-result {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #34495e;
+/* 텍스트 영역 */
+.backup-info {
+  font-size: 13px;
+  color: #444;
 }
 
-/* 개별 삭제 버튼 */
-.compare-delete {
+/* 🔥 개별 삭제 버튼 */
+.delete-backup-btn {
   position: absolute;
-  right: 10px;
-  top: 10px;
-  background: #ff6060;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
   border: none;
-  color: white;
-
-  width: 24px;
-  height: 24px;
   border-radius: 50%;
-  cursor: pointer;
+  background: #ff6b6b;
+  color: #fff;
   font-size: 16px;
+  line-height: 22px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.delete-backup-btn:hover {
+  background: #ff3b3b;
+  transform: scale(1.12);
+}
 
+.compare-grid {
   display: flex;
-  align-items: center;
-  justify-content: center;
-
-  transition: 0.2s ease;
-}
-.compare-delete:hover {
-  background: #ff3737;
-  transform: scale(1.15);
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
+.compare-item {
+  width: calc(25% - 8px);
+  min-width: 180px;
+
+  padding: 8px;
+  background: #fafafa;
+  border-radius: 8px;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-sizing: border-box;
+}
+
+.compare-item h5 {
+  font-size: 12px;
+  /*margin: 0 0 6px 0;*/
+}
+
+.compare-item p {
+  /*margin: 2px 0;*/
+  font-size: 10px;
+}
+
+.result-container {
+  margin-top: 10px;
+}
 
 /* 전체 영역 */
 .project {
