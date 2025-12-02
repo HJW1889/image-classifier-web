@@ -992,6 +992,3 @@ function closeComparePage() {
 
 indexBtn.addEventListener("click", openCompare);
 closeBtn.addEventListener("click", closeComparePage);
-
-indexBtn.classList.remove("hidden");
-openCompare();
