@@ -1565,6 +1565,12 @@ input:checked + .slider:before {
    🔥 방명록 모바일 세로 (최고 우선순위 !!)
 ========================== */
 @media (max-width: 480px) {
+  div.container.contact-container,
+  #contact > div[class*="contact-container"],
+  #contact .contact-container {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
   /* 🔥 1단계: 컨테이너 강제 세로 */
   #contact .contact-container {
     display: flex !important;
