@@ -1311,200 +1311,225 @@ input:checked + .slider:before {
 
 
 /* ========================
-  모바일 ==================== */
+   모바일 (전체 개선) 
+   화면 너비 480px 이하 대상
+========================== */
 @media (max-width: 480px) {
-body {
-  font-family: Arial, Helvetica, "Apple SD Gothic Neo", "맑은 고딕", sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f0f4ff;     /* 배경색 */
-}
-
-html, body {
-  width: 100%;
-  overflow-x: hidden;
-}
-
-#home {
-  /*padding: 10px 10px;*/
-  background: linear-gradient(180deg, #eef3ff 0%, #f7faff 100%);
-  box-sizing: border-box;
-}
-
-#home h1 {
-  font-size: 24px;
-  font-weight: 800;
-  text-align: center;
-  color: #1f2b46;
-  /*margin-bottom: 20px;*/
-}
-
-/* 메인 컨테이너 */
-#home .container {
-  width: 100%;
-  padding: 24px 16px;
-  max-width: 400px !important;
-  margin: 0 auto;
-}
-
-/* 업로드 영역 */
-#home .header {
-  background: #f8faff;
-  border: 2px dashed #6e8bff;
-  border-radius: 16px;
-  padding: 30px 20px;
-  transition: 0.25s;
-}
-
-#home .header:hover {
-  border-color: #4d66ff;
-  background: #f1f4ff;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
-}
-
-header {
-    width: 100% !important;
-    padding: 10px 0 !important;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  /* 🔧 1. 기본 레이아웃 & 터치 최적화 */
+  html, body {
+    font-size: 16px; /* 기본 폰트 크기 고정 (터치 편의) */
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%; /* iOS 줌 방지 */
   }
 
-  nav {
-    width: 100% !important;
-    display: flex;
-    justify-content: center !important;
-    gap: 10px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  nav a {
-    margin: 0 !important;      /* ← 문제 핵심 해결 */
-    padding: 4px 6px !important;
-    font-size: 16px !important;
-  }
-
-  .toggle-switch {
-    transform: scale(1);     /* 스위치 크기 줄이기 */
-  }
-
+  /* 🔧 2. 헤더 완전 재정리 (세로 스택 + 터치 영역) */
   header {
-    flex-direction: column;     /* 위아래로 배치 */
-    justify-content: center;    /* 가로 중앙 */
-    align-items: center;        /* 세로 중앙 */
-    padding: 15px 0;            /* 상하 여백 줄이기 */
-  }
-
-  .brand {
-    font-size: 18px;
+    padding: 12px 16px !important; /* 좌우 여백 줄이고 상하 균일 */
+    flex-direction: column !important;
+    gap: 12px !important; /* 로고-네비 간격 */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
   }
 
   .logo {
-    margin: 10px 0;
-    align-items: center;  /* 세로 가운데 맞춤 */
-    justify-content: center; /* 가로 가운데 맞춤 */
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .logo .brand {
+    font-size: 20px !important; /* 모바일 로고 크기 최적 */
   }
 
   nav {
+    width: 100% !important;
+    justify-content: center !important;
+    gap: 16px !important; /* 네비 버튼 간격 */
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;        /* 가운데 정렬 */
-    gap: 10px;
-    margin-right: 20px; /*시각적 중심 보정*/
   }
 
-  h1 {
-    width: 90%;        /*제목 폭*/
-    font-size: 20px;
-    margin: 20px;  /**/
+  nav a {
+    padding: 8px 12px !important; /* 터치 영역 44px 기준 충족 */
+    font-size: 15px !important;
+    border-radius: 6px;
+    transition: background 0.2s;
   }
 
-  h2, p {
-    white-space: normal; /* 줄바꿈 허용 */
-    word-break: keep-all; /* 단어 단위로 줄바꿈 */
-    text-align: center;
+  nav a:hover, nav a:active {
+    background: rgba(110, 140, 255, 0.1);
   }
 
-  .container { /*컨테이너 내부*/
-    width: 100%; /*90*/
-    height: auto;
-    max-width: 360px;
-    padding: 20px; /*10*/
-    align-items: center;
+  /* 🔧 3. 홈 섹션 & 메인 컨테이너 */
+  #home {
+    padding: 60px 12px 40px !important; /* 상단 헤더 고려한 패딩 */
   }
+
+  #home h1 {
+    font-size: 24px !important;
+    line-height: 1.3;
+    margin-bottom: 32px !important;
+    padding: 0 8px;
+  }
+
+  #home .container {
+    width: 100% !important;
+    max-width: none !important; /* 제약 해제 */
+    padding: 28px 20px !important; /* 내부 여백 최적화 */
+    margin-bottom: 20px;
+  }
+
+  /* 🔧 4. 드롭존 & 버튼들 (터치 프렌들리) */
+  #home .header {
+    padding: 32px 24px !important; /* 내부 공간 넓힘 */
+    margin-bottom: 24px;
+  }
+
+  .upload-btn, .camera-btn {
+    width: 80px !important;
+    height: 80px !important; /* 터치 영역 44px 이상 */
+    font-size: 12px !important;
+  }
+
+  .upload-btn img, .camera-btn img {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  #drop-area p {
+    font-size: 14px !important;
+    padding: 0 8px;
+  }
+
+  /* 🔧 5. 미리보기 & 결과 영역 반응형 */
+  .analysis-row {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 24px !important;
+  }
+
   .preview-wrapper {
     width: 100% !important;
-    /*height: auto !important;*/
-    max-width: 320px; /* 모바일 기준 안정 크기 */
+    max-width: 340px !important;
+    height: 340px !important;
     margin: 0 auto;
   }
 
-  #preview {
-    height: 100%;
-    width: 100%;
-  }
-
-  #resultText, #result {
-    max-width: 360px;
+  .result-box {
+    width: 100% !important;
+    max-width: 340px !important;
+    min-height: 320px !important;
     margin: 0 auto;
+    padding: 24px 20px !important;
   }
 
-  .capture-circle {
-    width: 50px;
-    height: 50px;
-    border-width: 3px;
-  }
-  .upload-btn,
-  .camera-btn,
-  .predict-btn {
-    padding: 6px 12px;
-    font-size: 14px;
-    border: none;
-  }
   .action-buttons {
-    width: 100%;
-    display: flex;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .action-buttons .btn {
+    width: 100% !important;
+    padding: 14px !important;
+    font-size: 16px !important; /* 터치 최적 */
+  }
+
+  /* 🔧 6. 비교 패널 (가로 스크롤 최적화) */
+  #comparePanel {
+    padding: 16px !important;
+    margin: 24px 0 !important;
+  }
+
+  .compare-slots {
+    gap: 12px !important;
+    padding: 8px 12px !important;
+  }
+
+  .compare-card, .compare-slot {
+    flex: 0 0 280px !important; /* 모바일에서 약간 넓게 */
+    max-width: 280px !important;
+  }
+
+  /* 🔧 7. 쇼핑 링크 (2열 그리드) */
+  .shop-links {
+    gap: 12px !important;
     justify-content: center;
-    margin: 0 auto;
-    padding: 0;
-    box-sizing: border-box;
   }
 
-.shop-links {
-    justify-content: center; /* 가운데 정렬 유지 */
-    gap: 10px;             /* 이미지 간격 축소 */
+  .shop-links a {
+    width: 140px !important;
+    height: 110px !important; /* 세로 비율 조정 */
+    flex: 1 1 140px;
   }
 
-/* 컨테이너 */
-.shop-links a {
-  display: block;
-  position: relative;
-  text-decoration: none;
-  overflow: visible; /*hidden*/
-  width: 120px;
-  height: 150px;
-  border-radius: 10px;     /* 둥근 모서리 유지 */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* 비교 카드 개별 박스 */
-.compare-slot {
-  flex-shrink: 0;         /* 🔥 줄어들지 않게 */
-  width: 70%;           /* 개별 박스 크기 */
-}
-
-.compare-slots { /*컨테이너들 사이*/
-  display: flex;
-  gap: 15px;
-  margin-top: 0px;
-}
-
-  /* 모바일 방명록 컨테이너 */
+  /* 🔧 8. 방명록 모바일 최적화 */
   #contact.contact-section .contact-container {
     flex-direction: column !important;
+    gap: 24px !important;
   }
+
+  #contact.contact-section .contact-left,
+  #contact.contact-section .contact-right {
+    padding: 24px 20px !important;
+  }
+
   #contact.contact-section #guestbookFeed {
-    max-height: 300px !important;
+    max-height: 280px !important;
+  }
+
+  #contact.contact-section input,
+  #contact.contact-section textarea {
+    padding: 14px 16px !important;
+    font-size: 16px !important; /* 모바일 입력 편의 */
+  }
+
+  /* 🔧 9. 푸터 & 기타 버튼들 */
+  .predict-btn {
+    width: 100% !important;
+    padding: 16px !important;
+    font-size: 16px !important;
+  }
+
+  .footer {
+    padding: 16px !important;
+    justify-content: center;
+  }
+
+  /* 🔧 10. 토글 스위치 & 피드백 */
+  .toggle-switch {
+    transform: scale(0.95) !important;
+  }
+
+  .feedback-wrong-btn {
+    font-size: 13px !important;
+    padding: 8px 12px !important;
+  }
+
+  .correction-form {
+    right: 0 !important;
+    min-width: 200px !important;
+    left: auto !important;
+  }
+
+  /* 🔧 11. 프로그레스바 반응형 */
+  .progress-label {
+    width: 80px !important;
+    font-size: 13px !important;
+  }
+
+  .progress-percent {
+    width: 36px !important;
+    font-size: 13px !important;
+  }
+
+  /* 🔧 12. 스크롤바 모바일 숨김 */
+  #comparePanel::-webkit-scrollbar,
+  #guestbookFeed::-webkit-scrollbar {
+    height: 4px !important;
+  }
+
+  #comparePanel::-webkit-scrollbar-thumb,
+  #guestbookFeed::-webkit-scrollbar-thumb {
+    border-radius: 4px !important;
   }
 }
