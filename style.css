@@ -344,6 +344,23 @@ nav a:hover { color: royalblue; }
   background: #ff3b3b;
 }
 
+/* ============================
+   비교 패널 레이아웃 강제 덮어쓰기
+============================ */
+#comparePanel #compareSlots,
+#comparePanel .compare-slots {
+  display: inline-flex !important;    /* ❗ 가로 배치 강제 */
+  flex-wrap: nowrap !important;       /* ❗ 줄바꿈 금지 */
+  gap: 15px !important;
+  padding: 10px 15px !important;
+  white-space: nowrap !important;
+}
+
+#comparePanel .compare-card {
+  flex: 0 0 240px !important;         /* ❗ 가로 길이 고정 */
+  display: inline-block !important;
+}
+
 
 
 
