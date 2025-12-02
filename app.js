@@ -37,7 +37,6 @@ const $toggleWrapper = document.querySelector(".toggle-switch");
 const $container = document.getElementById("progressBarsContainer");
 const $predictStatus = document.getElementById("predictStatusMessage"); // (HTML엔 없어도 됨, 있으면 상태 표시)
 
-const $comparePanel = document.getElementById("comparePanel");
 // 기존
 // const $compareSlots = document.getElementById("compareSlots");  
 
@@ -351,14 +350,6 @@ function saveCurrentResultSnapshot() {
 function renderCompareSlots() {
   $compareSlots.innerHTML = "";
 
-  // 비교 기록이 0개면 패널 숨김
-  if (compareHistory.length === 0) {
-    $comparePanel.style.display = "none";
-    return;
-  }
-
-  // compareHistory가 있으면 반드시 comparePanel 표시
-  $comparePanel.style.display = "block";
 
   compareHistory.forEach((item, idx) => {
     const slot = document.createElement("div");
@@ -402,15 +393,6 @@ function handleCompareStart() {
   if (!last || last.html !== snap.html) {
     compareHistory.push(snap);
   }
-
-  compareActive = true;
-  if ($comparePanel) $comparePanel.style.display = "block";
-  renderCompareSlots();
-
-  if (compareHistory.length >= MAX_COMPARE) {
-    showMessage("최대 4개까지 기록됩니다. 새로 분석하기만 가능해요!");
-  }
-}
 
 function handleNewAnalysis() {
   compareActive = true;  // 비교 기능 유지
