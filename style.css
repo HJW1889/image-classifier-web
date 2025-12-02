@@ -796,92 +796,90 @@ input:checked + .slider:before {
 }
 
 /* ============================================================
-   📦 책갈피 비교 패널 (좌우 책 모양)
+   📖 책 펼침 효과 (홈 + 비교패널 나란히)
 ============================================================ */
 
-/* 인덱스 버튼 (책갈피) - 오른쪽에 붙음 */
+/* 인덱스 버튼 (책갈피 + 닫기 버튼) */
 #indexBtn {
   position: fixed;
   top: 50%;
-  right: 0;
+  right: 20px;
   transform: translateY(-50%);
-  padding: 15px 20px;
+  padding: 15px 25px;
   background: linear-gradient(135deg, #4d66ff, #3b53e6);
   color: white;
-  border-radius: 20px 0 0 20px;
+  border-radius: 25px 0 0 25px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  z-index: 1001;
-  box-shadow: -4px 0 12px rgba(77,102,255,0.4);
+  z-index: 1002;
+  box-shadow: -6px 0 20px rgba(77,102,255,0.4);
   white-space: nowrap;
   transition: all 0.3s ease;
 }
 
 #indexBtn:hover {
   background: linear-gradient(135deg, #3b53e6, #2a45cc);
-  box-shadow: -6px 0 16px rgba(77,102,255,0.5);
+  box-shadow: -8px 0 24px rgba(77,102,255,0.5);
 }
 
-/* 인덱스 버튼 숨김 */
-#indexBtn.hidden {
-  opacity: 0;
-  transform: translateY(-50%) translateX(20px);
-  pointer-events: none;
+/* 비교패널 열린 상태에서 인덱스 버튼 = 닫기 버튼 */
+#indexBtn::after {
+  content: "닫기";
+  display: block;
+  font-size: 12px;
+  opacity: 0.9;
+  margin-top: 2px;
 }
 
-/* 비교 패널 - 오른쪽 반페이지 책 */
+/* ========================================================
+   핵심: 홈섹션도 슬라이드!
+============================================================ */
+#pageWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 비교패널 열리면 홈섹션은 왼쪽 50%로 밀림 */
+#pageWrapper.has-compare {
+  transform: translateX(-50vw);
+}
+
+/* 비교패널 - 오른쪽 50% 책 페이지 */
 #comparePanel {
   position: fixed;
   top: 0;
-  right: -50vw;  /* 처음엔 오른쪽 밖으로 숨김 */
-  width: 50vw;   /* 화면의 절반만 */
+  right: -50vw;  /* 처음엔 완전 오른쪽 밖 */
+  width: 50vw;
   height: 100vh;
   background: linear-gradient(90deg, #f8faff 0%, #f0f4ff 100%);
-  border-left: 2px solid #d4d8ff;
-  box-shadow: -8px 0 30px rgba(0,0,0,0.15);
-  z-index: 1000;
+  border-left: 3px solid #d4d8ff;
+  box-shadow: -10px 0 40px rgba(0,0,0,0.2);
+  z-index: 1001;
   transition: right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  padding: 40px 30px;
+  padding: 50px 40px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
 
 #comparePanel.open {
-  right: 0;  /* 책 오른쪽 페이지로 슬라이드 */
-}
-
-/* 닫기 버튼 */
-.compare-close {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: rgba(255,68,68,0.9);
-  color: white;
-  border: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  font-size: 18px;
-  cursor: pointer;
-  z-index: 1002;
-  transition: all 0.2s ease;
-}
-
-.compare-close:hover {
-  background: #ff4444;
-  transform: scale(1.1);
+  right: 0;  /* 책 오른쪽 페이지로 등장 */
 }
 
 /* 패널 제목 */
 #comparePanel h5 {
-  font-size: 20px;
+  font-size: 22px;
   color: #2c3e50;
   font-weight: 700;
-  margin: 0 0 25px 0;
-  padding-bottom: 15px;
-  border-bottom: 2px solid #e1e5ff;
+  margin: 0 0 30px 0;
+  padding-bottom: 20px;
+  border-bottom: 3px solid #e1e5ff;
 }
 
 /* 비교 슬롯들 */
@@ -889,36 +887,35 @@ input:checked + .slider:before {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding-right: 10px;
+  gap: 25px;
 }
 
 /* 비교 카드 */
 .compare-card {
   background: white;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
   border: 1px solid #e8ecff;
   transition: all 0.3s ease;
 }
 
 .compare-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 35px rgba(0,0,0,0.15);
 }
 
 .compare-card .compare-image img {
   width: 100%;
-  height: 160px;
+  height: 180px;
   object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 15px;
+  border-radius: 15px;
+  margin-bottom: 18px;
 }
 
 .compare-result {
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.6;
   color: #34495e;
 }
 
@@ -946,37 +943,6 @@ input:checked + .slider:before {
 .compare-delete:hover {
   background: #ff3737;
   transform: scale(1.15);
-}
-
-
-/* ============================================================
-   📑 책갈피 버튼 (비교 열기 버튼)
-============================================================ */
-
-#indexBtn {
-  position: fixed;
-  top: 40%;
-  right: 0;
-
-  padding: 12px 18px;
-  background: #4d66ff;
-  color: white;
-  border-radius: 12px 0 0 12px;
-
-  font-size: 15px;
-  cursor: pointer;
-  font-weight: 600;
-
-  z-index: 99999;
-  transition: background 0.2s;
-}
-
-#indexBtn:hover {
-  background: #3b53e6;
-}
-
-#indexBtn.hidden {
-  display: none;
 }
 
 
