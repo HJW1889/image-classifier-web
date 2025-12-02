@@ -974,21 +974,39 @@ async function sendFeedback(predicted, corrected, file) {
   }
 }
 
+// =========================
+// 페이지 슬라이더 (홈 ↔ 비교 결과)
+// =========================
 const wrapper = document.getElementById("pageWrapper");
 const indexBtn = document.getElementById("indexBtn");
 const closeBtn = document.getElementById("closeCompare");
 
-// 비교 페이지 열기
+// 비교 페이지 열기 (홈은 왼쪽, 비교는 오른쪽에 보이게)
 function openCompare() {
-  wrapper.style.transform = "translateX(-50%)";
-  indexBtn.classList.add("hidden");
+  if (!wrapper) return;
+  // 홈이 왼쪽, 비교페이지가 오른쪽에 나란히 보이도록 전체를 왼쪽으로 한 페이지만큼 이동
+  wrapper.style.transform = "translateX(-100vw)";
 }
 
-// 비교 페이지 닫기
+// 비교 페이지 닫기 (홈만 보이게)
 function closeComparePage() {
+  if (!wrapper) return;
   wrapper.style.transform = "translateX(0)";
-  indexBtn.classList.remove("hidden");
 }
 
-indexBtn.addEventListener("click", openCompare);
-closeBtn.addEventListener("click", closeComparePage);
+// 인덱스(책갈피) 버튼 클릭 → 열기/닫기 토글
+if (indexBtn && wrapper) {
+  indexBtn.addEventListener("click", () => {
+    const isOpen = wrapper.style.transform === "translateX(-100vw)";
+    if (isOpen) {
+      closeComparePage();
+    } else {
+      openCompare();
+    }
+  });
+}
+
+// 비교 페이지 안의 "닫기" 버튼
+if (closeBtn) {
+  closeBtn.addEventListener("click", closeComparePage);
+}
