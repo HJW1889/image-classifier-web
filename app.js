@@ -342,14 +342,38 @@ function saveCurrentResultSnapshot() {
 
 function renderCompareSlots() {
   if (!$compareSlots) return;
+
   $compareSlots.innerHTML = "";
-  compareHistory.forEach((item) => {
+
+  compareHistory.forEach((item, idx) => {
     const slot = document.createElement("div");
-    slot.className = "compare-slot";
-    slot.innerHTML = item.html;
+    slot.className = "compare-card";
+
+    slot.innerHTML = `
+      <button class="compare-delete" data-idx="${idx}">×</button>
+      <div class="compare-image">
+        <img src="${item.img}" alt="backup">
+      </div>
+      <div class="compare-result">
+        <div class="raw-result">${$result.innerHTML}</div>
+        <div class="raw-bars">${$container.innerHTML}</div>
+        <div class="raw-text">${$resultText.innerHTML}</div>
+      </div>
+    `;
+
     $compareSlots.appendChild(slot);
   });
+
+  // 삭제 버튼 이벤트 등록
+  $compareSlots.querySelectorAll(".compare-delete").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const index = Number(btn.dataset.idx);
+      compareHistory.splice(index, 1);
+      renderCompareSlots();
+    });
+  });
 }
+
 
 function handleCompareStart() {
   const hasResult =
