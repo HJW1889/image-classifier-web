@@ -976,38 +976,29 @@ async function sendFeedback(predicted, corrected, file) {
 }
 
 // =========================
-// 페이지 슬라이더 (홈 ↔ 비교 결과)
+// 페이지 슬라이더 (홈 ↔ 비교패널)
 // =========================
-const wrapper = document.getElementById("pageWrapper");
+const comparePanel = document.getElementById("comparePanel");
 const indexBtn = document.getElementById("indexBtn");
 const closeBtn = document.getElementById("closeCompare");
 
-// 비교 페이지 열기 (홈은 왼쪽, 비교는 오른쪽에 보이게)
+// 비교 패널 열기
 function openCompare() {
-  if (!wrapper) return;
-  // 홈이 왼쪽, 비교페이지가 오른쪽에 나란히 보이도록 전체를 왼쪽으로 한 페이지만큼 이동
-  wrapper.style.transform = "translateX(-100vw)";
+  comparePanel.classList.add("open");
+  indexBtn.classList.add("hidden");
 }
 
-// 비교 페이지 닫기 (홈만 보이게)
-function closeComparePage() {
-  if (!wrapper) return;
-  wrapper.style.transform = "translateX(0)";
+// 비교 패널 닫기
+function closeComparePanel() {
+  comparePanel.classList.remove("open");
+  indexBtn.classList.remove("hidden");
 }
 
-// 인덱스(책갈피) 버튼 클릭 → 열기/닫기 토글
-if (indexBtn && wrapper) {
-  indexBtn.addEventListener("click", () => {
-    const isOpen = wrapper.style.transform === "translateX(-100vw)";
-    if (isOpen) {
-      closeComparePage();
-    } else {
-      openCompare();
-    }
-  });
-}
+// 책갈피(인덱스) 버튼 클릭 → 열림
+indexBtn.addEventListener("click", openCompare);
 
-// 비교 페이지 안의 "닫기" 버튼
-if (closeBtn) {
-  closeBtn.addEventListener("click", closeComparePage);
-}
+// 닫기 버튼
+closeBtn.addEventListener("click", closeComparePanel);
+
+// 기본 상태 — 책갈피는 보여야 하므로
+indexBtn.classList.remove("hidden");
