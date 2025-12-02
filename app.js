@@ -156,18 +156,6 @@ function showPreview(fileOrBlob) {
 }
 
 // =========================
-// 접근성 오버레이 (있으면)
-// =========================
-function showOverlay() {
-  const overlay = document.getElementById("accessibilityOverlay");
-  if (overlay) overlay.style.display = "flex";
-}
-function closeOverlay() {
-  const overlay = document.getElementById("accessibilityOverlay");
-  if (overlay) overlay.style.display = "none";
-}
-
-// =========================
 // "예측이 틀렸어요" → 말풍선 토글
 // =========================
 if ($wrongBtn && $correctionForm) {
