@@ -362,6 +362,16 @@ function renderCompareSlots() {
     return;
   }
 
+  $comparePanel.style.cssText = `
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 24px 0 !important;
+    padding: 16px !important;
+    overflow-x: auto !important;
+    clear: both !important;
+  `;  
+  
   // compareHistory가 있으면 반드시 comparePanel 표시
   $comparePanel.style.display = "block";
 
